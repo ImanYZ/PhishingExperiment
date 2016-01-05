@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)http://getbootstrap.com/examples/theme/# -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="http://getbootstrap.com/favicon.ico">
+
+    <title>Phishing Lottery Choice</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="./bootstrap-3.3.6-dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="./bootstrap-3.3.6-dist/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this project -->
+    <link href="./bootstrap-3.3.6-dist/css/project.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="./bootstrap-3.3.6-dist/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body role="document">
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://www.si.umich.edu/"><img src="{{ MEDIA_URL }}logo.png" alt="University of Michigan - School of Information Logo" width="230" height="21"></a>
+        </div>
+<!--         <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="">Home</a></li>
+            <li><a href="http://getbootstrap.com/examples/theme/#about">About</a></li>
+            <li><a href="http://getbootstrap.com/examples/theme/#contact">Contact</a></li>
+            <li class="dropdown">
+              <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="">Action</a></li>
+                <li><a href="">Another action</a></li>
+                <li><a href="">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="">Separated link</a></li>
+                <li><a href="">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+ -->      </div>
+    </nav>
+
+    <div class="container theme-showcase" role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <h1>Introduction</h1>
+        <p>You are about to participate in a decision process in which you will be making choices between a series of two lotteries. This is part of a study intended to provide insight into certain features of decision processes. If you follow the instructions carefully and make good decisions you may earn a considerable amount of money. You will be paid in cash at the end of the experiment.</p>
+        <h2>Procedure</h2>
+        <ul>
+          <li>You will be making choices between two lotteries, such as those represented as “Option A” and “Option B” below. The money prizes are determined by the computer equivalent of throwing a ten-sided die. Each outcome, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, is equally likely. If you choose Option A in the row shown below, you will have a 1 in 10 chance of earning 200 points and a 9 in 10 chance of earning 160 points. Similarly, Option B offers a 1 in 10 chance of earning 385 points and a 9 in 10 chance of earning 10 points.</li>
+        </ul>
+        <div class="row">
+          <div class="col-md-2">
+          </div>
+          <div class="col-md-6">
+            <table class="table table-bordered" style="background-color: white;">
+              <thead>
+                <tr>
+                  <th><h3>Decision</h3></th>
+                  <th><h3>Option A</h3></th>
+                  <th><h3>Option B</h3></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td rowspan="2"><h3>1</h3></td>
+                </tr>
+                <tr>
+                  <td><button type="button" class="btn btn-lg btn-info">200 points if the die is 1<br>160 points if the die is 2 - 10</button></td>
+                  <td><button type="button" class="btn btn-lg btn-info">385 points if the die is 1<br>10 points if the die is 2 - 10</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <ul>
+          <li>Each row of the decision table contains a pair of choices between Option A and Option B.</li>
+          <li>You make your choice by clicking on option A or option B buttons. Only one option in each row can be selected, and you may change your decision as you wish.</li>
+          <li>Even though you will make ten decisions, only one of these will end up being used. The selection of the one to be used depends on the “throw of the die” that is the determined by the computer’s random number generator. No decision is any more likely to be used than any other, and you will not know in advance which one will be selected, so please think about each one carefully. This random selection of a decision fixes the row (i.e. the Decision) that will be used. For example, suppose that you make all ten decisions and the throw of the die is 9, then your choice, A or B, for decision 9 below would be used and the other decisions would not be used.</li>
+        </ul>
+        <div class="row">
+          <div class="col-md-2">
+          </div>
+          <div class="col-md-6">
+            <table class="table table-bordered" style="background-color: white;">
+              <thead>
+                <tr>
+                  <th><h3>Decision</h3></th>
+                  <th><h3>Option A</h3></th>
+                  <th><h3>Option B</h3></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td rowspan="2"><h3>9</h3></td>
+                </tr>
+                <tr>
+                  <td><button type="button" class="btn btn-lg btn-info">200 points if the die is 1-9<br>160 points if the die is 10</button></td>
+                  <td><button type="button" class="btn btn-lg btn-info">385 points if the die is 1-9<br>10 points if the die is 10</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <ul>
+          <li>After the random die throw fixes the Decision row that will be used, we need to obtain a second random number that determines the earnings for the Option you chose for that row. In Decision 9 below, for example, a throw of 1, 2, 3, 4, 5, 6, 7, 8, or 9 will result in the higher payoff for the option you chose, and a throw of 10 will result in the lower payoff.</li>
+        </ul>
+        <div class="row">
+          <div class="col-md-2">
+          </div>
+          <div class="col-md-6">
+            <table class="table table-bordered" style="background-color: white;">
+              <thead>
+                <tr>
+                  <th><h3>Decision</h3></th>
+                  <th><h3>Option A</h3></th>
+                  <th><h3>Option B</h3></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td rowspan="2"><h3>9</h3></td>
+                </tr>
+                <tr>
+                  <td><button type="button" class="btn btn-lg btn-info">200 points if the die is 1-9<br>160 points if the die is 10</button></td>
+                  <td><button type="button" class="btn btn-lg btn-info">385 points if the die is 1-9<br>10 points if the die is 10</button></td>
+                </tr>
+                <tr>
+                  <td rowspan="2"><h3>10</h3></td>
+                </tr>
+                <tr>
+                  <td><button type="button" class="btn btn-lg btn-info">200 points if the die is 1-10</button></td>
+                  <td><button type="button" class="btn btn-lg btn-info">385 points if the die is 1-10</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <ul class="list-unstyled" style="padding-left: 40px;">
+          <li>For decision 10, the random die throw will not be needed, since the choice is between amounts of money that are fixed: 200 points for Option A and 385 points for Option B.</li>
+        </ul>
+        <ul>
+          <li><b>Making Ten Decisions</b>: You may make these choices in any order and change them as much as you wish until you press the Submit button at the bottom.</li>
+          <li><b>The Relevant Decision</b>: One of the rows is then selected at random, and the Option (A or B) that you chose in that row will be used to determine your earnings. Note: Please think about each decision carefully, since each row is equally likely to end up being the one that is used to determine payoffs.</li>
+          <li><b>Determining the Payoff</b>: After one of the decisions has been randomly selected, the computer will generate another random number that corresponds to the throw of a ten sided die. The number is equally likely to be 1, 2, 3, ... 10. This random number determines your earnings for the Option (A or B) that you previously selected for the decision being used.</li>
+        </ul>
+      </div>
+
+        <div class="page-header"><h1 style="">Let's Play ... <small>Be Careful!</small></h1></div>
+        <div class="row">
+          <div class="col-md-2">
+          </div>
+          <div class="col-md-6">
+            <table class="table table-bordered" style="background-color: white;">
+              <thead>
+                <tr>
+                  <th><h3>Decision</h3></th>
+                  <th><h3>Option A</h3></th>
+                  <th><h3>Option B</h3></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td rowspan="2"><h3>1</h3></td>
+                </tr>
+                <tr>
+                  <td><button type="button" class="btn btn-lg btn-info">200 points if the die is 1<br>160 points if the die is 2 - 10</button></td>
+                  <td><button type="button" class="btn btn-lg btn-info">385 points if the die is 1<br>10 points if the die is 2 - 10</button></td>
+                </tr>
+                <tr>
+                  <td rowspan="2"><h3>9</h3></td>
+                </tr>
+                <tr>
+                  <td><button type="button" class="btn btn-lg btn-info">200 points if the die is 1-9<br>160 points if the die is 10</button></td>
+                  <td><button type="button" class="btn btn-lg btn-info">385 points if the die is 1-9<br>10 points if the die is 10</button></td>
+                </tr>
+                <tr>
+                  <td rowspan="2"><h3>10</h3></td>
+                </tr>
+                <tr>
+                  <td><button type="button" class="btn btn-lg btn-info">200 points if the die is 1-10</button></td>
+                  <td><button type="button" class="btn btn-lg btn-info">385 points if the die is 1-10</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+      <div class="page-header">
+        <h1>Buttons</h1>
+      </div>
+      <p>
+        <button type="button" class="btn btn-lg btn-default">Default</button>
+        <button type="button" class="btn btn-lg btn-primary">Primary</button>
+        <button type="button" class="btn btn-lg btn-success">Success</button>
+        <button type="button" class="btn btn-lg btn-info">Info</button>
+        <button type="button" class="btn btn-lg btn-warning">Warning</button>
+        <button type="button" class="btn btn-lg btn-danger">Danger</button>
+        <button type="button" class="btn btn-lg btn-link">Link</button>
+      </p>
+      <p>
+        <button type="button" class="btn btn-default">Default</button>
+        <button type="button" class="btn btn-primary">Primary</button>
+        <button type="button" class="btn btn-success">Success</button>
+        <button type="button" class="btn btn-info">Info</button>
+        <button type="button" class="btn btn-warning">Warning</button>
+        <button type="button" class="btn btn-danger">Danger</button>
+        <button type="button" class="btn btn-link">Link</button>
+      </p>
+      <p>
+        <button type="button" class="btn btn-sm btn-default">Default</button>
+        <button type="button" class="btn btn-sm btn-primary">Primary</button>
+        <button type="button" class="btn btn-sm btn-success">Success</button>
+        <button type="button" class="btn btn-sm btn-info">Info</button>
+        <button type="button" class="btn btn-sm btn-warning">Warning</button>
+        <button type="button" class="btn btn-sm btn-danger">Danger</button>
+        <button type="button" class="btn btn-sm btn-link">Link</button>
+      </p>
+      <p>
+        <button type="button" class="btn btn-xs btn-default">Default</button>
+        <button type="button" class="btn btn-xs btn-primary">Primary</button>
+        <button type="button" class="btn btn-xs btn-success">Success</button>
+        <button type="button" class="btn btn-xs btn-info">Info</button>
+        <button type="button" class="btn btn-xs btn-warning">Warning</button>
+        <button type="button" class="btn btn-xs btn-danger">Danger</button>
+        <button type="button" class="btn btn-xs btn-link">Link</button>
+      </p>
+
+
+      <div class="page-header">
+        <h1>Tables</h1>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <div class="page-header">
+        <h1>Thumbnails</h1>
+      </div>
+      <img data-src="holder.js/200x200" class="img-thumbnail" alt="200x200" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzIwMHgyMDAKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNTFmM2IxNmZjOSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1MWYzYjE2ZmM5Ij48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9Ijc0LjA0Njg3NSIgeT0iMTA0LjM5Njg3NSI+MjAweDIwMDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==" data-holder-rendered="true" style="width: 200px; height: 200px;">
+
+
+      <div class="page-header">
+        <h1>Labels</h1>
+      </div>
+      <h1>
+        <span class="label label-default">Default</span>
+        <span class="label label-primary">Primary</span>
+        <span class="label label-success">Success</span>
+        <span class="label label-info">Info</span>
+        <span class="label label-warning">Warning</span>
+        <span class="label label-danger">Danger</span>
+      </h1>
+      <h2>
+        <span class="label label-default">Default</span>
+        <span class="label label-primary">Primary</span>
+        <span class="label label-success">Success</span>
+        <span class="label label-info">Info</span>
+        <span class="label label-warning">Warning</span>
+        <span class="label label-danger">Danger</span>
+      </h2>
+      <h3>
+        <span class="label label-default">Default</span>
+        <span class="label label-primary">Primary</span>
+        <span class="label label-success">Success</span>
+        <span class="label label-info">Info</span>
+        <span class="label label-warning">Warning</span>
+        <span class="label label-danger">Danger</span>
+      </h3>
+      <h4>
+        <span class="label label-default">Default</span>
+        <span class="label label-primary">Primary</span>
+        <span class="label label-success">Success</span>
+        <span class="label label-info">Info</span>
+        <span class="label label-warning">Warning</span>
+        <span class="label label-danger">Danger</span>
+      </h4>
+      <h5>
+        <span class="label label-default">Default</span>
+        <span class="label label-primary">Primary</span>
+        <span class="label label-success">Success</span>
+        <span class="label label-info">Info</span>
+        <span class="label label-warning">Warning</span>
+        <span class="label label-danger">Danger</span>
+      </h5>
+      <h6>
+        <span class="label label-default">Default</span>
+        <span class="label label-primary">Primary</span>
+        <span class="label label-success">Success</span>
+        <span class="label label-info">Info</span>
+        <span class="label label-warning">Warning</span>
+        <span class="label label-danger">Danger</span>
+      </h6>
+      <p>
+        <span class="label label-default">Default</span>
+        <span class="label label-primary">Primary</span>
+        <span class="label label-success">Success</span>
+        <span class="label label-info">Info</span>
+        <span class="label label-warning">Warning</span>
+        <span class="label label-danger">Danger</span>
+      </p>
+
+
+      <div class="page-header">
+        <h1>Badges</h1>
+      </div>
+      <p>
+        <a href="">Inbox <span class="badge">42</span></a>
+      </p>
+      <ul class="nav nav-pills" role="tablist">
+        <li role="presentation" class="active"><a href="">Home <span class="badge">42</span></a></li>
+        <li role="presentation"><a href="">Profile</a></li>
+        <li role="presentation"><a href="">Messages <span class="badge">3</span></a></li>
+      </ul>
+
+
+      <div class="page-header">
+        <h1>Dropdown menus</h1>
+      </div>
+      <div class="dropdown theme-dropdown clearfix">
+        <a id="dropdownMenu1" href="" class="sr-only dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <li class="active"><a href="">Action</a></li>
+          <li><a href="">Another action</a></li>
+          <li><a href="">Something else here</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a href="">Separated link</a></li>
+        </ul>
+      </div>
+
+
+      <div class="page-header">
+        <h1>Navs</h1>
+      </div>
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="">Home</a></li>
+        <li role="presentation"><a href="">Profile</a></li>
+        <li role="presentation"><a href="">Messages</a></li>
+      </ul>
+      <ul class="nav nav-pills" role="tablist">
+        <li role="presentation" class="active"><a href="">Home</a></li>
+        <li role="presentation"><a href="">Profile</a></li>
+        <li role="presentation"><a href="">Messages</a></li>
+      </ul>
+
+
+      <div class="page-header">
+        <h1>Navbars</h1>
+      </div>
+
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="">Project name</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="">Home</a></li>
+              <li><a href="http://getbootstrap.com/examples/theme/#about">About</a></li>
+              <li><a href="http://getbootstrap.com/examples/theme/#contact">Contact</a></li>
+              <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="">Action</a></li>
+                  <li><a href="">Another action</a></li>
+                  <li><a href="">Something else here</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li class="dropdown-header">Nav header</li>
+                  <li><a href="">Separated link</a></li>
+                  <li><a href="">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+
+      <nav class="navbar navbar-inverse">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="">Project name</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="">Home</a></li>
+              <li><a href="http://getbootstrap.com/examples/theme/#about">About</a></li>
+              <li><a href="http://getbootstrap.com/examples/theme/#contact">Contact</a></li>
+              <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="">Action</a></li>
+                  <li><a href="">Another action</a></li>
+                  <li><a href="">Something else here</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li class="dropdown-header">Nav header</li>
+                  <li><a href="">Separated link</a></li>
+                  <li><a href="">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+
+
+      <div class="page-header">
+        <h1>Alerts</h1>
+      </div>
+      <div class="alert alert-success" role="alert">
+        <strong>Well done!</strong> You successfully read this important alert message.
+      </div>
+      <div class="alert alert-info" role="alert">
+        <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
+      </div>
+      <div class="alert alert-warning" role="alert">
+        <strong>Warning!</strong> Best check yo self, you're not looking too good.
+      </div>
+      <div class="alert alert-danger" role="alert">
+        <strong>Oh snap!</strong> Change a few things up and try submitting again.
+      </div>
+
+
+      <div class="page-header">
+        <h1>Progress bars</h1>
+      </div>
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"><span class="sr-only">60% Complete</span></div>
+      </div>
+      <div class="progress">
+        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"><span class="sr-only">40% Complete (success)</span></div>
+      </div>
+      <div class="progress">
+        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%"><span class="sr-only">20% Complete</span></div>
+      </div>
+      <div class="progress">
+        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"><span class="sr-only">60% Complete (warning)</span></div>
+      </div>
+      <div class="progress">
+        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%"><span class="sr-only">80% Complete (danger)</span></div>
+      </div>
+      <div class="progress">
+        <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"><span class="sr-only">60% Complete</span></div>
+      </div>
+      <div class="progress">
+        <div class="progress-bar progress-bar-success" style="width: 35%"><span class="sr-only">35% Complete (success)</span></div>
+        <div class="progress-bar progress-bar-warning" style="width: 20%"><span class="sr-only">20% Complete (warning)</span></div>
+        <div class="progress-bar progress-bar-danger" style="width: 10%"><span class="sr-only">10% Complete (danger)</span></div>
+      </div>
+
+
+      <div class="page-header">
+        <h1>List groups</h1>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <ul class="list-group">
+            <li class="list-group-item">Cras justo odio</li>
+            <li class="list-group-item">Dapibus ac facilisis in</li>
+            <li class="list-group-item">Morbi leo risus</li>
+            <li class="list-group-item">Porta ac consectetur ac</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+          </ul>
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-4">
+          <div class="list-group">
+            <a href="" class="list-group-item active">
+              Cras justo odio
+            </a>
+            <a href="" class="list-group-item">Dapibus ac facilisis in</a>
+            <a href="" class="list-group-item">Morbi leo risus</a>
+            <a href="" class="list-group-item">Porta ac consectetur ac</a>
+            <a href="" class="list-group-item">Vestibulum at eros</a>
+          </div>
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-4">
+          <div class="list-group">
+            <a href="" class="list-group-item active">
+              <h4 class="list-group-item-heading">List group item heading</h4>
+              <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+            </a>
+            <a href="" class="list-group-item">
+              <h4 class="list-group-item-heading">List group item heading</h4>
+              <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+            </a>
+            <a href="" class="list-group-item">
+              <h4 class="list-group-item-heading">List group item heading</h4>
+              <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+            </a>
+          </div>
+        </div><!-- /.col-sm-4 -->
+      </div>
+
+
+      <div class="page-header">
+        <h1>Panels</h1>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Panel title</h3>
+            </div>
+            <div class="panel-body">
+              Panel content
+            </div>
+          </div>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Panel title</h3>
+            </div>
+            <div class="panel-body">
+              Panel content
+            </div>
+          </div>
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-4">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">Panel title</h3>
+            </div>
+            <div class="panel-body">
+              Panel content
+            </div>
+          </div>
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">Panel title</h3>
+            </div>
+            <div class="panel-body">
+              Panel content
+            </div>
+          </div>
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-4">
+          <div class="panel panel-warning">
+            <div class="panel-heading">
+              <h3 class="panel-title">Panel title</h3>
+            </div>
+            <div class="panel-body">
+              Panel content
+            </div>
+          </div>
+          <div class="panel panel-danger">
+            <div class="panel-heading">
+              <h3 class="panel-title">Panel title</h3>
+            </div>
+            <div class="panel-body">
+              Panel content
+            </div>
+          </div>
+        </div><!-- /.col-sm-4 -->
+      </div>
+
+
+      <div class="page-header">
+        <h1>Wells</h1>
+      </div>
+      <div class="well">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>
+      </div>
+
+
+      <div class="page-header">
+        <h1>Carousel</h1>
+      </div>
+      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+          <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
+          <li data-target="#carousel-example-generic" data-slide-to="2" class=""></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+          <div class="item next left">
+            <img data-src="holder.js/1140x500/auto/#777:#555/text:First slide" alt="First slide [1140x500]" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTE0MCIgaGVpZ2h0PSI1MDAiIHZpZXdCb3g9IjAgMCAxMTQwIDUwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PCEtLQpTb3VyY2UgVVJMOiBob2xkZXIuanMvMTE0MHg1MDAvYXV0by8jNzc3OiM1NTUvdGV4dDpGaXJzdCBzbGlkZQpDcmVhdGVkIHdpdGggSG9sZGVyLmpzIDIuNi4wLgpMZWFybiBtb3JlIGF0IGh0dHA6Ly9ob2xkZXJqcy5jb20KKGMpIDIwMTItMjAxNSBJdmFuIE1hbG9waW5za3kgLSBodHRwOi8vaW1za3kuY28KLS0+PGRlZnM+PHN0eWxlIHR5cGU9InRleHQvY3NzIj48IVtDREFUQVsjaG9sZGVyXzE1MWYzYjE4ZTEyIHRleHQgeyBmaWxsOiM1NTU7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6NTdwdCB9IF1dPjwvc3R5bGU+PC9kZWZzPjxnIGlkPSJob2xkZXJfMTUxZjNiMThlMTIiPjxyZWN0IHdpZHRoPSIxMTQwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iIzc3NyIvPjxnPjx0ZXh0IHg9IjM5MC41MDc4MTI1IiB5PSIyNzUuMzk2ODc1Ij5GaXJzdCBzbGlkZTwvdGV4dD48L2c+PC9nPjwvc3ZnPg==" data-holder-rendered="true">
+          </div>
+          <div class="item">
+            <img data-src="holder.js/1140x500/auto/#666:#444/text:Second slide" alt="Second slide [1140x500]" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTE0MCIgaGVpZ2h0PSI1MDAiIHZpZXdCb3g9IjAgMCAxMTQwIDUwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PCEtLQpTb3VyY2UgVVJMOiBob2xkZXIuanMvMTE0MHg1MDAvYXV0by8jNjY2OiM0NDQvdGV4dDpTZWNvbmQgc2xpZGUKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNTFmM2IxNmM5MiB0ZXh0IHsgZmlsbDojNDQ0O2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjU3cHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1MWYzYjE2YzkyIj48cmVjdCB3aWR0aD0iMTE0MCIgaGVpZ2h0PSI1MDAiIGZpbGw9IiM2NjYiLz48Zz48dGV4dCB4PSIzMzUuNjAxNTYyNSIgeT0iMjc1LjM5Njg3NSI+U2Vjb25kIHNsaWRlPC90ZXh0PjwvZz48L2c+PC9zdmc+" data-holder-rendered="true">
+          </div>
+          <div class="item active left">
+            <img data-src="holder.js/1140x500/auto/#555:#333/text:Third slide" alt="Third slide [1140x500]" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTE0MCIgaGVpZ2h0PSI1MDAiIHZpZXdCb3g9IjAgMCAxMTQwIDUwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PCEtLQpTb3VyY2UgVVJMOiBob2xkZXIuanMvMTE0MHg1MDAvYXV0by8jNTU1OiMzMzMvdGV4dDpUaGlyZCBzbGlkZQpDcmVhdGVkIHdpdGggSG9sZGVyLmpzIDIuNi4wLgpMZWFybiBtb3JlIGF0IGh0dHA6Ly9ob2xkZXJqcy5jb20KKGMpIDIwMTItMjAxNSBJdmFuIE1hbG9waW5za3kgLSBodHRwOi8vaW1za3kuY28KLS0+PGRlZnM+PHN0eWxlIHR5cGU9InRleHQvY3NzIj48IVtDREFUQVsjaG9sZGVyXzE1MWYzYjE4MzBkIHRleHQgeyBmaWxsOiMzMzM7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6NTdwdCB9IF1dPjwvc3R5bGU+PC9kZWZzPjxnIGlkPSJob2xkZXJfMTUxZjNiMTgzMGQiPjxyZWN0IHdpZHRoPSIxMTQwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iIzU1NSIvPjxnPjx0ZXh0IHg9IjM3Ny44NjcxODc1IiB5PSIyNzUuMzk2ODc1Ij5UaGlyZCBzbGlkZTwvdGV4dD48L2c+PC9nPjwvc3ZnPg==" data-holder-rendered="true">
+          </div>
+        </div>
+        <a class="left carousel-control" href="http://getbootstrap.com/examples/theme/#carousel-example-generic" role="button" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="http://getbootstrap.com/examples/theme/#carousel-example-generic" role="button" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="bootstrap-3.3.6-dist/js/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="bootstrap-3.3.6-dist/js/jquery.min.js"><\/script>')</script>
+    <script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+    <script src="bootstrap-3.3.6-dist/js/docs.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="bootstrap-3.3.6-dist/js/ie10-viewport-bug-workaround.js"></script>
+  
+    <!-- JavaScript code for this project -->
+    <script src="./bootstrap-3.3.6-dist/js/project.js"></script>
+
+<div id="global-zeroclipboard-html-bridge" class="global-zeroclipboard-container" title="" style="position: absolute; left: 0px; top: -9999px; width: 15px; height: 15px; z-index: 999999999;" data-original-title="Copy to clipboard">      <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" id="global-zeroclipboard-flash-bridge" width="100%" height="100%">         <param name="movie" value="/assets/flash/ZeroClipboard.swf?noCache=1451492430219">         <param name="allowScriptAccess" value="sameDomain">         <param name="scale" value="exactfit">         <param name="loop" value="false">         <param name="menu" value="false">         <param name="quality" value="best">         <param name="bgcolor" value="#ffffff">         <param name="wmode" value="transparent">         <param name="flashvars" value="trustedOrigins=getbootstrap.com%2C%2F%2Fgetbootstrap.com%2Chttp%3A%2F%2Fgetbootstrap.com">         <embed src="/assets/flash/ZeroClipboard.swf?noCache=1451492430219" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="100%" height="100%" name="global-zeroclipboard-flash-bridge" allowscriptaccess="sameDomain" allowfullscreen="false" type="application/x-shockwave-flash" wmode="transparent" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="trustedOrigins=getbootstrap.com%2C%2F%2Fgetbootstrap.com%2Chttp%3A%2F%2Fgetbootstrap.com" scale="exactfit">                </object></div><svg xmlns="http://www.w3.org/2000/svg" width="1140" height="500" viewBox="0 0 1140 500" preserveAspectRatio="none" style="display: none; visibility: hidden; position: absolute; top: -100%; left: -100%;"><defs><style type="text/css"></style></defs><text x="0" y="57" style="font-weight:bold;font-size:57pt;font-family:Arial, Helvetica, Open Sans, sans-serif">Thirdslide</text></svg>
+</body>
+</html>
