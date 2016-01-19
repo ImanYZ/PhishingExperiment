@@ -4,6 +4,7 @@
 
 .elasticbeanstalk/
 migrations/
+www/static_Root/
 
 
 # Elastic Beanstalk Files
