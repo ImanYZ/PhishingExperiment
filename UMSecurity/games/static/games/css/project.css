@@ -18,5 +18,24 @@ body {
 }
 
 ul li {
-  font-size: 20px; /* or whatever */
+  font-size: 20px;
+}
+
+@media(max-width: 767px){
+    .table .btn-lg {
+      font-size: 10px;
+    }
+    h2 {
+      font-size: 16px;
+    }
+    h3, h4 {
+      font-size: 13px;
+    }
+    ul li {
+      font-size: 13px;
+    }
+    }
+    .jumbotron p {
+      font-size: 13px;
+    }
 }
