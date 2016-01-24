@@ -42,11 +42,6 @@
       <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand" href="https://www.si.umich.edu/"><img src="{% static 'games/logo.png' %}" alt="University of Michigan - School of Information Logo" width="230" height="21"></a>
-          <a class="navbar-brand" href="#">
-            {% if umid %}
-              Hello {{ umid }}
-            {% endif %}
-          </a>
         </div>
         {% if umid %}
         <div class="navbar-right">

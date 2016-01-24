@@ -41,7 +41,7 @@
         <ul>
           <li>Each row of the decision table contains a pair of choices between Option A and Option B.</li>
           <li>You make your choice by clicking on option A or option B buttons. Only one option in each row can be selected, and you may change your decision as you wish.</li>
-          <li>Even though you will make ten decisions, only one of these will end up being used. The selection of the one to be used depends on the “throw of the die” that is the determined by the computer’s random number generator. No decision is any more likely to be used than any other, and you will not know in advance which one will be selected, so please think about each one carefully. This random selection of a decision fixes the row (i.e. the Decision) that will be used. For example, suppose that you make all ten decisions and the throw of the die is 9, then your choice, A or B, for decision 9 below would be used and the other decisions would not be used.</li>
+          <li>Even though you will make ten decisions, only one of these will end up being used. The selection of the one to be used depends on the “throw of the die” that is determined by the computer’s random number generator. No decision is any more likely to be used than any other, and you will not know in advance which one will be selected, so please think about each one carefully. This random selection of a decision fixes the row (i.e. the Decision) that will be used. For example, suppose that you make all ten decisions and the throw of the die is 9, then your choice, A or B, for decision 9 below would be used and the other decisions would not be used.</li>
         </ul>
         <div class="row">
           <div class="col-md-2">
@@ -148,53 +148,305 @@
             <tbody>
               <tr id="row1">
                 <td><h3>1</h3></td>
-                <td><button type="button" class="btn btn-lg btn-info btn-game" id="Decision1OptionA" name="A"><span class="die0">200 points if the die is 1<br></span><span class="die1">160 points if the die is 2 - 10</span></button></td>
-                <td><button type="button" class="btn btn-lg btn-info btn-game" id="Decision1OptionB" name="B"><span class="die0">385 points if the die is 1<br></span><span class="die1">10 points if the die is 2 - 10</span></button></td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game" id="Decision1OptionA" name="A">
+                    <table style="background-color: none;">
+                      <tr class="die0">
+                        <td style="text-align:right; padding-right: 10px;">die is 1: </td>
+                        <td style="text-align:left;">200 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:right; padding-right: 10px;">die is 2-10: </td>
+                        <td style="text-align:left;">160 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game" id="Decision1OptionB" name="B">
+                    <table style="background-color: none;">
+                      <tr class="die0">
+                        <td style="text-align:right; padding-right: 10px;">die is 1: </td>
+                        <td style="text-align:left;">385 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:right; padding-right: 10px;">die is 2-10: </td>
+                        <td style="text-align:left;">10 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
               </tr>
               <tr id="row2">
                 <td><h3>2</h3></td>
-                <td><button type="button" class="btn btn-lg btn-info btn-game" id="Decision2OptionA" name="A"><span class="die0">200 points if the die is 1 - 2<br></span><span class="die1">160 points if the die is 3 - 10</span></button></td>
-                <td><button type="button" class="btn btn-lg btn-info btn-game" id="Decision2OptionB" name="B"><span class="die0">385 points if the die is 1 - 2<br></span><span class="die1">10 points if the die is 3 - 10</span></button></td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game" id="Decision2OptionA" name="A">
+                    <table style="background-color: none;">
+                      <tr class="die0">
+                        <td style="text-align:right; padding-right: 10px;">die is 1-2: </td>
+                        <td style="text-align:left;">200 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:right; padding-right: 10px;">die is 3-10: </td>
+                        <td style="text-align:left;">160 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game" id="Decision2OptionB" name="B">
+                    <table style="background-color: none;">
+                      <tr class="die0">
+                        <td style="text-align:right; padding-right: 10px;">die is 1-2: </td>
+                        <td style="text-align:left;">385 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:right; padding-right: 10px;">die is 3-10: </td>
+                        <td style="text-align:left;">10 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
               </tr>
               <tr id="row3">
                 <td><h3>3</h3></td>
-                <td><button type="button" class="btn btn-lg btn-info btn-game" id="Decision3OptionA" name="A"><span class="die0">200 points if the die is 1 - 3<br></span><span class="die1">160 points if the die is 4 - 10</span></button></td>
-                <td><button type="button" class="btn btn-lg btn-info btn-game" id="Decision3OptionB" name="B"><span class="die0">385 points if the die is 1 - 3<br></span><span class="die1">10 points if the die is 4 - 10</span></button></td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game" id="Decision3OptionA" name="A">
+                    <table style="background-color: none;">
+                      <tr class="die0">
+                        <td style="text-align:right; padding-right: 10px;">die is 1-3: </td>
+                        <td style="text-align:left;">200 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:right; padding-right: 10px;">die is 4-10: </td>
+                        <td style="text-align:left;">160 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game" id="Decision3OptionB" name="B">
+                    <table style="background-color: none;">
+                      <tr class="die0">
+                        <td style="text-align:right; padding-right: 10px;">die is 1-3: </td>
+                        <td style="text-align:left;">385 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:right; padding-right: 10px;">die is 4-10: </td>
+                        <td style="text-align:left;">10 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
               </tr>
               <tr id="row4">
                 <td><h3>4</h3></td>
-                <td><button type="button" class="btn btn-lg btn-info btn-game" id="Decision4OptionA" name="A"><span class="die0">200 points if the die is 1 - 4<br></span><span class="die1">160 points if the die is 5 - 10</span></button></td>
-                <td><button type="button" class="btn btn-lg btn-info btn-game" id="Decision4OptionB" name="B"><span class="die0">385 points if the die is 1 - 4<br></span><span class="die1">10 points if the die is 5 - 10</span></button></td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game" id="Decision4OptionA" name="A">
+                    <table style="background-color: none;">
+                      <tr class="die0">
+                        <td style="text-align:right; padding-right: 10px;">die is 1-4: </td>
+                        <td style="text-align:left;">200 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:right; padding-right: 10px;">die is 5-10: </td>
+                        <td style="text-align:left;">160 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game" id="Decision4OptionB" name="B">
+                    <table style="background-color: none;">
+                      <tr class="die0">
+                        <td style="text-align:right; padding-right: 10px;">die is 1-4: </td>
+                        <td style="text-align:left;">385 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:right; padding-right: 10px;">die is 5-10: </td>
+                        <td style="text-align:left;">10 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
               </tr>
               <tr id="row5">
                 <td><h3>5</h3></td>
-                <td><button type="button" class="btn btn-lg btn-info btn-game" id="Decision5OptionA" name="A"><span class="die0">200 points if the die is 1 - 5<br></span><span class="die1">160 points if the die is 6 - 10</span></button></td>
-                <td><button type="button" class="btn btn-lg btn-info btn-game" id="Decision5OptionB" name="B"><span class="die0">385 points if the die is 1 - 5<br></span><span class="die1">10 points if the die is 6 - 10</span></button></td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game" id="Decision5OptionA" name="A">
+                    <table style="background-color: none;">
+                      <tr class="die0">
+                        <td style="text-align:right; padding-right: 10px;">die is 1-5: </td>
+                        <td style="text-align:left;">200 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:right; padding-right: 10px;">die is 6-10: </td>
+                        <td style="text-align:left;">160 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game" id="Decision5OptionB" name="B">
+                    <table style="background-color: none;">
+                      <tr class="die0">
+                        <td style="text-align:right; padding-right: 10px;">die is 1-5: </td>
+                        <td style="text-align:left;">385 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:right; padding-right: 10px;">die is 6-10: </td>
+                        <td style="text-align:left;">10 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
               </tr>
               <tr id="row6">
                 <td><h3>6</h3></td>
-                <td><button type="button" class="btn btn-lg btn-info btn-game" id="Decision6OptionA" name="A"><span class="die0">200 points if the die is 1 - 6<br></span><span class="die1">160 points if the die is 7 - 10</span></button></td>
-                <td><button type="button" class="btn btn-lg btn-info btn-game" id="Decision6OptionB" name="B"><span class="die0">385 points if the die is 1 - 6<br></span><span class="die1">10 points if the die is 7 - 10</span></button></td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game" id="Decision6OptionA" name="A">
+                    <table style="background-color: none;">
+                      <tr class="die0">
+                        <td style="text-align:right; padding-right: 10px;">die is 1-6: </td>
+                        <td style="text-align:left;">200 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:right; padding-right: 10px;">die is 7-10: </td>
+                        <td style="text-align:left;">160 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game" id="Decision6OptionB" name="B">
+                    <table style="background-color: none;">
+                      <tr class="die0">
+                        <td style="text-align:right; padding-right: 10px;">die is 1-6: </td>
+                        <td style="text-align:left;">385 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:right; padding-right: 10px;">die is 7-10: </td>
+                        <td style="text-align:left;">10 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
               </tr>
               <tr id="row7">
                 <td><h3>7</h3></td>
-                <td><button type="button" class="btn btn-lg btn-info btn-game" id="Decision7OptionA" name="A"><span class="die0">200 points if the die is 1 - 7<br></span><span class="die1">160 points if the die is 8 - 10</span></button></td>
-                <td><button type="button" class="btn btn-lg btn-info btn-game" id="Decision7OptionB" name="B"><span class="die0">385 points if the die is 1 - 7<br></span><span class="die1">10 points if the die is 8 - 10</span></button></td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game" id="Decision7OptionA" name="A">
+                    <table style="background-color: none;">
+                      <tr class="die0">
+                        <td style="text-align:right; padding-right: 10px;">die is 1-7: </td>
+                        <td style="text-align:left;">200 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:right; padding-right: 10px;">die is 8-10: </td>
+                        <td style="text-align:left;">160 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game" id="Decision7OptionB" name="B">
+                    <table style="background-color: none;">
+                      <tr class="die0">
+                        <td style="text-align:right; padding-right: 10px;">die is 1-7: </td>
+                        <td style="text-align:left;">385 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:right; padding-right: 10px;">die is 8-10: </td>
+                        <td style="text-align:left;">10 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
               </tr>
               <tr id="row8">
                 <td><h3>8</h3></td>
-                <td><button type="button" class="btn btn-lg btn-info btn-game" id="Decision8OptionA" name="A"><span class="die0">200 points if the die is 1 - 8<br></span><span class="die1">160 points if the die is 9 - 10</span></button></td>
-                <td><button type="button" class="btn btn-lg btn-info btn-game" id="Decision8OptionB" name="B"><span class="die0">385 points if the die is 1 - 8<br></span><span class="die1">10 points if the die is 9 - 10</span></button></td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game" id="Decision8OptionA" name="A">
+                    <table style="background-color: none;">
+                      <tr class="die0">
+                        <td style="text-align:right; padding-right: 10px;">die is 1-8: </td>
+                        <td style="text-align:left;">200 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:right; padding-right: 10px;">die is 9-10: </td>
+                        <td style="text-align:left;">160 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game" id="Decision8OptionB" name="B">
+                    <table style="background-color: none;">
+                      <tr class="die0">
+                        <td style="text-align:right; padding-right: 10px;">die is 1-8: </td>
+                        <td style="text-align:left;">385 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:right; padding-right: 10px;">die is 9-10: </td>
+                        <td style="text-align:left;">10 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
               </tr>
               <tr id="row9">
                 <td><h3>9</h3></td>
-                <td><button type="button" class="btn btn-lg btn-info btn-game" id="Decision9OptionA" name="A"><span class="die0">200 points if the die is 1 - 9<br></span><span class="die1">160 points if the die is 10</span></button></td>
-                <td><button type="button" class="btn btn-lg btn-info btn-game" id="Decision9OptionB" name="B"><span class="die0">385 points if the die is 1 - 9<br></span><span class="die1">10 points if the die is 10</span></button></td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game" id="Decision9OptionA" name="A">
+                    <table style="background-color: none;">
+                      <tr class="die0">
+                        <td style="text-align:right; padding-right: 10px;">die is 1-9: </td>
+                        <td style="text-align:left;">200 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:right; padding-right: 10px;">die is 10: </td>
+                        <td style="text-align:left;">160 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game" id="Decision9OptionB" name="B">
+                    <table style="background-color: none;">
+                      <tr class="die0">
+                        <td style="text-align:right; padding-right: 10px;">die is 1-9: </td>
+                        <td style="text-align:left;">385 points</td>
+                      </tr>
+                      <tr class="die1">
+                        <td style="text-align:right; padding-right: 10px;">die is 10: </td>
+                        <td style="text-align:left;">10 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
               </tr>
               <tr id="row10">
                 <td><h3>10</h3></td>
-                <td><button type="button" class="btn btn-lg btn-info btn-game" id="Decision10OptionA" name="A"><span class="die0">200 points if the die is 1 - 10</span></button></td>
-                <td><button type="button" class="btn btn-lg btn-info btn-game" id="Decision10OptionB" name="B"><span class="die0">385 points if the die is 1 - 10</span></button></td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game" id="Decision10OptionA" name="A">
+                    <table style="background-color: none;">
+                      <tr class="die0">
+                        <td style="text-align:right; padding-right: 10px;">die is 1-10: </td>
+                        <td style="text-align:left;">200 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-info btn-game" id="Decision10OptionB" name="B">
+                    <table style="background-color: none;">
+                      <tr class="die0">
+                        <td style="text-align:right; padding-right: 10px;">die is 1-10: </td>
+                        <td style="text-align:left;">385 points</td>
+                      </tr>
+                    </table>
+                  </button>
+                </td>
               </tr>
               <tr>
                 <td colspan="3"><h4 id="SubmitSection">If you select an option for every row, the submit button will appear.&nbsp;&nbsp;&nbsp;
@@ -204,14 +456,16 @@
                 </td>
               </tr>
               <tr id="WillingnessSection" style="display:none;">
-                <td colspan="3"><h4><p id="WillingnessText">Now, enter the number of points, between 0 and 15, which you are willing to pay to see the results of the other rows:</p>
+                <td colspan="3">
+                  <h4 id="WillingnessH4">
+                    <p>Now, enter the number of points, between 0 and 15, which you are willing to pay to see the results of the other rows:</p>
                     <div class="col-xs-6">
                     </div>
                     <div class="col-xs-3">
                       <input type="text" name="WillingnessAmount" id="WillingnessAmount" class="form-control" placeholder="Points">
                     </div>
-                    <input type="submit" class="btn btn-lg btn-success pull-right" id="WillingnessBtn" value="Submit" style="display:none;">
-                  </h4><br><br>
+                    <input type="submit" class="btn btn-lg btn-success pull-right" id="WillingnessBtn" value="Submit" style="display:none;"><br><br>
+                  </h4>
                   <h4 id="WillingnessError" style="color: red; display:none;">Please enter a number between 0 and 15.</h4>
                   <h3 class="text-success" id="WillingnessResult"></h3>
                   <button type="button" class="btn btn-lg btn-success pull-right" id="Continue" style="display:none;">Continue to the next game...</button>
@@ -303,8 +557,8 @@
             else if (die[decision] <= decision) {
                 selectedRow.find(".die1").hide(2500);
             }
-            $("#ResultNode").html("Resulted Decision: " + 
-                decision + ", die: " + die[decision] + " &#10140; Points Earned: " + originalPoints);
+            $("#ResultNode").html("Decision = " + 
+                decision + "<br>Die = " + die[decision] + "<br>&#10140; Points Earned = " + originalPoints);
             $("#SubmitSection").hide();
             $("#SubmitBtn").hide();
             $("#WillingnessSection").show();
@@ -323,7 +577,7 @@
                   headerRow.find("td:eq(1)").show(2500);
                   $("#WillingnessResult").html("Random number = " + 
                     willingnessRand + " &le; Your willingness = " + 
-                    willingnessNum + " &#10140; Final Points Earned: " + result);
+                    willingnessNum + "<br>&#10140; Final Points Earned: " + result);
                   for (index = 1; index <= 10; index++) {
                       var rowObj = $("#row" + index)
                       rowObj.show(2500);
@@ -354,7 +608,7 @@
                   $("#WillingnessResult").removeClass("text-success").addClass( "text-danger" );
               }
               $("#WillingnessBtn").hide();
-              $("#WillingnessText").hide();
+              $("#WillingnessH4").hide();
               $("#WillingnessAmount").hide();
             }
             $("#Continue").show();
@@ -543,7 +797,7 @@
                         $("#WillingnessResult").removeClass("text-success").addClass( "text-danger" );
                     }
                     $("#WillingnessBtn").hide();
-                    $("#WillingnessText").hide();
+                    $("#WillingnessH4").hide();
                     $("#WillingnessAmount").hide();
                 },
                 error: function (data) {
