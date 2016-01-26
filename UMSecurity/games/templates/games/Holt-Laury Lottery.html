@@ -449,8 +449,8 @@
                 </td>
               </tr>
               <tr>
-                <td colspan="3"><h4 id="SubmitSection">If you select an option for every row, the submit button will appear.&nbsp;&nbsp;&nbsp;
-                  <input type="submit" class="btn btn-lg btn-success" id="SubmitBtn" value="Submit" style="display:none;"></h4>
+                <td colspan="3"><h4 id="SubmitSection">If you select an option for every row, the submit button will appear.&nbsp;&nbsp;&nbsp;</h4>
+                  <input type="submit" class="btn btn-lg btn-success pull-right" id="SubmitBtn" value="Submit" style="display:none;">
                   <h4 id="errorMessage" style="color: red; display:none;">Please select an option for evey row.</h4>
                   <h3 class="text-success" id="ResultNode"></h3>
                 </td>
@@ -544,12 +544,12 @@
             var selectedRow = $("#row" + decision);
             var headerRow = $("#row0");
             if (option[decision] == 0) {
-              selectedRow.find("td:eq(2)").hide(2500);
-              headerRow.find("td:eq(2)").hide(2500);
+              selectedRow.children("td:eq(2)").hide(2500);
+              headerRow.children("td:eq(2)").hide(2500);
             }
             else if (option[decision] == 1) {
-              selectedRow.find("td:eq(1)").hide(2500);
-              headerRow.find("td:eq(1)").hide(2500);
+              selectedRow.children("td:eq(1)").hide(2500);
+              headerRow.children("td:eq(1)").hide(2500);
             }
             if (die[decision] > decision) {
                 selectedRow.find(".die0").hide(2500);
@@ -571,10 +571,10 @@
               if (willingnessNum >= willingnessRand) {
                   var selectedRow = $("#row" + decision);
                   var headerRow = $("#row0");
-                  selectedRow.find("td:eq(2)").show(2500);
-                  headerRow.find("td:eq(2)").show(2500);
-                  selectedRow.find("td:eq(1)").show(2500);
-                  headerRow.find("td:eq(1)").show(2500);
+                  selectedRow.children("td:eq(2)").show(2500);
+                  headerRow.children("td:eq(2)").show(2500);
+                  selectedRow.children("td:eq(1)").show(2500);
+                  headerRow.children("td:eq(1)").show(2500);
                   $("#WillingnessResult").html("Random number = " + 
                     willingnessRand + " &le; Your willingness = " + 
                     willingnessNum + "<br>&#10140; Final Points Earned: " + result);
@@ -604,7 +604,7 @@
               else {
                   $("#WillingnessResult").html("Random number = " + 
                     willingnessRand + " > Your willingness = " +
-                    willingnessNum + " &#10140; Final Points Earned: " + result);
+                    willingnessNum + "<br>&#10140; Final Points Earned: " + result);
                   $("#WillingnessResult").removeClass("text-success").addClass( "text-danger" );
               }
               $("#WillingnessBtn").hide();
@@ -688,8 +688,7 @@
                     var decision = data.decision;
                     var die = data.die;
                     var result = data.result;
-                    $("#ResultNode").html("Resulted Decision: " + 
-                      decision);
+                    $("#ResultNode").html("Decision = " + decision);
                     for (i = 1; i <= 10; i++) {
                       if (i != decision) {
                         $("#row" + i).hide(2500);
@@ -699,12 +698,12 @@
                         var selectedRow = $("#row" + decision);
                         var headerRow = $("#row0");
                         if (DecisionsOption[decision] == 0) {
-                          selectedRow.find("td:eq(2)").hide(2500);
-                          headerRow.find("td:eq(2)").hide(2500);
+                          selectedRow.children("td:eq(2)").hide(2500);
+                          headerRow.children("td:eq(2)").hide(2500);
                         }
                         else if (DecisionsOption[decision] == 1) {
-                          selectedRow.find("td:eq(1)").hide(2500);
-                          headerRow.find("td:eq(1)").hide(2500);
+                          selectedRow.children("td:eq(1)").hide(2500);
+                          headerRow.children("td:eq(1)").hide(2500);
                         }
                         setTimeout(function() {
                             if (die > decision) {
@@ -713,8 +712,9 @@
                             else if (die <= decision) {
                                 selectedRow.find(".die1").hide(2500);
                             }
-                            $("#ResultNode").html("Resulted Decision: " + 
-                                decision + ", die: " + die + " &#10140; Points Earned: " + result);
+                            $("#ResultNode").html("Decision = " + 
+                              decision + "<br>Die = " + die +
+                              "<br>&#10140; Points Earned: " + result);
                             $("#SubmitSection").hide();
                             $("#SubmitBtn").hide();
                             $("#WillingnessSection").show();
@@ -760,13 +760,13 @@
                     if (willingnessNum >= willingnessRand) {
                         var selectedRow = $("#row" + decision);
                         var headerRow = $("#row0");
-                        selectedRow.find("td:eq(2)").show(2500);
-                        headerRow.find("td:eq(2)").show(2500);
-                        selectedRow.find("td:eq(1)").show(2500);
-                        headerRow.find("td:eq(1)").show(2500);
+                        selectedRow.children("td:eq(2)").show(2500);
+                        headerRow.children("td:eq(2)").show(2500);
+                        selectedRow.children("td:eq(1)").show(2500);
+                        headerRow.children("td:eq(1)").show(2500);
                         $("#WillingnessResult").html("Random number = " + 
                           willingnessRand + " &le; Your willingness = " + 
-                          willingnessNum + " &#10140; Final Points Earned: " + result);
+                          willingnessNum + "<br>&#10140; Final Points Earned: " + result);
                         for (index = 1; index <= 10; index++) {
                             var rowObj = $("#row" + index)
                             rowObj.show(1600);
@@ -793,7 +793,7 @@
                     else {
                         $("#WillingnessResult").html("Random number = " + 
                           willingnessRand + " > Your willingness = " +
-                          willingnessNum + " &#10140; Final Points Earned: " + result);
+                          willingnessNum + "<br>&#10140; Final Points Earned: " + result);
                         $("#WillingnessResult").removeClass("text-success").addClass( "text-danger" );
                     }
                     $("#WillingnessBtn").hide();

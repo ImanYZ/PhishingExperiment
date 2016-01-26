@@ -44,8 +44,10 @@
           <a class="navbar-brand" href="https://www.si.umich.edu/"><img src="{% static 'games/logo.png' %}" alt="University of Michigan - School of Information Logo" width="230" height="21"></a>
         </div>
         {% if umid %}
-        <div class="navbar-right">
-          <a class="navbar-brand" href="../logout/">Logout</a>
+        <div id="navbar" class="navbar-collapse collapse">
+          <div class="navbar-right">
+            <a class="navbar-brand" href="../logout/">Logout</a>
+          </div>
         </div>
         {% endif %}
       </div>

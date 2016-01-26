@@ -22,7 +22,7 @@ ul li {
 }
 
 @media(max-width: 767px){
-    .table .btn-lg {
+    .btn-lg {
       font-size: 10px;
     }
     h2 {
@@ -33,7 +33,6 @@ ul li {
     }
     ul li {
       font-size: 13px;
-    }
     }
     .jumbotron p {
       font-size: 13px;

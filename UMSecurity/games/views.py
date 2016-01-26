@@ -16,9 +16,8 @@ def login(request):
             umid = request.POST['username']
             user, created = User.objects.get_or_create(username=umid)
             request.session['umid'] = user.username
-            return lottery(request)
 
-    return render(request, 'games/Holt-Laury Lottery.html')
+    return lottery(request)
 
 def logout(request):
     try:
