@@ -10,5 +10,8 @@ urlpatterns = [
     url(r'^logout/$', views.logout, name='logout'),
     url(r'^lottery/$', views.lottery, name='lottery'),
     url(r'^lottery/Submit$', views.lotterySubmit, name='lotterySubmit'),
-    url(r'^lottery/Willingness$', views.willingness, name='willingness'),
+    url(r'^lottery/Willingness$', views.lotteryWillingness, name='lotteryWillingness'),
+    url(r'^gamble/$', views.gamble, name='gamble'),
+    url(r'^gamble/Submit$', views.gambleSubmit, name='gambleSubmit'),
+    url(r'^gamble/Willingness$', views.gambleWillingness, name='gambleWillingness'),
 ]

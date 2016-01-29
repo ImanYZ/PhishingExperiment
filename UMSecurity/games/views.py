@@ -1,5 +1,6 @@
 import json
 from random import randint
+import random
 import datetime
 
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -119,7 +120,7 @@ def lotterySubmit(request):
             return JsonResponse({ 'decision':decision, 
                 'die':die[decision], 'result':result })
 
-def willingness(request):
+def lotteryWillingness(request):
     if request.method == 'POST':
         requestPost = json.loads(request.body.decode('utf-8'))
         if ('umid' in request.session and request.session['umid'] != '' and
@@ -165,4 +166,106 @@ def willingness(request):
 
             return JsonResponse({ 'decision':decision, 'willingnessRand':willingnessRand,
                 'option':option, 'die':die, 'result':result })
+
+@ensure_csrf_cookie
+def gamble(request):
+    if request.session.get('umid', False) and request.session['umid'] != "":
+        request.session['started'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
+        umid = request.session['umid']
+        user = User.objects.get(username=umid)
+        if user.gamble_set.count() != 0:
+            gamble = user.gamble_set.all()[0]
+            chosen = gamble.chosen
+            coin = [None]*10
+            coin[1] = gamble.coin1
+            coin[2] = gamble.coin2
+            coin[3] = gamble.coin3
+            coin[4] = gamble.coin4
+            coin[5] = gamble.coin5
+            coin[6] = gamble.coin6
+            coin[7] = gamble.coin7
+            coin[8] = gamble.coin8
+            coin[9] = gamble.coin9
+            result = gamble.points
+            originalPoints = gamble.originalPoints
+            willingnessNum = gamble.willingness
+            willingnessRand = gamble.willingnessRand
+            context = { 'umid': umid, 'chosen':chosen, 'coin':coin, 'result':result,
+                'originalPoints':originalPoints, 'willingnessNum':willingnessNum,
+                'willingnessRand':willingnessRand }
+            return render(request, 'games/Eckel-Grossman Gamble.html', context)
+    
+        context = { 'umid': umid }
+        return render(request, 'games/Eckel-Grossman Gamble.html', context)
+
+    context = { 'umid': "" }
+    return render(request, 'games/Eckel-Grossman Gamble.html', context)
+
+def gambleSubmit(request):
+    if request.method == 'POST':
+        requestPost = json.loads(request.body.decode('utf-8'))
+        if ('umid' in request.session and request.session['umid'] != '' and
+         'chosen' in requestPost and requestPost['chosen'] != ''):
+            
+            umid = request.session['umid']
+            chosen = requestPost['chosen']
+            user = User.objects.get(username=umid)
+
+            coin = [None]*11
+            result = 0
+
+            for index in range(1, 10): 
+                coin[index] = random.getrandbits(1)
+                if chosen == index:
+                    if coin[index]:
+                        result = 160 + 40 * (index - 1)
+                    else:
+                        result = 160 - 20 * (index - 1)
+            
+            user.gamble_set.update_or_create(chosen=chosen,
+                coin1=coin[1], coin2=coin[2],
+                coin3=coin[3], coin4=coin[4],
+                coin5=coin[5], coin6=coin[6],
+                coin7=coin[7], coin8=coin[8],
+                coin9=coin[9], points=result, originalPoints=result,
+                started=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                finished=datetime.datetime.now())
+
+            return JsonResponse({ 'chosen':chosen, 
+                'coin':coin[chosen], 'result':result })
+
+def gambleWillingness(request):
+    if request.method == 'POST':
+        requestPost = json.loads(request.body.decode('utf-8'))
+        if ('umid' in request.session and request.session['umid'] != '' and
+         'willingnessNum' in requestPost and requestPost['willingnessNum'] != ''):
+            
+            umid = request.session['umid']
+            willingnessNum = requestPost['willingnessNum']
+            user = User.objects.get(username=umid)
+
+            willingnessRand = round(randint(0, int((15 - 0) / 0.01)) * 0.01 + 0, 2)
+
+            gamble = user.gamble_set.all()[0]
+            result = gamble.points
+            if willingnessRand <= willingnessNum:
+                result = gamble.points - willingnessRand
+            chosen = gamble.chosen
+
+            coin = [None]*10
+            coin[1] = gamble.coin1
+            coin[2] = gamble.coin2
+            coin[3] = gamble.coin3
+            coin[4] = gamble.coin4
+            coin[5] = gamble.coin5
+            coin[6] = gamble.coin6
+            coin[7] = gamble.coin7
+            coin[8] = gamble.coin8
+            coin[9] = gamble.coin9
+
+            user.gamble_set.update(willingness=willingnessNum, willingnessRand=willingnessRand,
+                points=result)
+
+            return JsonResponse({ 'chosen':chosen, 'willingnessRand':willingnessRand,
+                'coin':coin, 'result':result })
 

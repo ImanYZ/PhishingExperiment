@@ -21,6 +21,14 @@ ul li {
   font-size: 20px;
 }
 
+.text-center td,th {
+   text-align: center;
+}
+
+h4 p {
+   line-height: 160%;
+}
+
 @media(max-width: 767px){
     .btn-lg {
       font-size: 10px;
@@ -28,7 +36,7 @@ ul li {
     h2 {
       font-size: 16px;
     }
-    h3, h4 {
+    h3, h4, p {
       font-size: 13px;
     }
     ul li {
