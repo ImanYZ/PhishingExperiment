@@ -3,7 +3,7 @@
 
 
 .elasticbeanstalk/
-UMSecurity/games/migrations/
+*/migrations/
 www/static_Root/
 
 
