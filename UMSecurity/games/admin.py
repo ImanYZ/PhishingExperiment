@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import User
 from .models import HoltLaury
+from .models import Gamble
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ['username', 'created', 'updated']
@@ -23,3 +24,13 @@ class HoltLauryAdmin(admin.ModelAdmin):
 
 admin.site.register(HoltLaury, HoltLauryAdmin)
 
+class GambleAdmin(admin.ModelAdmin):
+    list_display = ['user', 'chosen', 'coin1', 'coin2',
+        'coin3', 'coin4', 'coin5', 'coin6', 'coin7',
+        'coin8', 'coin9', 'originalPoints', 'points',
+        'willingness', 'willingnessRand', 'started',
+        'finished', 'created', 'updated']
+
+    search_fields = ['username']
+
+admin.site.register(Gamble, GambleAdmin)
