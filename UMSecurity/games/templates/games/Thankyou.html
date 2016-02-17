@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Thank you!{% endblock %}
+
+{% block leftcontent %}
+  <div class="WelcomeText" id="InstructionsDIV">
+    <h1>Thank you for playing</h1>
+    <p><b>Stay Alert!</b></p>
+    <p>Stay alert, and you won't be tricked by phishing emails.</p>
+    <ul>
+      <li>Check your own email for clues that indicate phishing.</li>
+      <li>Don't click suspicious links.</li>
+      <li>Don't open suspicious documents, files, or attachments.</li>
+    </ul>
+    <p><b>If You Get Caught!</b></p>
+    <p>Take action immediately to minimize the damage.</p>
+    <ul>
+      <li>Change your UMICH password.</li>
+      <li>Contact the ITS Service Center (4help@umich.edu) to report the incident so your U-M account can be checked for signs of compromise.</li>
+    </ul>
+  </div>
+
+{% endblock %}
+
+{% block rightcontent %}
+<!--   <div style="margin:40px;">
+    <img src="{% static 'games/media/271145_327_218.png' %}" alt="Thank you Fish Image" height="100%">
+  </div> -->
+  <form id="ThankYouForm" action="/Submit" method="post" style="margin-top:40px">
+    <div class="form-group">
+      <label for="usr">How do you evaluate the pre-test module?</label>
+      <textarea type="text" class="form-control" style="width:97%;" id="PretestComment" rows="7" placeholder="Please enter your comment about the pre-test module."></textarea>
+    </div>
+    <div class="form-group">
+      <label for="usr">How do you evaluate the training module?</label>
+      <textarea type="text" class="form-control" style="width:97%;" id="TrainingComment" rows="7" placeholder="Please enter your comment about the training module."></textarea>
+    </div>
+    <div class="form-group">
+      <label for="usr">How do you evaluate the 3 games?</label>
+      <textarea type="text" class="form-control" style="width:97%;" id="GamesComment" rows="7" placeholder="Please enter your comment about the 3 games."></textarea>
+    </div>
+    <div class="row" style="margin-bottom:40px;">
+      <div class="col-xs-4 ">
+      </div>
+      <div class="col-xs-4 ">
+        <button type="submit" class="btn btn-lg btn-success">Submit &amp; Quit</button>
+      </div>
+      <div class="col-xs-4 ">
+      </div>
+    </div>
+  </form>
+{% endblock %}
+
+{% block scontent %}
+  <!-- JavaScript code for this project -->
+  <script>
+    $(document).ready(function(){
+
+      function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie != '') {
+              var cookies = document.cookie.split(';');
+              for (var i = 0; i < cookies.length; i++) {
+                  var cookie = jQuery.trim(cookies[i]);
+                  // Does this cookie string begin with the name we want?
+                  if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+      var csrftoken = getCookie('csrftoken');
+
+      function csrfSafeMethod(method) {
+          // these HTTP methods do not require CSRF protection
+          return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+      }
+      $.ajaxSetup({
+          beforeSend: function(xhr, settings) {
+              if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+              }
+          }
+      });
+
+      $( "#ThankYouForm" ).submit(function( event ) {
+       
+          // Stop form from submitting normally
+          event.preventDefault();
+
+          // Get some values from elements on the page:
+          var pretestComment = $('#PretestComment').val();
+          var trainingComment = $('#TrainingComment').val();
+          var gamesComment = $('#GamesComment').val();
+
+          // Send the data using post
+          var jqxhr = $.post( "{% url 'games:thankyousubmit' %}", { 'pretestComment': pretestComment, 'trainingComment': trainingComment, 'gamesComment': gamesComment })
+              .done(function(data) {
+                  window.location.href = "https://www.umich.edu/";
+              })
+              .fail(function() {
+                  alert("Unfortunately your feedback has not been received. Please submit your feedback again. If you have seen this message repeatedly, please make sure you are connected to the Internet, Refresh the page and Submit your feedback again. Also, please feel free to contact us at: oneweb@umich.edu");
+              });
+      });
+    });
+  </script>
+{% endblock %}

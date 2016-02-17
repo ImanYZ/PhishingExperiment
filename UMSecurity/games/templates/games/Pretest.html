@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Pre-test!{% endblock %}
+
+{% block welcontent %}
+  <div class="row">
+    <div class="col-md-2 ">
+    </div>
+    <div class="col-md-8 ">
+      <div class="WelcomeText" id="InstructionsDIV" style="margin-top:40px;">
+          <h1>Pre-test</h1>
+            <p><b>Question {{ question }}</b></p>
+        {% if question == 1 %}
+            <p>You receive an email urging you to click a link to renew your U-M library privileges: 
+              <a class="LinkAnchor" href="http://www.citibanking.net">
+                www.umich.edu/renew-library-privileges
+              </a>
+              . Should you trust the link to take you to the U-M website?
+            </p>
+        {% elif question == 2 %}
+            <p>You receive an email urging you to click the link: 
+              <a class="LinkAnchor" href="https://www.wellsfargo.com/">
+                https://www.wellsfargo.com/
+              </a>
+              . Should you trust the link?
+            </p>
+        {% elif question == 3 %}
+            <p>You receive an email urging you to click the link: 
+              <a class="LinkAnchor" href="http://www.amazon.com.varzeas.us">
+                http://www.amazon.com.varzeas.us
+              </a>
+              . Should you trust the link?
+            </p>
+        {% elif question == 4 %}
+            <p>You receive an email urging you to click the link: 
+              <a class="LinkAnchor" href="http://www.citibanking.net">
+                http://www.citibanking.net
+              </a>
+              . Should you trust the link?
+            </p>
+        {% elif question == 5 %}
+            <p>You receive an email urging you to click the link: 
+              <a class="LinkAnchor" href="http://www.amazon.co.uk">
+                http://www.amazon.co.uk
+              </a>
+              . Should you trust the link?
+            </p>
+        {% elif question == 6 %}
+          <div style="margin-bottom:19px">
+            <p>You receive an email that claims your library access will expire soon. It links to the site depicted. Is it safe to enter your password?</p>
+            <div class="centered">
+                <img src="{% static 'games/media/Pre-test_Question_6.png' %}" alt="UMICH LogIn" height="415" width="562">
+            </div>
+          </div>
+        {% elif question == 7 %}
+          <div style="margin-bottom:19px">
+            <p>Suppose Tom has received an email from a friend that says a document has been shared with him on dropbox. It links to the site depicted. Do you think Tom should follow the link?</p>
+            <div class="centered">
+              <img src="{% static 'games/media/Dropbox.png' %}" alt="Dropbox" height="381" width="466">
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    <div class="col-md-2 ">
+    </div>
+  </div>
+
+  <form id="PretestForm" action="../Submit" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="question" id="question" value="{{ question }}">
+    <input type="hidden" name="answer" id="answer" value="0">
+    <input type="hidden" name="questionclicked" id="questionclicked" value="0">
+    <input type="hidden" name="questionrightclicked" id="questionrightclicked" value="0">
+    <input type="hidden" name="questionhovered" id="questionhovered" value="0">
+    <input type="hidden" name="questionhoveredseconds" id="questionhoveredseconds" value="0">
+    <div class="row" style="margin-top:40px">
+      <div class="col-xs-4">
+      </div>
+      <div class="col-xs-2">
+        <button id="YesButton" class="btn btn-lg {% if not correct %} btn-info {% else %} disabled {% if correct == 1 and answer == 1 %} btn-success {% elif correct == 1 and answer == 0 %} btn-default {% elif correct == 2 and answer == 1 %} btn-danger {% elif correct == 2 and answer == 0 %} btn-success {% endif %} {% endif %} btn-answer" type="submit">Yes</button>
+      </div>
+      <div class="col-xs-2">
+        <button id="NoButton" class="btn btn-lg {% if not correct %} btn-info {% else %} disabled {% if correct == 1 and answer == 0 %} btn-success {% elif correct == 1 and answer == 1 %} btn-default {% elif correct == 2 and answer == 0 %} btn-danger {% elif correct == 2 and answer == 1 %} btn-success {% endif %} {% endif %} btn-answer" type="submit">No</button>
+      </div>
+      <div class="col-xs-4">
+      </div>
+    </div>
+    {% if correct %}
+    <div class="row" style="margin-top:40px">
+      <div class="col-xs-5">
+      </div>
+      <div class="col-xs-2">
+        <button id="Continue" class="btn btn-lg btn-success " type="button">Continue</button>
+      </div>
+      <div class="col-xs-5">
+      </div>
+    </div>
+    {% endif %}
+  </form>
+{% endblock %}
+
+{% block scontent %}
+  <!-- JavaScript code for this project -->
+  <script>
+    $(document).ready(function(){
+
+      function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie != '') {
+              var cookies = document.cookie.split(';');
+              for (var i = 0; i < cookies.length; i++) {
+                  var cookie = jQuery.trim(cookies[i]);
+                  // Does this cookie string begin with the name we want?
+                  if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+      var csrftoken = getCookie('csrftoken');
+
+      function csrfSafeMethod(method) {
+          // these HTTP methods do not require CSRF protection
+          return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+      }
+      $.ajaxSetup({
+          beforeSend: function(xhr, settings) {
+              if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+              }
+          }
+      });
+
+      $( "#NoButton" ).click(function( event ) {
+        // Stop form from submitting normally
+        event.preventDefault();
+
+        if (!$(this).hasClass("disabled")) {
+          // Get some values from elements on the page:
+          $("#answer").val(0);
+
+          $( "#PretestForm" ).submit();
+        }
+      });
+
+      $( "#YesButton" ).click(function( event ) {
+        // Stop form from submitting normally
+        event.preventDefault();
+
+        if (!$(this).hasClass("disabled")) {
+          // Get some values from elements on the page:
+          $("#answer").val(1);
+
+          $( "#PretestForm" ).submit();
+        }
+      });
+
+      $( "#Continue" ).click(function( event ) {
+        // Stop form from submitting normally
+        event.preventDefault();
+
+        if ({{ question }} < 7) {
+          window.location.href = '../' + ({{ question }} + 1) + '/';
+        }
+        else {
+          window.location.href = '../results';
+        }
+      });
+
+      $(".LinkAnchor").mousedown(function(event) {
+          switch (event.which) {
+              case 1:
+                  event.preventDefault();
+                  var url = $(this).attr('href');
+                  $("#questionclicked").val("1");
+                  window.location.href = url;
+                  break;
+              default:
+                  $("#questionrightclicked").val("1");
+          }
+      });
+      $(".LinkAnchor").hover(
+        function(){       
+          $(this).data('inTime', new Date().getTime());
+          $("#questionhovered").val("1");
+        },    
+        function(){       
+          var outTime = new Date().getTime();       
+          var hoverTime = (outTime - $(this).data('inTime'))/1000;        
+          $("#questionhoveredseconds").val(hoverTime);
+        });
+    });
+  </script>
+{% endblock %}

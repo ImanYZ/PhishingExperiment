@@ -1,184 +1,164 @@
 {% extends "base.html" %}
 
-{% block title %}Eckel-Grossman Gamble{% endblock %}
+{% block title %}2nd Game{% endblock %}
 
-{% block content %}
+{% block leftcontent %}
+  <div class="" id="InstructionsDIV">
+    <h1>2<sup>nd</sup> Game</h1>
+    <ul>
+      <li>Please choose one of the nine 50-50 lotteries (rows).</li>
+      <li>The computer will toss a fair coin in your chosen lottery.</li>
+      <li>If it comes up heads, you’ll receive the amount under the “Heads” column. If it comes up tails, you’ll receive the amount under the “Tails” column.</li>
+      <li>Please choose your lottery and then click the submit button.</li>
+    </ul>
+  </div>
+{% endblock %}
 
-      {% if umid %}
-      <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron" style="overflow:hidden; " id="InstructionsDIV">
-        <h1>2nd Game</h1><br>
-        <p>Please choose only one of the following nine 50-50 gambles. Each of the nine gambles is associated with two outcomes labeled ‘Head’ and ‘Tail’. The two outcomes correspond to two different payoffs in each gamble. The game will flip a coin for each of the nine gambles, but you will only be paid based on the result of the gamble that you choose. For example, if you choose Gamble 5, you will have half chance of earning 80 points (Head) and half chance of earning 320 points (Tail). You may change your decision as you wish until you press the Submit button at the bottom.</p>
-      </div>
+{% block rightcontent %}
+  <input type="hidden" name="GambleChoice" id="GambleChoice" value="">
 
-      <div class="page-header"><h1 style="">Let's get started!</h1></div>
-      <input type="hidden" name="GambleChoice" id="GambleChoice" value="">
-
-      <div class="row">
-        <div class="col-md-2">
-        </div>
-        <div class="col-md-6">
-          <table class="table table-bordered" style="background-color: white;">
-            <thead>
-              <tr id="row0" class="text-center">
-                <th><h3>Gamble</h3></th>
-                <th style="width: 50%"><h3>Head</h3></th>
-                <th style="width: 50%"><h3>Tail</h3></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr id="row1" class="text-center">
-                <td><h3>1</h3></td>
-                <td colspan="2">
-                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble1">
-                    <table style="background-color: none; width:100%;">
-                      <tr>
-                        <td>160 points</td>
-                        <td>160 points</td>
-                      </tr>
-                    </table>
-                  </button>
-                </td>
-              </tr>
-              <tr id="row2" class="text-center">
-                <td><h3>2</h3></td>
-                <td colspan="2">
-                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble2">
-                    <table style="background-color: none; width:100%;">
-                      <tr>
-                        <td>140 points</td>
-                        <td>200 points</td>
-                      </tr>
-                    </table>
-                  </button>
-                </td>
-              </tr>
-              <tr id="row3" class="text-center">
-                <td><h3>3</h3></td>
-                <td colspan="2">
-                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble3">
-                    <table style="background-color: none; width:100%;">
-                      <tr>
-                        <td>120 points</td>
-                        <td>240 points</td>
-                      </tr>
-                    </table>
-                  </button>
-                </td>
-              </tr>
-              <tr id="row4" class="text-center">
-                <td><h3>4</h3></td>
-                <td colspan="2">
-                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble4">
-                    <table style="background-color: none; width:100%;">
-                      <tr>
-                        <td>100 points</td>
-                        <td>280 points</td>
-                      </tr>
-                    </table>
-                  </button>
-                </td>
-              </tr>
-              <tr id="row5" class="text-center">
-                <td><h3>5</h3></td>
-                <td colspan="2">
-                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble5">
-                    <table style="background-color: none; width:100%;">
-                      <tr>
-                        <td>80 points</td>
-                        <td>320 points</td>
-                      </tr>
-                    </table>
-                  </button>
-                </td>
-              </tr>
-              <tr id="row6" class="text-center">
-                <td><h3>6</h3></td>
-                <td colspan="2">
-                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble6">
-                    <table style="background-color: none; width:100%;">
-                      <tr>
-                        <td>60 points</td>
-                        <td>360 points</td>
-                      </tr>
-                    </table>
-                  </button>
-                </td>
-              </tr>
-              <tr id="row7" class="text-center">
-                <td><h3>7</h3></td>
-                <td colspan="2">
-                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble7">
-                    <table style="background-color: none; width:100%;">
-                      <tr>
-                        <td>40 points</td>
-                        <td>400 points</td>
-                      </tr>
-                    </table>
-                  </button>
-                </td>
-              </tr>
-              <tr id="row8" class="text-center">
-                <td><h3>8</h3></td>
-                <td colspan="2">
-                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble8">
-                    <table style="background-color: none; width:100%;">
-                      <tr>
-                        <td>20 points</td>
-                        <td>440 points</td>
-                      </tr>
-                    </table>
-                  </button>
-                </td>
-              </tr>
-              <tr id="row9" class="text-center">
-                <td><h3>9</h3></td>
-                <td colspan="2">
-                  <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble9">
-                    <table style="background-color: none; width:100%;">
-                      <tr>
-                        <td>0 points</td>
-                        <td>480 points</td>
-                      </tr>
-                    </table>
-                  </button>
-                </td>
-              </tr>
+  <table class="table holt-laury-table">
+    <thead>
+      <tr id="row0" class="text-center">
+        <th class="ColumnHeader">Lottery</th>
+        <th style="width: 50%" class="ColumnHeader">Heads</th>
+        <th style="width: 50%" class="ColumnHeader">Tails</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="row1" class="text-center">
+        <td class="ColumnHeader">1</td>
+        <td colspan="2" class="slim">
+          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble1">
+            <table>
               <tr>
-                <td colspan="3"><h4 id="SubmitSection">If you chose your preferred gamble, the submit button will appear.&nbsp;&nbsp;&nbsp;</h4>
-                  <input type="submit" class="btn btn-lg btn-success pull-right" id="SubmitBtn" value="Submit" style="display:none;">
-                  <h4 id="errorMessage" style="color: red; display:none;">Please select your preferred gamble.</h4>
-                  <h3 class="text-success" id="ResultNode"></h3>
-                </td>
+                <td>$4</td>
+                <td>$4</td>
               </tr>
-              <tr id="WillingnessSection" style="display:none;">
-                <td colspan="3">
-                  <h4 id="WillingnessH4">
-                    <p>Would you like to see the results of other gambles that you did not choose? You can pay between 0 and 15 of your points to see the other results. The game will also choose a number of points for you between 0 and 15. If your number is above the game's number, you'll pay the number of points that the game has chosen for you, otherwise, you'll not be able to see results of the other gambles.</p>
-                    <p>You can only pay once! Please enter the number of points you are willing to pay below:</p>
-                    <div class="col-xs-4">
-                    </div>
-                    <div class="col-xs-4">
-                      <input type="text" name="WillingnessAmount" id="WillingnessAmount" class="form-control" placeholder="Points">
-                    </div>
-                    <input type="submit" class="btn btn-lg btn-success pull-right" id="WillingnessBtn" value="Submit" style="display:none;"><br><br>
-                  </h4>
-                  <h4 id="WillingnessError" style="color: red; display:none;">Please enter a number between 0 and 15.</h4>
-                  <h3 class="text-success" id="WillingnessResult"></h3>
-                  <button type="button" class="btn btn-lg btn-success pull-right" id="Continue" style="display:none;">Continue to the next game...</button>
-                </td>
+            </table>
+          </button>
+        </td>
+      </tr>
+      <tr id="row2" class="text-center">
+        <td class="ColumnHeader">2</td>
+        <td colspan="2" class="slim">
+          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble2">
+            <table>
+              <tr>
+                <td>$3.5</td>
+                <td>$5</td>
               </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      {% endif %}
+            </table>
+          </button>
+        </td>
+      </tr>
+      <tr id="row3" class="text-center">
+        <td class="ColumnHeader">3</td>
+        <td colspan="2" class="slim">
+          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble3">
+            <table>
+              <tr>
+                <td>$3</td>
+                <td>$6</td>
+              </tr>
+            </table>
+          </button>
+        </td>
+      </tr>
+      <tr id="row4" class="text-center">
+        <td class="ColumnHeader">4</td>
+        <td colspan="2" class="slim">
+          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble4">
+            <table>
+              <tr>
+                <td>$2.5</td>
+                <td>$7</td>
+              </tr>
+            </table>
+          </button>
+        </td>
+      </tr>
+      <tr id="row5" class="text-center">
+        <td class="ColumnHeader">5</td>
+        <td colspan="2" class="slim">
+          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble5">
+            <table>
+              <tr>
+                <td>$2</td>
+                <td>$8</td>
+              </tr>
+            </table>
+          </button>
+        </td>
+      </tr>
+      <tr id="row6" class="text-center">
+        <td class="ColumnHeader">6</td>
+        <td colspan="2" class="slim">
+          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble6">
+            <table>
+              <tr>
+                <td>$1.5</td>
+                <td>$9</td>
+              </tr>
+            </table>
+          </button>
+        </td>
+      </tr>
+      <tr id="row7" class="text-center">
+        <td class="ColumnHeader">7</td>
+        <td colspan="2" class="slim">
+          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble7">
+            <table>
+              <tr>
+                <td>$1</td>
+                <td>$10</td>
+              </tr>
+            </table>
+          </button>
+        </td>
+      </tr>
+      <tr id="row8" class="text-center">
+        <td class="ColumnHeader">8</td>
+        <td colspan="2" class="slim">
+          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble8">
+            <table>
+              <tr>
+                <td>$0.5</td>
+                <td>$11</td>
+              </tr>
+            </table>
+          </button>
+        </td>
+      </tr>
+      <tr id="row9" class="text-center">
+        <td class="ColumnHeader">9</td>
+        <td colspan="2" class="slim">
+          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble9">
+            <table>
+              <tr>
+                <td>$0</td>
+                <td>$12</td>
+              </tr>
+            </table>
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <input type="submit" class="btn btn-lg btn-success pull-right" id="SubmitBtn" value="Submit" style="display:none;">
+          <h4 id="errorMessage" style="color: red; display:none;">Please select your preferred lottery.</h4>
+          <h3 class="text-success" id="ResultNode"></h3>
+          <button type="button" class="btn btn-lg btn-success pull-right" id="Continue" style="display:none;">Continue to the next game...</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 {% endblock %}
 
 {% block scontent %}
-    <!-- JavaScript code for this project -->
-    <script>
-      $(document).ready(function(){
+  <!-- JavaScript code for this project -->
+  <script>
+    $(document).ready(function(){
         function getCookie(name) {
             var cookieValue = null;
             if (document.cookie && document.cookie != '') {
@@ -227,68 +207,26 @@
                 }
             }
             var selectedRow = $("#row" + chosen);
+            $("#Gamble" + chosen).removeClass( "btn-info" ).addClass( "btn-success" );
             var headerRow = $("#row0");
             var coinVal = "";
             if (coin[chosen] == false) {
-              selectedRow.find("table").find("td:eq(1)").hide(2500);
-              headerRow.find("th:eq(2)").hide(2500);
-              coinVal = "Head";
+              selectedRow.find("table").find("td:eq(1)").css("color", "black");
+              selectedRow.find("table").find("td:eq(1)").css("text-decoration", "line-through");
+              // headerRow.find("th:eq(2)").hide(2500);
+              coinVal = "heads";
             }
             else if (coin[chosen] == true) {
-              selectedRow.find("table").find("td:eq(0)").hide(2500);
-              headerRow.find("th:eq(1)").hide(2500);
-              coinVal = "Tail";
+              selectedRow.find("table").find("td:eq(0)").css("color", "black");
+              selectedRow.find("table").find("td:eq(0)").css("text-decoration", "line-through");
+              // headerRow.find("th:eq(1)").hide(2500);
+              coinVal = "tails";
             }
-            $("#ResultNode").html("Chosen Gamble = " + 
-              chosen + "<br>Coin = " + coinVal + 
-              "<br>&#10140; Points Earned = " + originalPoints);
+            $("#ResultNode").html("<p>You chose lottery " + 
+              chosen + ".</p><p>The coin toss's result is " + coinVal + 
+              ".</p><p>&#10140; You earned $" + originalPoints + ".</p>");
             $("#SubmitSection").hide();
             $("#SubmitBtn").hide();
-            $("#WillingnessSection").show();
-
-            var result = {{ result }};
-            var willingnessRand = {{ willingnessRand }};
-            var willingnessNum = {{ willingnessNum }};
-
-            if (willingnessRand != 16) {
-              if (willingnessNum >= willingnessRand) {
-                  var selectedRow = $("#row" + chosen);
-                  var headerRow = $("#row0");
-                  selectedRow.find("table").find("td:eq(1)").show(2500);
-                  headerRow.find("th:eq(2)").show(2500);
-                  selectedRow.find("table").find("td:eq(0)").show(2500);
-                  headerRow.find("th:eq(1)").show(2500);
-                  $("#WillingnessResult").html("Random number = " + 
-                    willingnessRand + " &le; Your willingness = " + 
-                    willingnessNum + "<br>&#10140; Final Points Earned: " + result);
-                  for (index = 1; index < 10; index++) {
-                      var rowObj = $("#row" + index)
-                      rowObj.show(2500);
-                      rowObj.find(".btn-success").removeClass( "btn-success" ).addClass( "btn-warning" );
-                      rowObj.find(".btn-default").removeClass( "btn-default" ).addClass( "btn-warning" );
-                      rowObj.find(".btn-info").removeClass( "btn-info" ).addClass( "btn-warning" );
-                      if (index == chosen) {
-                        rowObj.find(".btn-warning").removeClass( "btn-warning" ).addClass( "btn-success" );
-                        if (coin[index] == false) {
-                          rowObj.find(".btn-success" ).find("td:eq(1)").addClass( "text-danger" );
-                        }
-                        else if (coin[index] == true) {
-                          rowObj.find(".btn-success" ).find("td:eq(0)").addClass( "text-danger" );
-                        }
-                      }
-                  }
-                  $("#WillingnessResult").removeClass("text-danger").addClass( "text-success" );
-              }
-              else {
-                  $("#WillingnessResult").html("Random number = " + 
-                    willingnessRand + " > Your willingness = " +
-                    willingnessNum + "<br>&#10140; Final Points Earned: " + result);
-                  $("#WillingnessResult").removeClass("text-success").addClass( "text-danger" );
-              }
-              $("#WillingnessBtn").hide();
-              $("#WillingnessH4").hide();
-              $("#WillingnessAmount").hide();
-            }
             $("#Continue").show();
 
         {% endif %}
@@ -335,7 +273,7 @@
                     var chosen = data.chosen;
                     var coin = data.coin;
                     var result = data.result;
-                    $("#ResultNode").html("Chosen Gamble = " + chosen);
+                    $("#ResultNode").html("You chose lottery " + chosen);
                     for (i = 1; i < 10; i++) {
                       if (i != chosen) {
                         $("#row" + i).hide(2500);
@@ -346,22 +284,23 @@
                         var headerRow = $("#row0");
                         var coinVal = "";
                         if (coin == false) {
-                          selectedRow.find("table").find("td:eq(1)").hide(2500);
-                          headerRow.find("th:eq(2)").hide(2500);
-                          coinVal = "Head";
+                          selectedRow.find("table").find("td:eq(1)").css("color", "black");
+                          selectedRow.find("table").find("td:eq(1)").css("text-decoration", "line-through");
+                          // headerRow.find("th:eq(2)").hide(2500);
+                          coinVal = "heads";
                         }
                         else if (coin == true) {
-                          selectedRow.find("table").find("td:eq(0)").hide(2500);
-                          headerRow.find("th:eq(1)").hide(2500);
-                          coinVal = "Tail";
+                          selectedRow.find("table").find("td:eq(0)").css("color", "black");
+                          selectedRow.find("table").find("td:eq(0)").css("text-decoration", "line-through");
+                          // headerRow.find("th:eq(1)").hide(2500);
+                          coinVal = "tails";
                         }
                         setTimeout(function() {
-                            $("#ResultNode").html("Chosen Gamble = " + 
-                              chosen + "<br>Coin = " + coinVal +
-                              "<br>&#10140; Points Earned: " + result);
+                            $("#ResultNode").html("<p>You chose lottery " + 
+                              chosen + ".</p><p>The coin toss's result is " + coinVal +
+                              ".</p><p>&#10140; You earned $" + result + ".</p>");
                             $("#SubmitSection").hide();
                             $("#SubmitBtn").hide();
-                            $("#WillingnessSection").show();
                             $("#Continue").show();
                         }, 2500);
                     }, 2500);
@@ -373,84 +312,11 @@
 
         });
 
-        $("#WillingnessAmount").on("input", function(){
-            var value = $(this).val();
-            if (value != "" && $.isNumeric(value) && parseInt(value) >= 0 && parseInt(value) <= 15) {
-                $("#WillingnessBtn").show();
-                $("#WillingnessError").hide();
-            }
-            else {
-                $("#WillingnessError").show();
-                $("#WillingnessBtn").hide();
-            }
-        });
+      $("#Continue").click(function(){
 
-        $("#WillingnessBtn").click(function(){
-            var willingnessNum = parseInt($("#WillingnessAmount").val());
-
-            $.ajax({
-                type: 'Post',
-                dataType: 'json',
-                url: '../gamble/Willingness',
-                data: JSON.stringify({ 'willingnessNum': willingnessNum }),
-                contentType: 'application/json; charset=utf-8',
-                async: false,
-                success: function (data) {
-                    var willingnessRand = data.willingnessRand;
-                    var chosen = data.chosen;
-                    var coin = data.coin;
-                    var result = data.result;
-                    if (willingnessNum >= willingnessRand) {
-                        var selectedRow = $("#row" + chosen);
-                        var headerRow = $("#row0");
-                        selectedRow.find("table").find("td:eq(1)").show(2500);
-                        headerRow.find("th:eq(2)").show(2500);
-                        selectedRow.find("table").find("td:eq(0)").show(2500);
-                        headerRow.find("th:eq(1)").show(2500);
-                        $("#WillingnessResult").html("Random number = " + 
-                          willingnessRand + " &le; Your willingness = " + 
-                          willingnessNum + "<br>&#10140; Final Points Earned: " + result);
-                        for (index = 1; index < 10; index++) {
-                            var rowObj = $("#row" + index)
-                            rowObj.show(1600);
-                            rowObj.find(".btn-success").removeClass( "btn-success" ).addClass( "btn-warning" );
-                            rowObj.find(".btn-default").removeClass( "btn-default" ).addClass( "btn-warning" );
-                            rowObj.find(".btn-info").removeClass( "btn-info" ).addClass( "btn-warning" );
-                            if (index == chosen) {
-                              rowObj.find(".btn-warning").removeClass( "btn-warning" ).addClass( "btn-success" );
-                              if (coin[index] == false) {
-                                rowObj.find(".btn-success" ).find("td:eq(1)").addClass( "text-danger" );
-                              }
-                              else if (coin[index] == true) {
-                                rowObj.find(".btn-success" ).find("td:eq(0)").addClass( "text-danger" );
-                              }
-                            }
-                        }
-                        $("#WillingnessResult").removeClass("text-danger").addClass( "text-success" );
-                    }
-                    else {
-                        $("#WillingnessResult").html("Random number = " + 
-                          willingnessRand + " > Your willingness = " +
-                          willingnessNum + "<br>&#10140; Final Points Earned: " + result);
-                        $("#WillingnessResult").removeClass("text-success").addClass( "text-danger" );
-                    }
-                    $("#WillingnessBtn").hide();
-                    $("#WillingnessH4").hide();
-                    $("#WillingnessAmount").hide();
-                },
-                error: function (data) {
-                    alert( "An error occurred. Please try again." );
-                }
-            });
-
-        });
-
-        $('#WillingnessAmount').keypress(function (e) {
-          if (e.which == 13) {
-            $('#WillingnessBtn').click();
-            return false;    //<---- Add this line
-          }
-        });
+          window.location.href = "../investment";
       });
-    </script>
+
+    });
+  </script>
 {% endblock %}

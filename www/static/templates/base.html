@@ -9,9 +9,14 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta http-equiv="cache-control" content="max-age=0">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="-1">
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 11:00:00 GMT">
+    <meta http-equiv="pragma" content="no-cache">
     <link rel="icon" href="{% static 'games/favicon.ico' %}">
 
-    <title>{% block title %}U of M Security Experiments{% endblock %}</title>
+    <title>{% block title %}BF Training{% endblock %}</title>
     
     <!-- Bootstrap core CSS -->
     <link href="{% static 'games/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
@@ -33,20 +38,26 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <link rel="stylesheet" href="{% static 'games/css/jquery.mCustomScrollbar.css' %}" type="text/css" />
+
+    <link rel="stylesheet" href="{% static 'games/css/jquery-ui.css' %}" type="text/css" />
+
   </head>
 
-  <body role="document">
+  <body role="document" style="background-image:url({% static 'games/media/j0401016.jpg' %})">
 
     <!-- Fixed navbar -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="https://www.si.umich.edu/"><img src="{% static 'games/logo.png' %}" alt="University of Michigan - School of Information Logo" width="230" height="21"></a>
+          <a class="navbar-brand" href="https://www.si.umich.edu/">
+            <img src="{% static 'games/media/university-of-michigan-logo.png' %}" alt="University of Michigan - School of Information Logo" width="301px" height="46px" style="max-width:301px; margin-top: -13px;">
+          </a>
         </div>
         {% if umid %}
         <div id="navbar" class="navbar-collapse collapse">
           <div class="navbar-right">
-            <a class="navbar-brand" href="../logout/">Logout</a>
+            <a class="navbar-brand" href="{% url 'games:logout' %}">Logout</a>
           </div>
         </div>
         {% endif %}
@@ -58,10 +69,10 @@
       {% if not umid %}
       <div class="container">
 
-        <div class="col-md-4">
+        <div class="col-xs-4">
         </div>
-        <div class="col-md-4">
-          <form class="form-signin" action="../login/" method="post">{% csrf_token %}
+        <div class="col-xs-4">
+          <form class="form-signin" action="{% url 'games:login' %}" method="post">{% csrf_token %}
             <h2 class="form-signin-heading">Please sign in</h2>
             <label for="inputEmail" class="sr-only">Please Enter Your Email Address.</label>
             <input type="email" id="inputEmail" class="form-control" placeholder="Please Enter Your Email Address." required="" autofocus="" id="username" name="username"><br>
@@ -70,21 +81,45 @@
                 <input type="checkbox" value="remember-me"> Remember me
               </label>
             </div>
- -->            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+ -->
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
           </form>
         </div> 
+        <div class="col-xs-4">
+        </div>
+      </div>
+
+      {% elif not welcomepage %}
+      <div class="container-fluid">
+        <div class="row transBackground">
+          <div class="col-md-6 ">
+            {% block leftcontent %}{% endblock %}
+          </div>
+          <div class="col-md-6">
+            {% block rightcontent %}{% endblock %}
+          </div>
+        </div>
+        <div class="row">
+          <br><br>
+        </div>
+      </div>
+      {% else %}
+      <div class="container-fluid">
+        <div class="row transBackground">
+            {% block welcontent %}{% endblock %}
+        </div>
+        <div class="row">
+          <br><br>
+        </div>
       </div>
       {% endif %}
 
-{% block content %}{% endblock %}
-
-      <hr>
-
-      <footer>
+      <div class="navbar navbar-inverse navbar-fixed-bottom">
         <p>&copy; University of Michigan, School of Information 2016</p>
-      </footer>
+      </div>
 
-    </div> <!-- /container -->
+    </div>
+    <!-- /container -->
 
 
     <!-- Bootstrap core JavaScript
@@ -97,7 +132,18 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{% static 'games/js/ie10-viewport-bug-workaround.js' %}"></script>
 
+    <script src="{% static 'games/js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+    <script>
+      (function($){
+          $(window).load(function(){
+              $(".transBackground").mCustomScrollbar();
+          });
+      })(jQuery);
+    </script>
+
+    <script src="{% static 'games/js/jquery-ui.js' %}"></script>
+
 {% block scontent %}{% endblock %}
 
-</body>
+  </body>
 </html>

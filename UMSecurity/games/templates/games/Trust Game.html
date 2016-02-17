@@ -1,0 +1,528 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}3rd Game{% endblock %}
+
+{% block leftcontent %}
+  <div id="InstructionsDIV">
+    <h1>3<sup>rd</sup> Game</h1>
+    <div id="Instructions1">
+      <ul>
+        <li>In this game, you’re going to be randomly matched with an anonymous participant.</li>
+        <li>Each of you is given $5.</li>
+        <li>You will be either an investor or a responder. We will ask for your decisions in each role.</li>
+      </ul>
+      <h4 id="PartSection">Part 1 – If you are the investor…</h4>
+      <ul>
+        <li>You will decide how many of your $5 to pass to the responder by dragging along the slider.</li>
+        <li>The computer will triple the amount that you give to the responder.</li>
+        <li>The responder then decides on the number of amount to give back to you.</li>
+        <li>Please make your decision and click the submit button.</li>
+      </ul>
+    </div>
+    <div id="Instructions2" style="display:none;">
+      <h4 id="PartSection">Part <span id="PartNum">2</span> – If you are the responder and the investor passes <span style="color:red;">$<span id="InvestorPasses">1</span></span> to you…</h4>
+      <ul>
+        <li>The computer will triple the points that she passes to you.</li>
+        <li>You will decide how many of your total points to give back to the investor by dragging along the slider.</li>
+        <li>Please make your decision and click the submit button.</li>
+      </ul>
+    </div>
+    <div id="Instructions3" style="display:none;">
+      <h4 id="PartSection">Final Part</h4>
+      <ul>
+        <li>You are randomly matched with another participant. One of you has been randomly chosen as the investor and the other as the responder.</li>
+        <li>The computer has looked up your decisions and computed your payoffs accordingly.</li>
+        <li>The results are depicted in the following picture.</li>
+      </ul>
+    </div>
+  </div>
+{% endblock %}
+
+{% block rightcontent %}
+  <div id="RightContentContainer">
+    <form id="InvestorForm" action="../investment/Submit" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="invested" id="invested" value="0">
+    </form>
+    <form id="ReturnForm" action="../../returning/Submit" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="returned" id="returned" value="0">
+      <input type="hidden" name="part" id="part" value="">
+    </form>
+
+    <div id="UpperArrow">
+      <img src="{% static 'games/media/Upper_Orange_Arrow.png' %}" alt="Upper Arrow" height="100%" width="100%">
+    </div>
+
+    <div id="LowerArrow" style="display:none;">
+      <img src="{% static 'games/media/Lower_Orange_Arrow.png' %}" alt="Lower Arrow" height="100%" width="100%">
+    </div>
+
+    <div id="InvestmentCalc">
+      <span id="InvestmentAmount">$0</span> X 3 = <span id="InvestmentResult">$0</span>
+    </div>
+
+    <div id="ReturnCalc" style="display:none;">
+      <span id="ReturnAmount">$0</span>
+    </div>
+
+    <div id="LeftCoins">
+      <div id="LeftCoinsAmount">
+        <span id="LeftCoinsAmountNum">$5</span>
+      </div>
+      <div id="LeftCoin1" style="top:130px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="LeftCoin2" style="top:121px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="LeftCoin3" style="top:112px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="LeftCoin4" style="top:103px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="LeftCoin5" style="top:94px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="LeftCoin6" style="top:85px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="LeftCoin7" style="top:76px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="LeftCoin8" style="top:67px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="LeftCoin9" style="top:58px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="LeftCoin10" style="top:49px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="LeftCoin11" style="top:40px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="LeftCoin12" style="top:31px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="LeftCoin13" style="top:22px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="LeftCoin14" style="top:13px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="LeftCoin15" style="top:4px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="LeftCoin16" style="top:-5px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="LeftCoin17" style="top:-14px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="LeftCoin18" style="top:-23px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="LeftCoin19" style="top:-32px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="LeftCoin20" style="top:-41px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+
+      <div id="LeftCoinsLabel">
+        <p>INVESTOR</p>
+        <p id="InvestorIdentity">(YOU)</p>
+      </div>
+    </div>
+
+    <div id="RightCoins">
+      <div id="RightCoinsAmount">
+        <span id="RightCoinsAmountNum">$5</span>
+      </div>
+      <div id="RightCoin1" style="top:130px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="RightCoin2" style="top:121px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="RightCoin3" style="top:112px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="RightCoin4" style="top:103px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="RightCoin5" style="top:94px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="RightCoin6" style="top:85px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="RightCoin7" style="top:76px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="RightCoin8" style="top:67px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="RightCoin9" style="top:58px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="RightCoin10" style="top:49px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="RightCoin11" style="top:40px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="RightCoin12" style="top:31px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="RightCoin13" style="top:22px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="RightCoin14" style="top:13px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="RightCoin15" style="top:4px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="RightCoin16" style="top:-5px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="RightCoin17" style="top:-14px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="RightCoin18" style="top:-23px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="RightCoin19" style="top:-32px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+      <div id="RightCoin20" style="top:-41px;">
+        <img src="{% static 'games/media/goldcoin.png' %}" alt="Gold Coin" height="100px" width="100px">
+      </div>
+
+      <div id="RightCoinsLabel">
+        <p>RESPONDER</p>
+        <p id="ResponderIdentity">(OTHER)</p>
+      </div>
+    </div>
+
+    <div id="SliderContainer">
+      <div id="slider"></div>
+    </div>
+
+    <input type="submit" class="btn btn-lg btn-success" id="SliderSubmitBtn" value="Submit" >
+
+  </div>
+
+{% endblock %}
+
+{% block scontent %}
+  <!-- JavaScript code for this project -->
+  <script>
+    $(document).ready(function(){
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+        $("#RightContentContainer").height($(window).height());
+        $("#RightContentContainer").width($(window).width()/2);
+
+        var part = 1;
+        {% if part %}
+          part = {{ part }};
+          returned = {{ returned }};
+          if (returned < 0) {
+            returned = 0;
+          }
+        {% endif %}
+        if (part == 1) {
+          var invested = 0;
+          {% if invested %}
+            invested = {{ invested }};
+          {% endif %}
+          if (invested < 0) {
+            invested = 0;
+          }
+          $("#invested").val( invested );
+
+          $( "#InvestmentAmount" ).html( "$" + invested );
+          $( "#InvestmentResult" ).html( "$" + (invested * 3) );
+
+          $( "#LeftCoinsAmountNum" ).html( "$" + (5 - invested) );
+          $( "#RightCoinsAmountNum" ).html( "$" + (5 + (invested * 3)) );
+
+          $("#LeftCoinsAmount").css("top", (76 + 9 * invested) + "px");
+          $("#RightCoinsAmount").css("top", (76 - 27 * invested) + "px");
+
+          for (i = 1; i <= 5; i++) {
+            if (i <= invested) {
+              $("#LeftCoin" + (6 - i)).hide();
+              $("#RightCoin" + (5 + (i * 3))).show();
+              $("#RightCoin" + (5 + (i * 3) - 1)).show();
+              $("#RightCoin" + (5 + (i * 3) - 2)).show();
+            }
+            else {
+              $("#LeftCoin" + (6 - i)).show();
+              $("#RightCoin" + (5 + (i * 3))).hide();
+              $("#RightCoin" + (5 + (i * 3) - 1)).hide();
+              $("#RightCoin" + (5 + (i * 3) - 2)).hide();
+            }
+          }
+
+          $( "#slider" ).slider({
+            value: invested,
+            min: 0,
+            max: 5,
+            step: 1,
+            slide: function( event, ui ) {
+              var inv = parseInt(ui.value);
+              $("#invested").val(ui.value);
+
+              $( "#InvestmentAmount" ).html( "$" + ui.value );
+              $( "#InvestmentResult" ).html( "$" + (inv * 3) );
+
+              $( "#LeftCoinsAmountNum" ).html( "$" + (5 - inv) );
+              $( "#RightCoinsAmountNum" ).html( "$" + (5 + (inv * 3)) );
+
+              $("#LeftCoinsAmount").css("top", (76 + 9 * inv) + "px");
+              $("#RightCoinsAmount").css("top", (76 - 27 * inv) + "px");
+
+              for (i = 1; i <= 5; i++) {
+                if (i <= inv) {
+                  $("#LeftCoin" + (6 - i)).hide();
+                  $("#RightCoin" + (5 + (i * 3))).show();
+                  $("#RightCoin" + (5 + (i * 3) - 1)).show();
+                  $("#RightCoin" + (5 + (i * 3) - 2)).show();
+                }
+                else {
+                  $("#LeftCoin" + (6 - i)).show();
+                  $("#RightCoin" + (5 + (i * 3))).hide();
+                  $("#RightCoin" + (5 + (i * 3) - 1)).hide();
+                  $("#RightCoin" + (5 + (i * 3) - 2)).hide();
+                }
+              }
+            }
+          });
+        }
+        else if (part >= 2 && part <= 7) {
+          part = part - 2;
+          $("#UpperArrow").children("img")[0].src ="{% static 'games/media/Upper_Blue_Arrow.png' %}";
+          $("#LowerArrow").show();
+          $("#ReturnCalc").show();
+          $("#InvestmentAmount").css("color", "blue");
+          $("#InvestmentCalc").css("color", "blue");
+          $("#LeftCoinsAmountNum").css("color", "green");
+          $("#Instructions1").slideUp();
+          $("#Instructions2").show().slideDown();
+          $("#PartNum").html(part + 2);
+          $("#InvestorPasses").html(part);
+          $("#InvestorIdentity").html("(OTHER)");
+          $("#ResponderIdentity").html("(YOU)");
+          $("#RightCoinsAmount").css("color", "green");
+
+          $( "#InvestmentAmount" ).html( "$" + part );
+          $( "#InvestmentResult" ).html( "$" + (part * 3) );
+
+          $("#returned").val( returned );
+          $( "#ReturnAmount" ).html( "$" + returned );
+
+          $( "#LeftCoinsAmountNum" ).html( "$" + (5 - part + returned) );
+          $( "#RightCoinsAmountNum" ).html( "$" + (5 + (part * 3) - returned) );
+
+          $("#LeftCoinsAmount").css("top", (76 - 9 * (returned - part)) + "px");
+          $("#RightCoinsAmount").css("top", (76 + 9 * (returned - (part * 3))) + "px");
+
+          var sliderMaxVal = 5 + (part * 3);
+          var sliderMinVal = 0;
+          var sliderVal = sliderMaxVal - returned;
+
+          for (i = 1; i <= sliderMaxVal; i++) {
+            if (i <= sliderVal) {
+              $("#LeftCoin" + (6 - part + sliderMaxVal - i)).hide();
+              $("#RightCoin" + i).show();
+            }
+            else {
+              $("#LeftCoin" + (6 - part + sliderMaxVal - i)).show();
+              $("#RightCoin" + i).hide();
+            }
+          }
+
+          $( "#slider" ).slider({
+            value: sliderVal,
+            min: sliderMinVal,
+            max: sliderMaxVal,
+            step: 1,
+            slide: function( event, ui ) {
+              part = part - 2;
+              var inv = parseInt(ui.value);
+              var transferedAmount = sliderMaxVal - inv;
+              
+              $("#returned").val(transferedAmount);
+              $( "#ReturnAmount" ).html( "$" + transferedAmount );
+
+              $( "#LeftCoinsAmountNum" ).html( "$" + (5 - part + transferedAmount) );
+              $( "#RightCoinsAmountNum" ).html( "$" + inv );
+
+              $("#LeftCoinsAmount").css("top", (76 - 9 * (transferedAmount - part)) + "px");
+              $("#RightCoinsAmount").css("top", (76 + 9 * (transferedAmount - (part * 3))) + "px");
+
+              for (i = 1; i <= 20; i++) {
+                if (i <= inv) {
+                  $("#LeftCoin" + (6 - part + sliderMaxVal - i)).hide();
+                  $("#RightCoin" + i).show();
+                }
+                else {
+                  $("#LeftCoin" + (6 - part + sliderMaxVal - i)).show();
+                  $("#RightCoin" + i).hide();
+                }
+              }
+              part = part + 2;
+            }
+          });
+          part = part + 2;
+        }
+
+        {% if finished and finished == 1 %}
+          $("#SliderContainer").hide();
+          $("#SliderSubmitBtn").val("Continue");
+        {% endif %}
+        $("#SliderSubmitBtn").click(function() {
+          if (part == 1) {
+            $("#InvestorForm").submit();
+          }
+          else if (part >= 2 && part < 7) {
+            $("#part").val(part);
+            $("#ReturnForm").submit();
+          }
+          else if (part == 7) {
+            var returnedValue = $("#returned").val();
+            modalObj.showPleaseWait();
+            var intervalObj = setInterval(function() {
+              $.ajax({
+                type: 'Post',
+                dataType: 'json',
+                url: '../../returning/final',
+                data: JSON.stringify({ 'returned': returnedValue }),
+                contentType: 'application/json; charset=utf-8',
+                async: false,
+                success: function (data) {
+                  var found = data.found;
+                  if (found == 0) {
+                    return;
+                  }
+                  else if (found == 1) {
+                    var InvestOrReturn = data.InvestOrReturn;
+                    var returnAmount = data.returnAmount;
+                    var investAmount = data.investAmount;
+                    var points = data.points;
+
+                    $("#UpperArrow").children("img")[0].src ="{% static 'games/media/Upper_Blue_Arrow.png' %}";
+                    $("#LowerArrow").show();
+                    $("#ReturnCalc").show();
+                    $("#InvestmentAmount").css("color", "blue");
+                    $("#InvestmentCalc").css("color", "blue");
+                    $("#LeftCoinsAmountNum").css("color", "green");
+                    $("#Instructions1").slideUp();
+                    $("#Instructions2").show().slideDown();
+                    $("#PartNum").html("Final");
+                    $("#InvestorPasses").html(part);
+                    if (InvestOrReturn) {
+                      $("#InvestorIdentity").html("(YOU)");
+                      $("#ResponderIdentity").html("(OTHER)");
+                    }
+                    else {
+                      $("#InvestorIdentity").html("(OTHER)");
+                      $("#ResponderIdentity").html("(YOU)");
+                    }
+                    $("#RightCoinsAmount").css("color", "green");
+
+                    $( "#InvestmentAmount" ).html( "$" + investAmount );
+                    $( "#InvestmentResult" ).html( "$" + (investAmount * 3) );
+
+                    $( "#ReturnAmount" ).html( "$" + returnAmount );
+
+                    $( "#LeftCoinsAmountNum" ).html( "$" + (5 - investAmount + returnAmount) );
+                    $( "#RightCoinsAmountNum" ).html( "$" + (5 + (investAmount * 3) - returnAmount) );
+
+                    $("#LeftCoinsAmount").css("top", (76 - 9 * (returnAmount - investAmount)) + "px");
+                    $("#RightCoinsAmount").css("top", (76 + 9 * (returnAmount - (investAmount * 3))) + "px");
+
+                    var sliderMaxVal = 5 + (investAmount * 3);
+                    var sliderVal = sliderMaxVal - returnAmount;
+
+                    for (i = 1; i <= 20; i++) {
+                      if (i <= sliderVal) {
+                        $("#LeftCoin" + (6 - investAmount + sliderMaxVal - i)).hide();
+                        $("#RightCoin" + i).show();
+                      }
+                      else {
+                        $("#LeftCoin" + (6 - investAmount + sliderMaxVal - i)).show();
+                        $("#RightCoin" + i).hide();
+                      }
+                    }
+
+                    $("#Instructions2").slideUp();
+                    $("#Instructions3").show().slideDown();
+                    $("#SliderContainer").hide();
+                    $("#SliderSubmitBtn").val("Continue");
+                    $("#SliderSubmitBtn").click(function() {
+                      window.location.href = "../../thankyou";
+                    });
+
+                    modalObj.hidePleaseWait();
+                    clearInterval(intervalObj);
+                  }
+                },
+                error: function (data) {
+                  alert( "An error occurred. Please try again!" );
+                }
+              });
+            }, 2500);
+          }
+        });
+
+      var modalObj;
+      modalObj = modalObj || (function () {
+          var pleaseWaitDiv = $('<div class="modal fade" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h1>Please wait for the other player...</h1></div><div class="modal-body"><div class="progress progress-striped active"><div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%"><span class="sr-only">100% Complete</span></div></div></div></div></div></div></div>');
+          return {
+              showPleaseWait: function() {
+                  pleaseWaitDiv.modal();
+              },
+              hidePleaseWait: function () {
+                  pleaseWaitDiv.modal('hide');
+              },
+
+          };
+      })();
+    });
+  </script>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Pre-test!{% endblock %}
+
+{% block welcontent %}
+  <div class="row">
+    <div class="col-md-2 ">
+    </div>
+    <div class="col-md-8 ">
+      <div class="WelcomeText" id="InstructionsDIV" style="margin-top:40px;">
+        <h1>Pre-test Results</h1>
+        <p><b>You have {{ correctResult }} correct and {{ wrongResult }} wrong answers.</b></p>
+        {% if correctResult == 7 %}
+        <p id="AllCorrect">Although you answered all questions correctly, we believe it's beneficial for you to go through the training module.</p>
+        {% else %}
+        <p id="NotAllCorrect">Since a number of your answers are not correct, we suggest you to go through the training module.</p>
+        {% endif %}
+      </div>
+    <div class="col-md-2 ">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-5">
+    </div>
+    <div class="col-xs-2">
+      <a id="GotoTraining" href="/training" class="btn btn-lg btn-success" type="button">Go to Training</a>
+    </div>
+    <div class="col-xs-5">
+    </div>
+  </div>
+{% endblock %}
+
+{% block scontent %}
+  <!-- JavaScript code for this project -->
+  <script>
+    $(document).ready(function(){
+
+      function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie != '') {
+              var cookies = document.cookie.split(';');
+              for (var i = 0; i < cookies.length; i++) {
+                  var cookie = jQuery.trim(cookies[i]);
+                  // Does this cookie string begin with the name we want?
+                  if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+      var csrftoken = getCookie('csrftoken');
+
+      function csrfSafeMethod(method) {
+          // these HTTP methods do not require CSRF protection
+          return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+      }
+      $.ajaxSetup({
+          beforeSend: function(xhr, settings) {
+              if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+              }
+          }
+      });
+
+    });
+  </script>
+{% endblock %}

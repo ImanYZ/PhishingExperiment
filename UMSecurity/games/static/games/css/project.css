@@ -1,6 +1,21 @@
+html, body {
+  height: 100%;
+}
+
 body {
-  padding-top: 70px;
-  padding-bottom: 30px;
+  padding-top: 52px;
+  padding-bottom: 52px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.navbar-inverse {
+  background-color: #0E284B;
+  background-image: none;
 }
 
 .theme-dropdown .dropdown-menu {
@@ -17,24 +32,235 @@ body {
   width: auto;
 }
 
+.WelcomeText h1, .WelcomeText p, .WelcomeText ul {
+  margin-bottom:28px;
+}
+
 ul li {
-  font-size: 20px;
+  font-size: 16px;
+}
+
+ul ul {
+  margin-bottom: 10px;
 }
 
 .text-center td,th {
    text-align: center;
 }
 
+.centered {
+   text-align: center;
+}
+
+.text-center tr td {
+   width: 50%;
+}
+
+.text-center table {
+  background-color: none;
+  width: 100%;
+}
+
 h4 p {
    line-height: 160%;
 }
 
+.navbar-fixed-bottom p {
+  color: white;
+  margin-bottom: 0px;
+  margin-right: 70px;
+  margin-left: 70px;
+  margin-top: 13px;
+}
+
+.container-fluid, .theme-showcase {
+  height: 100%;
+}
+
+.transBackground {
+  background: rgba(255, 255, 255, 0.79);
+  height: 100%;
+}
+
+#InstructionsDIV {
+  padding-left: 22px;
+}
+
+#InstructionsDIV ul {
+  padding-left: 18px;
+}
+
+.ColumnHeader {
+  font-weight: bold;
+  font-size: 19px;
+}
+
+#InstructionsDIV p {
+  font-size: 19px;
+}
+
+td.slim {
+  padding: 4px !important;
+  line-height: 13px;
+}
+
+td.slim button {
+  padding: 7px !important;
+}
+
+.holt-laury-table {
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#PartSection {
+  font-weight: bold;
+}
+
+#UpperArrow {
+  position: absolute;
+  top: 0px;
+  right: 16%;
+  width: 65.5%;
+  height: 130px;
+}
+
+#LowerArrow {
+  position: absolute;
+  top: 160px;
+  right: 16.4%;
+  width: 65.5%;
+  height: 130px;
+}
+
+#InvestmentCalc {
+  position: absolute;
+  top: 100px;
+  right: 34%;
+  color: orange;
+  font-size: 34px;
+  font-weight: bold;
+}
+
+#ReturnCalc {
+  position: absolute;
+  top: 160px;
+  right: 46%;
+  color: orange;
+  font-size: 34px;
+  font-weight: bold;
+}
+
+#InvestmentAmount {
+  color: green;
+}
+
+#InvestmentResult, #RightCoinsAmountNum {
+  color: blue;
+}
+
+#LeftCoins {
+  position: absolute;
+  top: 70px;
+  right: 97%;
+}
+
+#RightCoins {
+  position: absolute;
+  top: 70px;
+  right: 1%;
+}
+
+#LeftCoin1, #LeftCoin2, #LeftCoin3, #LeftCoin4, #LeftCoin5, #LeftCoin6, #LeftCoin7, #LeftCoin8, #LeftCoin9, #LeftCoin10, 
+#LeftCoin11, #LeftCoin12, #LeftCoin13, #LeftCoin14, #LeftCoin15, #LeftCoin16, #LeftCoin17, #LeftCoin18, #LeftCoin19, #LeftCoin20 {
+  position: absolute;
+  left: 0px;
+}
+
+#LeftCoin6, #LeftCoin7, #LeftCoin8, #LeftCoin9, #LeftCoin10, 
+#LeftCoin11, #LeftCoin12, #LeftCoin13, #LeftCoin14, #LeftCoin15, #LeftCoin16, #LeftCoin17, #LeftCoin18, #LeftCoin19, #LeftCoin20 {
+  display: none;
+}
+
+#RightCoin1, #RightCoin2, #RightCoin3, #RightCoin4, #RightCoin5, #RightCoin6, #RightCoin7, #RightCoin8, #RightCoin9, #RightCoin10, 
+#RightCoin11, #RightCoin12, #RightCoin13, #RightCoin14, #RightCoin15, #RightCoin16, #RightCoin17, #RightCoin18, #RightCoin19, #RightCoin20 {
+  position: absolute;
+  right: 0px;
+}
+
+#RightCoin6, #RightCoin7, #RightCoin8, #RightCoin9, #RightCoin10, 
+#RightCoin11, #RightCoin12, #RightCoin13, #RightCoin14, #RightCoin15, #RightCoin16, #RightCoin17, #RightCoin18, #RightCoin19, #RightCoin20 {
+  position: absolute;
+  right: 0px;
+  display: none;
+}
+
+#LeftCoinsLabel {
+  position: absolute;
+  top: 220px;
+  left: 13px;
+  color: green;
+}
+
+#RightCoinsLabel {
+  position: absolute;
+  top: 220px;
+  right: 7px;
+  color: blue;
+}
+
+#LeftCoinsLabel p, #RightCoinsLabel p {
+  line-height: 70%;
+  font-weight: bold;
+  text-align: center;
+}
+
+#LeftCoinsAmount {
+  position: absolute;
+  top: 76px;
+  left: 22px;
+  color: black;
+}
+
+#RightCoinsAmount {
+  position: absolute;
+  top: 76px;
+  right: 22px;
+  color: black;
+}
+
+#LeftCoinsAmount span, #RightCoinsAmount span {
+  line-height: 91%;
+  font-weight: bold;
+  font-size: 40px;
+  text-align: center;
+}
+
+#SliderContainer {
+  position: absolute;
+  top: 310px;
+  right: 25%;
+  height: 40px;
+  width: 49%;
+}
+
+#SliderSubmitBtn {
+  position: absolute;
+  right: 41.5%;
+  top: 340px;
+}
+
 @media(max-width: 767px){
     .btn-lg {
-      font-size: 10px;
+      font-size: 16px;
     }
     h2 {
       font-size: 16px;
+    }
+    .ColumnHeader {
+      font-weight: bold;
+      font-size: 13px;
     }
     h3, h4, p {
       font-size: 13px;
@@ -45,4 +271,21 @@ h4 p {
     .jumbotron p {
       font-size: 13px;
     }
+    #RightCoins {
+      position: absolute;
+      top: 70px;
+      right: 10px;
+    }
+    #LeftCoins {
+      position: absolute;
+      top: 70px;
+      left: 10px;
+    }
 }
+
+@media(max-width: 480px){
+    .btn-lg {
+      font-size: 10px;
+    }
+}
+
