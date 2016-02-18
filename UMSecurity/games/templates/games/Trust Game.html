@@ -32,9 +32,9 @@
     <div id="Instructions3" style="display:none;">
       <h4 id="PartSection">Final Part</h4>
       <ul>
-        <li>You are randomly matched with another participant. One of you has been randomly chosen as the investor and the other as the responder.</li>
+        <li>You are randomly matched with another participant. You have been randomly chosen as the <span id="YourRole">investor</span> and the other person as the <span id="OthersRole">responder</span>.</li>
         <li>The computer has looked up your decisions and computed your payoffs accordingly.</li>
-        <li>The results are depicted in the following picture.</li>
+        <li>The results are depicted in the following figure.</li>
       </ul>
     </div>
   </div>
@@ -471,10 +471,14 @@
                     if (InvestOrReturn) {
                       $("#InvestorIdentity").html("(YOU)");
                       $("#ResponderIdentity").html("(OTHER)");
+                      $("#YourRole").html("investor");
+                      $("#OthersRole").html("responder");
                     }
                     else {
                       $("#InvestorIdentity").html("(OTHER)");
                       $("#ResponderIdentity").html("(YOU)");
+                      $("#YourRole").html("responder");
+                      $("#OthersRole").html("investor");
                     }
                     $("#RightCoinsAmount").css("color", "green");
 
