@@ -86,10 +86,10 @@
 
   {% else %}
 
-    <iframe src="{% static 'games/Phishing_Game_Keyboard_Accessible/index.html' %}" height="100%" width="100%" ></iframe>
+    <iframe id="TrainingIframe" src="{% static 'games/Phishing_Game_Keyboard_Accessible/index.html' %}" height="100%" width="100%" ></iframe>
 
-    <div style="position:absolute; top:40px; right:40px;"><a id="GotoGames" href="../lottery" class="btn btn-lg btn-success" type="button">Go to Games</a></div>
-
+<!--     <div style="position:absolute; top:40px; right:40px;"><a id="GotoGames" href="../lottery" class="btn btn-lg btn-success" type="button">Go to Games</a></div>
+ -->
   {% endif %}
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -105,8 +105,14 @@
     <script>
       (function($){
           $(window).load(function(){
+              setInterval( function() {
+                var iframeContent = $('#TrainingIframe').contents().find("body").html();
+                if (iframeContent.indexOf("Thank you for exiting the content")  > -1) {
+                  window.location.href = "/lottery";
+                }
+              }, 1000);
               $(window).on("beforeunload", function() { 
-                  window.location.href = "/games"; 
+                  window.location.href = "/lottery";
               })
           });
       })(jQuery);
