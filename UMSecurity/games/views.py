@@ -793,10 +793,10 @@ def thankyousubmit(request):
             user = User.objects.get(username=umid)
             if user.thankyou_set.count() == 0:
                 user.thankyou_set.create(trainingComment=trainingComment,
-                    gamesComment=gamesComment)
+                    gamesComment=gamesComment, pretestComment=pretestComment)
             else:
                 user.thankyou_set.update(trainingComment=trainingComment,
-                    gamesComment=gamesComment)
+                    gamesComment=gamesComment, pretestComment=pretestComment)
 
             return JsonResponse({  })
     context = { 'umid': "" }
