@@ -365,14 +365,20 @@
           var sliderMinVal = 0;
           var sliderVal = sliderMaxVal - returned;
 
-          for (i = 1; i <= sliderMaxVal; i++) {
+          for (i = 1; i <= 20; i++) {
             if (i <= sliderVal) {
-              $("#LeftCoin" + (6 - part + sliderMaxVal - i)).hide();
               $("#RightCoin" + i).show();
             }
             else {
-              $("#LeftCoin" + (6 - part + sliderMaxVal - i)).show();
               $("#RightCoin" + i).hide();
+            }
+          }
+          for (i = 1; i <= 20; i++) {
+            if (i <= 5 - part + returned) {
+              $("#LeftCoin" + i).show();
+            }
+            else {
+              $("#LeftCoin" + i).hide();
             }
           }
 
@@ -397,14 +403,21 @@
 
               for (i = 1; i <= 20; i++) {
                 if (i <= inv) {
-                  $("#LeftCoin" + (6 - part + sliderMaxVal - i)).hide();
                   $("#RightCoin" + i).show();
                 }
                 else {
-                  $("#LeftCoin" + (6 - part + sliderMaxVal - i)).show();
                   $("#RightCoin" + i).hide();
                 }
               }
+              for (i = 1; i <= 20; i++) {
+                if (i <= 5 - part + returned) {
+                  $("#LeftCoin" + i).show();
+                }
+                else {
+                  $("#LeftCoin" + i).hide();
+                }
+              }
+
               part = part + 2;
             }
           });
@@ -481,12 +494,19 @@
 
                     for (i = 1; i <= 20; i++) {
                       if (i <= sliderVal) {
-                        $("#LeftCoin" + (6 - investAmount + sliderMaxVal - i)).hide();
                         $("#RightCoin" + i).show();
                       }
                       else {
-                        $("#LeftCoin" + (6 - investAmount + sliderMaxVal - i)).show();
                         $("#RightCoin" + i).hide();
+                      }
+                    }
+
+                    for (i = 1; i <= 20; i++) {
+                      if (i <= 5 - investAmount + returnAmount) {
+                        $("#LeftCoin" + i).show();
+                      }
+                      else {
+                        $("#LeftCoin" + i).hide();
                       }
                     }
 
