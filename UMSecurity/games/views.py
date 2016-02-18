@@ -784,9 +784,10 @@ def thankyou(request):
 
 def thankyousubmit(request):
     if request.method == 'POST':
-        if ('trainingComment' in request.POST and 'gamesComment' in request.POST and 
+        if ('pretestComment' in request.POST and 'trainingComment' in request.POST and 'gamesComment' in request.POST and 
             request.session.get('umid', False) and request.session['umid'] != ''):
             umid = request.session['umid']
+            pretestComment = request.POST['pretestComment']
             trainingComment = request.POST['trainingComment']
             gamesComment = request.POST['gamesComment']
 
