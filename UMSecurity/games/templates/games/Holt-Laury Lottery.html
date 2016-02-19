@@ -692,7 +692,7 @@
 
         $("#WillingnessAmount").on("input", function(){
             var value = $(this).val();
-            if (value != "" && $.isNumeric(value) && parseInt(value) >= 0 && parseInt(value) <= 1) {
+            if (value != "" && $.isNumeric(value) && parseInt(value) >= 0 && parseInt(value) <= 4) {
                 $("#WillingnessBtn").show();
                 $("#WillingnessError").hide();
             }
