@@ -886,7 +886,18 @@ def final(request):
 def thankyou(request):
     if (request.session.get('umid', False)):
         umid = request.session['umid']
-        context = { 'umid': umid }
+        user = User.objects.get(username=umid)
+        holtLauryEarning = user.holtlaury_set.all()[0].points
+        gambleEarning = user.gamble_set.all()[0].points
+        investmentEarning = user.investment_set.all()[0].points
+        experimentEarning = holtLauryEarning + gambleEarning + investmentEarning
+        totalEarning = holtLauryEarning + gambleEarning + investmentEarning + 5
+        user.totalearning = totalEarning
+        user.experimentearning = experimentEarning
+        user.save()
+        context = { 'umid': umid, 'holtLauryEarning': holtLauryEarning, 'gambleEarning': gambleEarning, 
+            'investmentEarning': investmentEarning, 'experimentEarning': experimentEarning, 
+            'totalEarning': totalEarning }
         return render(request, 'games/Thankyou.html', context)
     context = { 'umid': "" }
     return render(request, 'games/Thankyou.html', context)

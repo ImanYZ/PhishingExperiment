@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{ gameNum }}<sup>{% if gameNum == 1 %}st{% elif gameNum == 2 %}nd{% elif gameNum == 3 %}rd{% endif %} Game{% endblock %}
+{% block title %}{{ gameNum }}{% if gameNum == 1 %}st{% elif gameNum == 2 %}nd{% elif gameNum == 3 %}rd{% endif %} Game{% endblock %}
 
 {% block leftcontent %}
   <div class="" id="InstructionsDIV">
@@ -531,7 +531,7 @@
                   var headerRow = $("#row0");
                   $(".WillingnessResult").html("<p>The amount chosen by the computer is $" + 
                           willingnessRand + ".</p><p>Your willingness to pay is $" + willingnessNum + ".</p><p>$" + willingnessRand + " &le; $" + 
-                          willingnessNum + "</p><p>&#10140; You got to find out which lottery was selected and you paid $" + willingnessNum + " for it.</p>");
+                          willingnessNum + "</p><p>&#10140; You got to find out which lottery was selected and you paid $" + willingnessRand + " for it.</p>");
                   for (i = 1; i <= 10; i++) {
                       if (i != decision) {
                           $("#row" + i).hide();
@@ -758,7 +758,7 @@
                         $(".WillingnessResult").removeClass("text-danger").addClass( "text-success" );
                         $(".WillingnessResult").html("<p>The amount chosen by the computer is $" + 
                           willingnessRand + ".</p><p> Your willingness to pay is $" + willingnessNum + ".</p><p>$" + willingnessRand + " &le; $" + 
-                          willingnessNum + "</p><p>&#10140; You got to find out which lottery was selected and you paid $" + willingnessNum + " for it.</p>");
+                          willingnessNum + "</p><p>&#10140; You got to find out which lottery was selected and you paid $" + willingnessRand + " for it.</p>");
                     }
                     else {
                         $(".WillingnessResult").html("<p>The amount chosen by the computer is $" + 

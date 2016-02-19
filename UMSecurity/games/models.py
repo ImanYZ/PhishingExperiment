@@ -7,6 +7,8 @@ class User(models.Model):
     firstgame = models.CharField(max_length=13, default="")
     secondgame = models.CharField(max_length=13, default="")
     thirdgame = models.CharField(max_length=13, default="")
+    totalearning = models.FloatField(default=0)
+    experimentearning = models.FloatField(default=0)
 
     # auto_now_add=True means it will return the date and time when the user signedup, and auto_now means it will return the date and time when it's updated.
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
