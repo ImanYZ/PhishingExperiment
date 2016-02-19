@@ -4,7 +4,7 @@
 
 {% block leftcontent %}
   <div class="" id="InstructionsDIV">
-    <h1>2<sup>nd</sup> Game</h1>
+    <h1>{{ gameNum }}<sup>{% if gameNum == 1 %}st{% elif gameNum == 2 %}nd{% elif gameNum == 3 %}rd{% endif %}</sup> Game</h1>
     <ul>
       <li>Please choose one of the nine 50-50 lotteries (rows).</li>
       <li>The computer will toss a fair coin in your chosen lottery.</li>

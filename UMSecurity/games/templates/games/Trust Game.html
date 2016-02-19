@@ -6,7 +6,7 @@
 
 {% block leftcontent %}
   <div id="InstructionsDIV">
-    <h1>3<sup>rd</sup> Game</h1>
+    <h1>{{ gameNum }}<sup>{% if gameNum == 1 %}st{% elif gameNum == 2 %}nd{% elif gameNum == 3 %}rd{% endif %}</sup> Game</h1>
     <div id="Instructions1">
       <ul>
         <li>In this game, you’re going to be randomly matched with an anonymous participant.</li>

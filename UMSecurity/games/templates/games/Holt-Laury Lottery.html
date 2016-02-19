@@ -4,7 +4,7 @@
 
 {% block leftcontent %}
   <div class="" id="InstructionsDIV">
-    <h1>1<sup>st</sup> Game</h1>
+    <h1>{{ gameNum }}<sup>{% if gameNum == 1 %}st{% elif gameNum == 2 %}nd{% elif gameNum == 3 %}rd{% endif %}</sup> Game</h1>
     <h4 id="PartNum">Part 1</h4>
     <ul>
       <li id="Instruction1" style="display:none;">There are 10 lotteries (rows) in the following table and a ten-sided die.</li>

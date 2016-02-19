@@ -360,6 +360,13 @@ def lottery(request):
         request.session['started'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
         umid = request.session['umid']
         user = User.objects.get(username=umid)
+        gameNum = 1
+        if user.firstgame == "lottery":
+            gameNum = 1
+        elif user.secondgame == "lottery":
+            gameNum = 2
+        elif user.thirdgame == "lottery":
+            gameNum = 3
         if user.holtlaury_set.count() != 0:
             holtLaury = user.holtlaury_set.all()[0]
             decision = holtLaury.decision
@@ -392,10 +399,10 @@ def lottery(request):
             context = { 'umid': umid, 'decision':decision, 'die':die,
                 'option':option, 'result':result,
                 'originalPoints':originalPoints, 'willingnessNum':willingnessNum,
-                'willingnessRand':willingnessRand }
+                'willingnessRand':willingnessRand, 'gameNum':gameNum }
             return render(request, 'games/Holt-Laury Lottery.html', context)
     
-        context = { 'umid': umid }
+        context = { 'umid': umid, 'gameNum':gameNum }
         return render(request, 'games/Holt-Laury Lottery.html', context)
 
     context = { 'umid': "" }
@@ -506,6 +513,13 @@ def gamble(request):
         request.session['started'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
         umid = request.session['umid']
         user = User.objects.get(username=umid)
+        gameNum = 1
+        if user.firstgame == "gamble":
+            gameNum = 1
+        elif user.secondgame == "gamble":
+            gameNum = 2
+        elif user.thirdgame == "gamble":
+            gameNum = 3
         if user.gamble_set.count() != 0:
             gamble = user.gamble_set.all()[0]
             chosen = gamble.chosen
@@ -525,10 +539,10 @@ def gamble(request):
             willingnessRand = gamble.willingnessRand
             context = { 'umid': umid, 'chosen':chosen, 'coin':coin, 'result':result,
                 'originalPoints':originalPoints, 'willingnessNum':willingnessNum,
-                'willingnessRand':willingnessRand }
+                'willingnessRand':willingnessRand, 'gameNum':gameNum }
             return render(request, 'games/Eckel-Grossman Gamble.html', context)
     
-        context = { 'umid': umid }
+        context = { 'umid': umid, 'gameNum':gameNum }
         return render(request, 'games/Eckel-Grossman Gamble.html', context)
 
     context = { 'umid': "" }
@@ -613,18 +627,25 @@ def investment(request):
         request.session['started'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
         umid = request.session['umid']
         user = User.objects.get(username=umid)
+        gameNum = 1
+        if user.firstgame == "gamble":
+            gameNum = 1
+        elif user.secondgame == "gamble":
+            gameNum = 2
+        elif user.thirdgame == "gamble":
+            gameNum = 3
         if user.investment_set.count() != 0:
             investment = user.investment_set.all()[0]
             invested = investment.invested
 
             if investment.otherreturned != -1 or investment.otherinvested != -1:
-                context = { 'umid': umid, 'invested':invested, 'finished':1 }
+                context = { 'umid': umid, 'invested':invested, 'gameNum':gameNum, 'finished':1 }
                 return render(request, 'games/Trust Game.html', context)
 
-            context = { 'umid': umid, 'invested':invested }
+            context = { 'umid': umid, 'invested':invested, 'gameNum':gameNum }
             return render(request, 'games/Trust Game.html', context)
     
-        context = { 'umid': umid }
+        context = { 'umid': umid, 'gameNum':gameNum }
         return render(request, 'games/Trust Game.html', context)
 
     context = { 'umid': "" }
@@ -658,6 +679,13 @@ def returned(request, part):
         request.session['started'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
         umid = request.session['umid']
         user = User.objects.get(username=umid)
+        gameNum = 1
+        if user.firstgame == "gamble":
+            gameNum = 1
+        elif user.secondgame == "gamble":
+            gameNum = 2
+        elif user.thirdgame == "gamble":
+            gameNum = 3
         if user.investment_set.count() != 0:
             if part == "":
                 return redirect('../investment')
@@ -679,17 +707,17 @@ def returned(request, part):
                         returned = investment.returned5
                     if returned == -1:
                         part = i
-                        context = { 'umid': umid, 'returned':0, 'part':part }
+                        context = { 'umid': umid, 'returned':0, 'part':part, 'gameNum':gameNum }
                         return render(request, 'games/Trust Game.html', context)
                 if investment.otherreturned != -1 or investment.otherinvested != -1:
-                    context = { 'umid': umid, 'returned':returned, 'part':part, 'finished':1 }
+                    context = { 'umid': umid, 'returned':returned, 'part':part, 'gameNum':gameNum, 'finished':1 }
                     return render(request, 'games/Trust Game.html', context)
-                context = { 'umid': umid, 'returned':returned, 'part':part }
+                context = { 'umid': umid, 'returned':returned, 'part':part, 'gameNum':gameNum }
                 return render(request, 'games/Trust Game.html', context)
             else:
                 return redirect('../investment')
 
-        context = { 'umid': umid }
+        context = { 'umid': umid, 'gameNum':gameNum }
         return render(request, 'games/Trust Game.html', context)
 
     context = { 'umid': "" }
@@ -749,6 +777,13 @@ def final(request):
             returned = int(requestPost['returned'])
             part = 7
             user = User.objects.get(username=umid)
+            gameNum = 1
+            if user.firstgame == "gamble":
+                gameNum = 1
+            elif user.secondgame == "gamble":
+                gameNum = 2
+            elif user.thirdgame == "gamble":
+                gameNum = 3
             if user.investment_set.count() != 0:
                 investment = user.investment_set.all()[0]
                 if investment.otherreturned == -1 and investment.otherinvested == -1:
@@ -772,7 +807,7 @@ def final(request):
                             investment.save()
                         if returned == -1:
                             part = i
-                            context = { 'umid': umid, 'returned':returned, 'part':part }
+                            context = { 'umid': umid, 'returned':returned, 'part':part, 'gameNum':gameNum }
                             return render(request, 'games/Trust Game.html', context)
                     
                     otherPlayer = None
@@ -841,7 +876,7 @@ def final(request):
                         return JsonResponse({ 'InvestOrReturn':False, 'found': 1, 
                             'returnAmount':investment.otheruser.investment_set.all()[0].otherreturned, 
                             'investAmount':investment.otherinvested, 'points':investment.points })
-            context = { 'umid': umid }
+            context = { 'umid': umid, 'gameNum':gameNum }
             return render(request, 'games/Trust Game.html', context)
 
     context = { 'umid': "" }
