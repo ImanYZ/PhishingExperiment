@@ -108,11 +108,11 @@
               setInterval( function() {
                 var iframeContent = $('#TrainingIframe').contents().find("body").html();
                 if (iframeContent.indexOf("Thank you for exiting the content")  > -1) {
-                  window.location.href = "/lottery";
+                  window.location.href = "/gameselection";
                 }
               }, 1000);
               $(window).on("beforeunload", function() { 
-                  window.location.href = "/lottery";
+                  window.location.href = "/gameselection";
               })
           });
       })(jQuery);

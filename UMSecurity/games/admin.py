@@ -8,7 +8,7 @@ from .models import Pretest
 from .models import Thankyou
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['username', 'created', 'updated']
+    list_display = ['username', 'firstgame', 'secondgame', 'thirdgame', 'created', 'updated']
 
     search_fields = ['username']
 

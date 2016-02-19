@@ -4,6 +4,9 @@ from django.utils import timezone
 
 class User(models.Model):
     username = models.CharField(max_length=200)
+    firstgame = models.CharField(max_length=13, default="")
+    secondgame = models.CharField(max_length=13, default="")
+    thirdgame = models.CharField(max_length=13, default="")
 
     # auto_now_add=True means it will return the date and time when the user signedup, and auto_now means it will return the date and time when it's updated.
     created = models.DateTimeField(auto_now_add=True, auto_now=False)

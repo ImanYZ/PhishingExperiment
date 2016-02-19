@@ -280,6 +280,80 @@ def training(request):
     context = { 'umid': umid }
     return render(request, 'games/Training.html', context)
 
+def gameselection(request):
+    if (request.session.get('umid', False)):
+        umid = request.session['umid']
+        user = User.objects.get(username=umid)
+        if user.firstgame == "":
+            randNum = randint(1, 2)
+            if randNum == 1:
+                user.firstgame = "lottery"
+                user.thirdgame = "investment"
+            elif randNum == 2:
+                user.firstgame = "investment"
+                user.thirdgame = "lottery"
+            user.secondgame = "gamble"
+            user.save()
+        if user.firstgame == "lottery":
+            return redirect('../lottery')
+        return redirect('../investment')
+    umid = ""
+    context = { 'umid': umid }
+    return render(request, 'games/Training.html', context)
+
+def nextgame(request, current):
+    if (request.session.get('umid', False)):
+        umid = request.session['umid']
+        user = User.objects.get(username=umid)
+        if user.firstgame != "":
+            if user.firstgame == "lottery" and user.secondgame == "gamble" and user.thirdgame == "investment":
+                if current == "lottery":
+                    return redirect('../../gamble')
+                if current == "gamble":
+                    return redirect('../../investment')
+                if current == "investment":
+                    return redirect('../../thankyou')
+            if user.firstgame == "investment" and user.secondgame == "gamble" and user.thirdgame == "lottery":
+                if current == "investment":
+                    return redirect('../../gamble')
+                if current == "gamble":
+                    return redirect('../../lottery')
+                if current == "lottery":
+                    return redirect('../../thankyou')
+            if user.firstgame == "gamble" and user.secondgame == "lottery" and user.thirdgame == "investment":
+                if current == "gamble":
+                    return redirect('../../lottery')
+                if current == "lottery":
+                    return redirect('../../investment')
+                if current == "investment":
+                    return redirect('../../thankyou')
+            if user.firstgame == "gamble" and user.secondgame == "investment" and user.thirdgame == "lottery":
+                if current == "gamble":
+                    return redirect('../../investment')
+                if current == "investment":
+                    return redirect('../../lottery')
+                if current == "lottery":
+                    return redirect('../../thankyou')
+            if user.firstgame == "lottery" and user.secondgame == "investment" and user.thirdgame == "gamble":
+                if current == "lottery":
+                    return redirect('../../investment')
+                if current == "investment":
+                    return redirect('../../gamble')
+                if current == "gamble":
+                    return redirect('../../thankyou')
+            if user.firstgame == "investment" and user.secondgame == "lottery" and user.thirdgame == "gamble":
+                if current == "investment":
+                    return redirect('../../lottery')
+                if current == "lottery":
+                    return redirect('../../gamble')
+                if current == "gamble":
+                    return redirect('../../thankyou')
+        else:
+            return redirect('../../gameselection')
+    umid = ""
+    context = { 'umid': umid }
+    return render(request, 'games/Training.html', context)
+
 @ensure_csrf_cookie
 def lottery(request):
     if request.session.get('umid', False) and request.session['umid'] != "":
@@ -351,7 +425,7 @@ def lotterySubmit(request):
                             result = 4
                     else:
                         if die[index] <= decision:
-                            result = 9.5
+                            result = 10
                         else:
                             result = 1
             
@@ -386,7 +460,7 @@ def lotteryWillingness(request):
             willingnessNum = requestPost['willingnessNum']
             user = User.objects.get(username=umid)
 
-            willingnessRand = round(randint(0, int((1 - 0) / 0.01)) * 0.01 + 0, 2)
+            willingnessRand = round(randint(0, int((4 - 0) / 0.01)) * 0.01 + 0, 2)
 
             holtLaury = user.holtlaury_set.all()[0]
             result = holtLaury.points
@@ -605,7 +679,7 @@ def returned(request, part):
                         returned = investment.returned5
                     if returned == -1:
                         part = i
-                        context = { 'umid': umid, 'returned':returned, 'part':part }
+                        context = { 'umid': umid, 'returned':0, 'part':part }
                         return render(request, 'games/Trust Game.html', context)
                 if investment.otherreturned != -1 or investment.otherinvested != -1:
                     context = { 'umid': umid, 'returned':returned, 'part':part, 'finished':1 }
@@ -678,6 +752,7 @@ def final(request):
             if user.investment_set.count() != 0:
                 investment = user.investment_set.all()[0]
                 if investment.otherreturned == -1 and investment.otherinvested == -1:
+                    print ("I am in the if.")
                     for i in range(2, part + 1):
                         if i == 2:
                             returned = investment.returned0
@@ -691,10 +766,10 @@ def final(request):
                             returned = investment.returned4
                         elif i == 7:
                             returned = int(requestPost['returned'])
-                            user.investment_set.update(
-                                returned5=returned,
-                                startedreturned5=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
-                                finishedreturned5=datetime.datetime.now())
+                            investment.returned5 = returned
+                            investment.startedreturned5 = datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p')
+                            investment.finishedreturned5 = datetime.datetime.now()
+                            investment.save()
                         if returned == -1:
                             part = i
                             context = { 'umid': umid, 'returned':returned, 'part':part }
@@ -706,7 +781,6 @@ def final(request):
                         if other.invested != -1 and other.returned5 != -1:
                             otherPlayer = other
                             break
-                    print("otherPlayer: " + str(otherPlayer))
                     if otherPlayer == None:
                         return JsonResponse({ 'found':0 })
                     InvestOrReturn = random.getrandbits(1)

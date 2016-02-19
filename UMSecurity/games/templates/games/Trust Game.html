@@ -410,7 +410,7 @@
                 }
               }
               for (i = 1; i <= 20; i++) {
-                if (i <= 5 - part + returned) {
+                if (i <= 5 - part + transferedAmount) {
                   $("#LeftCoin" + i).show();
                 }
                 else {
@@ -519,7 +519,7 @@
                     $("#SliderContainer").hide();
                     $("#SliderSubmitBtn").val("Continue");
                     $("#SliderSubmitBtn").click(function() {
-                      window.location.href = "../../thankyou";
+                      window.location.href = "../../nextgame/investment";
                     });
 
                     modalObj.hidePleaseWait();
