@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}2nd Game{% endblock %}
+{% block title %}{{ gameNum }}<sup>{% if gameNum == 1 %}st{% elif gameNum == 2 %}nd{% elif gameNum == 3 %}rd{% endif %} Game{% endblock %}
 
 {% block leftcontent %}
   <div class="" id="InstructionsDIV">

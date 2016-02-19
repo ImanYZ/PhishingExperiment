@@ -628,11 +628,11 @@ def investment(request):
         umid = request.session['umid']
         user = User.objects.get(username=umid)
         gameNum = 1
-        if user.firstgame == "gamble":
+        if user.firstgame == "investment":
             gameNum = 1
-        elif user.secondgame == "gamble":
+        elif user.secondgame == "investment":
             gameNum = 2
-        elif user.thirdgame == "gamble":
+        elif user.thirdgame == "investment":
             gameNum = 3
         if user.investment_set.count() != 0:
             investment = user.investment_set.all()[0]
@@ -680,11 +680,11 @@ def returned(request, part):
         umid = request.session['umid']
         user = User.objects.get(username=umid)
         gameNum = 1
-        if user.firstgame == "gamble":
+        if user.firstgame == "investment":
             gameNum = 1
-        elif user.secondgame == "gamble":
+        elif user.secondgame == "investment":
             gameNum = 2
-        elif user.thirdgame == "gamble":
+        elif user.thirdgame == "investment":
             gameNum = 3
         if user.investment_set.count() != 0:
             if part == "":
@@ -778,11 +778,11 @@ def final(request):
             part = 7
             user = User.objects.get(username=umid)
             gameNum = 1
-            if user.firstgame == "gamble":
+            if user.firstgame == "investment":
                 gameNum = 1
-            elif user.secondgame == "gamble":
+            elif user.secondgame == "investment":
                 gameNum = 2
-            elif user.thirdgame == "gamble":
+            elif user.thirdgame == "investment":
                 gameNum = 3
             if user.investment_set.count() != 0:
                 investment = user.investment_set.all()[0]
