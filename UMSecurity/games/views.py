@@ -887,13 +887,13 @@ def thankyou(request):
     if (request.session.get('umid', False)):
         umid = request.session['umid']
         user = User.objects.get(username=umid)
-        holtLauryEarning = user.holtlaury_set.all()[0].points
-        gambleEarning = user.gamble_set.all()[0].points
-        investmentEarning = user.investment_set.all()[0].points
-        experimentEarning = holtLauryEarning + gambleEarning + investmentEarning
-        totalEarning = holtLauryEarning + gambleEarning + investmentEarning + 5
-        user.totalearning = totalEarning
-        user.experimentearning = experimentEarning
+        holtLauryEarning = round(user.holtlaury_set.all()[0].points,2)
+        gambleEarning = round(user.gamble_set.all()[0].points,2)
+        investmentEarning = round(user.investment_set.all()[0].points,2)
+        experimentEarning = round(holtLauryEarning + gambleEarning + investmentEarning,2)
+        totalEarning = round(holtLauryEarning + gambleEarning + investmentEarning + 5,2)
+        user.totalearning = round(totalEarning,2)
+        user.experimentearning = round(experimentEarning,2)
         user.save()
         context = { 'umid': umid, 'holtLauryEarning': holtLauryEarning, 'gambleEarning': gambleEarning, 
             'investmentEarning': investmentEarning, 'experimentEarning': experimentEarning, 
