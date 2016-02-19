@@ -28,5 +28,4 @@ urlpatterns = [
     url(r'^returning/final$', views.final, name='final'),
     url(r'^thankyou/$', views.thankyou, name='thankyou'),
     url(r'^thankyou/submit$', views.thankyousubmit, name='thankyousubmit'),
-    url(r'^.*$', views.login, name='catch-all'),
 ]
