@@ -132,7 +132,9 @@
     <script>
       (function($){
           $(window).load(function(){
-              $(".transBackground").mCustomScrollbar();
+              $(".transBackground").mCustomScrollbar({
+                mouseWheelPixels: 50 //change this to a value, that fits your needs
+              });
           });
       })(jQuery);
     </script>
