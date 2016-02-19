@@ -273,9 +273,6 @@
                     var chosen = data.chosen;
                     var coin = data.coin;
                     var result = data.result;
-                    $("#SubmitSection").hide();
-                    $("#SubmitBtn").hide();
-                    $("#Continue").show();
                     $("#ResultNode").html("You chose lottery " + chosen);
                     for (i = 1; i < 10; i++) {
                       if (i != chosen) {
@@ -285,6 +282,8 @@
                     setTimeout(function() {
                         var selectedRow = $("#row" + chosen);
                         var headerRow = $("#row0");
+                        $("#SubmitSection").hide();
+                        $("#SubmitBtn").hide();
                         var coinVal = "";
                         if (coin == false) {
                           selectedRow.find("table").find("td:eq(1)").css("color", "black");
@@ -302,6 +301,7 @@
                             $("#ResultNode").html("<p>You chose lottery " + 
                               chosen + ".</p><p>The coin toss's result is " + coinVal +
                               ".</p><p>&#10140; You earned $" + result + ".</p>");
+                            $("#Continue").show();
                         }, 2500);
                     }, 2500);
                 },
