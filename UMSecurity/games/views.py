@@ -288,15 +288,15 @@ def gameselection(request):
             randNum = randint(1, 2)
             if randNum == 1:
                 user.firstgame = "lottery"
-                user.thirdgame = "investment"
+                user.thirdgame = "gamble"
             elif randNum == 2:
-                user.firstgame = "investment"
+                user.firstgame = "gamble"
                 user.thirdgame = "lottery"
-            user.secondgame = "gamble"
+            user.secondgame = "investment"
             user.save()
         if user.firstgame == "lottery":
             return redirect('../lottery')
-        return redirect('../investment')
+        return redirect('../gamble')
     umid = ""
     context = { 'umid': umid }
     return render(request, 'games/Training.html', context)
