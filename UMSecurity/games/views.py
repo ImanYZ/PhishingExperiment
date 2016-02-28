@@ -173,7 +173,7 @@ def pretestsubmit(request):
                         finishedquestion4=datetime.datetime.now())
                 return redirect('../pretest/5/')
             if question == 5:
-                if answer == 1:
+                if answer == 0:
                     correct5 = 1
                 else:
                     correct5 = 2
@@ -205,7 +205,7 @@ def pretestsubmit(request):
                         finishedquestion6=datetime.datetime.now())
                 return redirect('../pretest/7/')
             if question == 7:
-                if answer == 0:
+                if answer == 1:
                     correct7 = 1
                 else:
                     correct7 = 2
