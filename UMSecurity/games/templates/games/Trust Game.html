@@ -43,11 +43,11 @@
 
 {% block rightcontent %}
   <div id="RightContentContainer">
-    <form id="InvestorForm" action="../investment/Submit" method="post">
+    <form id="InvestorForm" action="{% url 'games:investmentSubmit' %}" method="post">
       {% csrf_token %}
       <input type="hidden" name="invested" id="invested" value="0">
     </form>
-    <form id="ReturnForm" action="../../returning/Submit" method="post">
+    <form id="ReturnForm" action="{% url 'games:returnedSubmit' %}" method="post">
       {% csrf_token %}
       <input type="hidden" name="returned" id="returned" value="0">
       <input type="hidden" name="part" id="part" value="">
@@ -449,7 +449,7 @@
               $.ajax({
                 type: 'Post',
                 dataType: 'json',
-                url: '../../returning/final',
+                url: "{% url 'games:final' %}",
                 data: JSON.stringify({ 'returned': returnedValue }),
                 contentType: 'application/json; charset=utf-8',
                 async: false,
@@ -534,7 +534,7 @@
                     $("#SliderContainer").hide();
                     $("#SliderSubmitBtn").val("Continue...");
                     $("#SliderSubmitBtn").click(function() {
-                      window.location.href = "../../nextgame/investment";
+                      window.location.href = "{% url 'games:nextgame' 'investment' %}";
                     });
 
                     modalObj.hidePleaseWait();
