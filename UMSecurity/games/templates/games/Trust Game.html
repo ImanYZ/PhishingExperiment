@@ -13,7 +13,7 @@
         <li>Suppose each of you is given $5.</li>
         <li>At different points during this game, you will act as an investor and a responder. We will ask for your decisions in each role.</li>
       </ul>
-      <h4 id="PartSection">Part 1 – If you are the investor…</h4>
+      <h4 id="PartSection">Part 1 – If you are <span style="color:red;">the investor…</span></h4>
       <ul>
         <li>You have the opportunity to pass some or all of your $5 to the responder by dragging the yellow circle along the slider.</li>
         <li>The computer will triple the amount of money that you give to the responder.</li>
@@ -22,10 +22,10 @@
       <p>Please make your decision and click the Submit button.</p>
     </div>
     <div id="Instructions2" style="display:none;">
-      <h4 id="PartSection">Part <span id="PartNum">2</span> – If you are the responder and the investor passes <span style="color:red;">$<span id="InvestorPasses">1</span></span> to you…</h4>
+      <h4 id="PartSection">Part <span id="PartNum">2</span> – If you are <span style="color:red;">the responder</span> and the investor passes <span style="color:red;">$<span id="InvestorPasses">0</span></span> to you…</h4>
       <ul>
-        <li>The computer will triple the amount of money that the investor passes to you.</li>
-        <li>You will decide how much of your money to give back to the investor by dragging the yellow circle along the slider.</li>
+        <li>The computer tripled the amount the investor sent to you. You received <span style="color:red;">$<span id="YouReceivedFromInvestor">1</span></span>.</li>
+        <li>Decide how much of your money to give back to the investor by dragging the yellow circle along the slider.</li>
       </ul>
       <p>Please make your decision and click the Submit button.</p>
     </div>
@@ -346,8 +346,11 @@
           $("#Instructions2").show().slideDown();
           $("#PartNum").html(part + 2);
           $("#InvestorPasses").html(part);
+          $("#YouReceivedFromInvestor").html(part * 3);
           $("#InvestorIdentity").html("(OTHER)");
           $("#ResponderIdentity").html("(YOU)");
+          $("#RightCoinsLabel").css("font-weight", "bold");
+          $("#LeftCoinsLabel").css("font-weight", "normal");
           $("#RightCoinsAmount").css("color", "green");
 
           $( "#InvestmentAmount" ).html( "$" + part );
@@ -469,15 +472,20 @@
                     $("#Instructions2").show().slideDown();
                     $("#PartNum").html("Final");
                     $("#InvestorPasses").html(part);
+                    $("#InvestorPasses").html(part * 3);
                     if (InvestOrReturn) {
                       $("#InvestorIdentity").html("(YOU)");
                       $("#ResponderIdentity").html("(OTHER)");
+                      $("#RightCoinsLabel").css("font-weight", "normal");
+                      $("#LeftCoinsLabel").css("font-weight", "bold");
                       $("#YourRole").html("investor");
                       $("#OthersRole").html("responder");
                     }
                     else {
                       $("#InvestorIdentity").html("(OTHER)");
                       $("#ResponderIdentity").html("(YOU)");
+                      $("#RightCoinsLabel").css("font-weight", "bold");
+                      $("#LeftCoinsLabel").css("font-weight", "normal");
                       $("#YourRole").html("responder");
                       $("#OthersRole").html("investor");
                     }
