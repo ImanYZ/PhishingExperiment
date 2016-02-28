@@ -9,31 +9,32 @@
     <h1>{{ gameNum }}<sup>{% if gameNum == 1 %}st{% elif gameNum == 2 %}nd{% elif gameNum == 3 %}rd{% endif %}</sup> Game</h1>
     <div id="Instructions1">
       <ul>
-        <li>In this game, you’re going to be randomly matched with an anonymous participant.</li>
-        <li>Each of you is given $5.</li>
-        <li>You will be either an investor or a responder. We will ask for your decisions in each role.</li>
+        <li>In this game, you will be randomly matched with an anonymous participant.</li>
+        <li>Suppose each of you is given $5.</li>
+        <li>At different points during this game, you will act as an investor and a responder. We will ask for your decisions in each role.</li>
       </ul>
       <h4 id="PartSection">Part 1 – If you are the investor…</h4>
       <ul>
-        <li>You will decide how many of your $5 to pass to the responder by dragging along the slider.</li>
-        <li>The computer will triple the amount that you give to the responder.</li>
-        <li>The responder then decides on the number of amount to give back to you.</li>
-        <li>Please make your decision and click the submit button.</li>
+        <li>You have the opportunity to pass some or all of your $5 to the responder by dragging the yellow circle along the slider.</li>
+        <li>The computer will triple the amount of money that you give to the responder.</li>
+        <li>The responder will then decide how much money to give back to you.</li>
       </ul>
+      <p>Please make your decision and click the Submit button.</p>
     </div>
     <div id="Instructions2" style="display:none;">
       <h4 id="PartSection">Part <span id="PartNum">2</span> – If you are the responder and the investor passes <span style="color:red;">$<span id="InvestorPasses">1</span></span> to you…</h4>
       <ul>
-        <li>The computer will triple the points that she passes to you.</li>
-        <li>You will decide how many of your total points to give back to the investor by dragging along the slider.</li>
-        <li>Please make your decision and click the submit button.</li>
+        <li>The computer will triple the amount of money that the investor passes to you.</li>
+        <li>You will decide how much of your money to give back to the investor by dragging the yellow circle along the slider.</li>
       </ul>
+      <p>Please make your decision and click the Submit button.</p>
     </div>
     <div id="Instructions3" style="display:none;">
       <h4 id="PartSection">Final Part</h4>
       <ul>
-        <li>You are randomly matched with another participant. You have been randomly chosen as the <span id="YourRole">investor</span> and the other person as the <span id="OthersRole">responder</span>.</li>
-        <li>The computer has looked up your decisions and computed your payoffs accordingly.</li>
+        <li>You have been randomly matched with another participant.</li>
+        <li>You have been randomly chosen to act as the <span id="YourRole">investor</span> and the other person will function as the <span id="OthersRole">responder</span>.</li>
+        <li>The computer has reviewed your previous decisions and computed your payoffs accordingly.</li>
         <li>The results are depicted in the following figure.</li>
       </ul>
     </div>

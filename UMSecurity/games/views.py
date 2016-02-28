@@ -35,6 +35,7 @@ def logout(request):
 def welcome(request):
     if (request.session.get('umid', False)):
         umid = request.session['umid']
+        request.session['startedStudy'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
     else:
         umid = ""
     context = { 'umid': umid, 'welcomepage': 1 }
@@ -436,6 +437,7 @@ def lotterySubmit(request):
                         else:
                             result = 1
             
+            result = round(result, 2)
             if user.holtlaury_set.count() == 0:
                 user.holtlaury_set.create(decision=decision,
                     option1=DecisionsOption[1], option2=DecisionsOption[2],
@@ -464,16 +466,16 @@ def lotteryWillingness(request):
          'willingnessNum' in requestPost and requestPost['willingnessNum'] != ''):
             
             umid = request.session['umid']
-            willingnessNum = requestPost['willingnessNum']
+            willingnessNum = round(requestPost['willingnessNum'], 2)
             user = User.objects.get(username=umid)
 
             willingnessRand = round(randint(0, int((4 - 0) / 0.01)) * 0.01 + 0, 2)
 
             holtLaury = user.holtlaury_set.all()[0]
-            result = holtLaury.points
-            originalPoints = holtLaury.originalPoints
+            result = round(holtLaury.points, 2)
+            originalPoints = round(holtLaury.originalPoints, 2)
             if willingnessRand <= willingnessNum:
-                result = holtLaury.points - willingnessRand
+                result = round(holtLaury.points, 2) - willingnessRand
             decision = holtLaury.decision
 
             die = [None]*11
@@ -533,8 +535,8 @@ def gamble(request):
             coin[7] = gamble.coin7
             coin[8] = gamble.coin8
             coin[9] = gamble.coin9
-            result = gamble.points
-            originalPoints = gamble.originalPoints
+            result = round(gamble.points, 2)
+            originalPoints = round(gamble.originalPoints, 2)
             willingnessNum = gamble.willingness
             willingnessRand = gamble.willingnessRand
             context = { 'umid': umid, 'chosen':chosen, 'coin':coin, 'result':result,
@@ -569,6 +571,7 @@ def gambleSubmit(request):
                     else:
                         result = 4 - 0.5 * (index - 1)
             
+            result = round(result, 2)
             if user.gamble_set.count() == 0:
                 user.gamble_set.create(chosen=chosen,
                     coin1=coin[1], coin2=coin[2],
@@ -591,15 +594,15 @@ def gambleWillingness(request):
          'willingnessNum' in requestPost and requestPost['willingnessNum'] != ''):
             
             umid = request.session['umid']
-            willingnessNum = requestPost['willingnessNum']
+            willingnessNum = round(requestPost['willingnessNum'], 2)
             user = User.objects.get(username=umid)
 
             willingnessRand = round(randint(0, int((1 - 0) / 0.01)) * 0.01 + 0, 2)
 
             gamble = user.gamble_set.all()[0]
-            result = gamble.points
+            result = round(gamble.points, 2)
             if willingnessRand <= willingnessNum:
-                result = gamble.points - willingnessRand
+                result = round(gamble.points, 2) - willingnessRand
             chosen = gamble.chosen
 
             coin = [None]*10
@@ -894,10 +897,12 @@ def thankyou(request):
         totalEarning = round(holtLauryEarning + gambleEarning + investmentEarning + 5,2)
         user.totalearning = round(totalEarning,2)
         user.experimentearning = round(experimentEarning,2)
+        user.startedstudy = datetime.datetime.strptime(request.session['startedStudy'], '%b %d %Y %I:%M:%S %p')
+        user.finishedstudy = datetime.datetime.now()
         user.save()
-        context = { 'umid': umid, 'holtLauryEarning': holtLauryEarning, 'gambleEarning': gambleEarning, 
-            'investmentEarning': investmentEarning, 'experimentEarning': experimentEarning, 
-            'totalEarning': totalEarning }
+        context = { 'umid': umid, 'holtLauryEarning': "%.2f" % holtLauryEarning, 'gambleEarning': gambleEarning, 
+            'investmentEarning': "%.2f" % investmentEarning, 'experimentEarning': "%.2f" % experimentEarning, 
+            'totalEarning': "%.2f" % totalEarning }
         return render(request, 'games/Thankyou.html', context)
     context = { 'umid': "" }
     return render(request, 'games/Thankyou.html', context)

@@ -6,9 +6,10 @@
   <div class="" id="InstructionsDIV">
     <h1>{{ gameNum }}<sup>{% if gameNum == 1 %}st{% elif gameNum == 2 %}nd{% elif gameNum == 3 %}rd{% endif %}</sup> Game</h1>
     <h4 id="PartNum">Part 1</h4>
+    <p id="Instruction0" style="display:none;">This game involves a lottery which is based on the results of a rolled 10-sided die.</p>
     <ul>
-      <li id="Instruction1" style="display:none;">There are 10 lotteries (rows) in the following table and a ten-sided die.</li>
-      <li id="Instruction2" style="display:none;">For each lottery, you need to choose either option A or B. The roll of the die will determine your payoff in the chosen lottery.</li>
+      <li id="Instruction1" style="display:none;">There are 10 lotteries and each lottery is represented by a row in the following table.</li>
+      <li id="Instruction2" style="display:none;">For each lottery, please choose either option A or B. The roll of the die will determine your payoff in the chosen lottery.</li>
       <li id="Instruction3" style="display:none;">For example, in the fifth row:
           <table class="table holt-laury-table">
             <thead>
@@ -54,39 +55,39 @@
           </table>
           <p>If you choose option A:</p>
           <ul>
-            <li>If the die is between 1 and 5, you'll get $5;</li>
-            <li>If the die is between 6 and 10, you'll get $4.</li>
+            <li>If the rolled die is between 1 and 5, you will receive $5;</li>
+            <li>If the rolled die is between 6 and 10, you will receive $4.</li>
           </ul>
           <p>If you choose option B:</p>
           <ul>
-            <li>If the die is between 1 and 5, you'll get $10;</li>
-            <li>If the die is between 6 and 10, you'll get $1.</li>
+            <li>If the rolled die is between 1 and 5, you will receive $10;</li>
+            <li>If the rolled die is between 6 and 10, you will receive $1.</li>
           </ul>
       </li>
       <li id="Instruction4" style="display:none;">Please choose an option for each of the 10 lotteries and then submit your choices.</li>
       <li id="Instruction5" style="display:none;">After submitting your choices, the game will randomly select one of the 10 lotteries, roll the die, and show you your payoff.</li>
-      <li id="Instruction6" style="display:none;">Your prize turns out to be <b>$<span id="PointsInInstructions">1234</span></b>.</li>
-      <li id="Instruction7" style="display:none;">Are you willing to pay some of your prize to find out which of the 10 lotteries was chosen?</li>
-      <li id="Instruction8" style="display:none;">The computer has randomly chosen an amount between 0 and 4. You should also choose an amount between 0 and 4.</li>
-      <li id="Instruction9" style="display:none;">If your amount is greater than or equal to the amount picked by the computer, you’ll find out which lottery was chosen and pay the price equal to the amount chosen by the computer.</li>
-      <li id="Instruction10" style="display:none;">Otherwise, you will not find out which lottery was chosen and pay nothing.</li>
-      <li id="Instruction11" style="display:none;">
-        Please enter your chosen amount.
-        <h4>
-          <div class="row">
-            <div class="col-xs-6">
-            </div>
-            <div class="col-xs-3">
-              <input type="text" name="WillingnessAmount" id="WillingnessAmount" class="form-control" placeholder="Amount">
-            </div>
-            <div class="col-xs-3">
-            </div>
-          </div>
-          <input type="submit" class="btn btn-lg btn-success pull-right" id="WillingnessBtn" value="Submit" style="display:none;">
-        </h4>
-      </li>
+      <li id="Instruction6" style="display:none;">You won <b>$<span id="PointsInInstructions">1234</span></b>.</li>
+      <li id="Instruction7" style="display:none;">Are you willing to pay some of your prize money to find out which of the 10 lotteries was chosen?</li>
+      <li id="Instruction8" style="display:none;">The computer has randomly chosen an amount of money between $0 and $4. Please also choose an amount of money between $0 and $4.</li>
+      <li id="Instruction9" style="display:none;">If your chosen amount is greater than or equal to the amount of money picked by the computer, you will find out which lottery was chosen and then pay a total equal to the amount of money chosen by the computer.</li>
+      <li id="Instruction10" style="display:none;">Otherwise, you will not find out which lottery was chosen and will pay nothing.</li>
     </ul>
-    <h4 id="WillingnessError" style="color: red; display:none;">Please enter an amount between 0 and 4.</h4>
+    <p id="Instruction11" style="display:none;">
+      Please enter your chosen amount to continue.
+      <h4>
+        <div class="row">
+          <div class="col-xs-6">
+          </div>
+          <div class="col-xs-3">
+            <input type="text" name="WillingnessAmount" id="WillingnessAmount" style="display:none;" class="form-control" placeholder="Amount">
+          </div>
+          <div class="col-xs-3">
+          </div>
+        </div>
+        <input type="submit" class="btn btn-lg btn-success pull-right" id="WillingnessBtn" value="Submit" style="display:none;">
+      </h4>
+    </p>
+    <h4 id="WillingnessError" style="color: red; display:none;">Please enter an amount between $0 and $4.</h4>
     <div class="WillingnessSection" style="display:none;">
       <h4 class="text-success WillingnessResult"></h4>
       <div class="row">
@@ -507,6 +508,7 @@
             $("#Instruction9").show();
             $("#Instruction10").show();
             $("#Instruction11").show();
+            $("#WillingnessAmount").show();
             $("#PointsInInstructions").html(originalPoints);
             $("#ResultNode").html("You earned $" + originalPoints + ".");
 
@@ -574,6 +576,7 @@
             }
 
         {% else %}
+          $("#Instruction0").show();
           $("#Instruction1").show();
           $("#Instruction2").show();
           $("#Instruction3").show();
@@ -664,6 +667,7 @@
                   // $("#SubmitSection").hide();
                   $("#SubmitBtn").hide();
                   $(".WillingnessSection").show();
+                  $("#Instruction0").hide();
                   $("#Instruction1").hide();
                   $("#Instruction2").hide();
                   $("#Instruction3").hide();
@@ -679,6 +683,7 @@
                   $("#Instruction9").show();
                   $("#Instruction10").show();
                   $("#Instruction11").show();
+                  $("#WillingnessAmount").show();
                   setTimeout( function() {
                     $('.transBackground').mCustomScrollbar("scrollTo","top");
                   }, 1000);

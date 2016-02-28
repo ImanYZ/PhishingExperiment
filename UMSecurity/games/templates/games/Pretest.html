@@ -13,39 +13,39 @@
           <h1>Pre-test</h1>
             <p><b>Question {{ question }}</b></p>
         {% if question == 1 %}
-            <p>You receive an email urging you to click a link to renew your U-M library privileges: 
-              <a class="LinkAnchor" href="http://202.57.255.177/">www.umich.edu/renew-library-privileges</a>. Should you trust the link to take you to the U-M website?
-            </p>
+            <p>You receive an email urging you to click the link below to renew your U-M Library privileges:</p>
+            <p><a class="LinkAnchor" href="http://202.57.255.177/">www.umich.edu/renew-library-privileges</a></p>
+            <p>Should you trust the link to take you to the U-M website?</p>
         {% elif question == 2 %}
-            <p>You receive an email urging you to click the link: 
-              <a class="LinkAnchor" href="https://www.wellsfargo.com/">https://www.wellsfargo.com/</a>. Should you trust the link?
-            </p>
+            <p>You have a bank account with Wells Fargo and receive an email asking you to click the link below:</p>
+            <p><a class="LinkAnchor" href="https://www.wellsfargo.com/">https://www.wellsfargo.com/</a></p>
+            <p>Should you trust the link?</p>
         {% elif question == 3 %}
-            <p>You receive an email urging you to click the link: 
-              <a class="LinkAnchor" href="http://www.amazon.com.varzeas.us">http://www.amazon.com.varzeas.us</a>. Should you trust the link?
-            </p>
-        {% elif question == 4 %}
-            <p>You receive an email urging you to click the link: 
-              <a class="LinkAnchor" href="http://www.citibanking.net">http://www.citibanking.net</a>. Should you trust the link?
-            </p>
-        {% elif question == 5 %}
-            <p>You receive an email urging you to click the link: 
-              <a class="LinkAnchor" href="http://www.amazon.co.uk">http://www.amazon.co.uk</a>. Should you trust the link?
-            </p>
-        {% elif question == 6 %}
           <div style="margin-bottom:19px">
-            <p>You receive an email that claims your library access will expire soon. It links to the site depicted. Is it safe to enter your password?</p>
+            <p>You receive an email that claims your library access will expire soon. It links to the site depicted. Is it safe to enter your uniqname and password?</p>
             <div class="centered">
                 <img src="{% static 'games/media/Pre-test_Question_6.png' %}" alt="UMICH LogIn" height="415" width="562">
             </div>
           </div>
-        {% elif question == 7 %}
+        {% elif question == 4 %}
+            <p>You have an account with Amazon and receive an email asking you to click the below link:</p>
+            <p><a class="LinkAnchor" href="http://www.amazon.com.varzeas.us">http://www.amazon.com.varzeas.us</a></p>
+            <p>Should you trust the link?</p>
+        {% elif question == 5 %}
+            <p>You have an account with Citibank and receive an email asking you to click the link below:
+            <p><a class="LinkAnchor" href="http://www.citibanking.net">http://www.citibanking.net</a></p>
+            <p>Should you trust the link?</p>
+        {% elif question == 6 %}
           <div style="margin-bottom:19px">
-            <p>Suppose Tom has received an email from a friend that says a document has been shared with him on dropbox. It links to the site depicted. Do you think Tom should follow the link?</p>
+            <p>Suppose Tom received an email from a friend that says a document has been shared with him on Dropbox. It links to the site depicted. Do you think Tom should follow the link?</p>
             <div class="centered">
               <img src="{% static 'games/media/Dropbox.png' %}" alt="Dropbox" height="381" width="466">
             </div>
           </div>
+        {% elif question == 7 %}
+            <p>You have an account with Amazon and receive an email asking you to click the link below:</p>
+            <p><a class="LinkAnchor" href="http://www.amazon.co.uk">http://www.amazon.co.uk</a></p>
+            <p>Should you trust the link?</p>
         {% endif %}
       </div>
     <div class="col-md-2 ">
@@ -64,23 +64,17 @@
       <div class="col-xs-4">
       </div>
       <div class="col-xs-2">
-        <button id="YesButton" class="btn btn-lg {% if not correct %} btn-info {% else %} disabled {% if correct == 1 and answer == 1 %} btn-success {% elif correct == 1 and answer == 0 %} btn-default {% elif correct == 2 and answer == 1 %} btn-danger {% elif correct == 2 and answer == 0 %} btn-success {% endif %} {% endif %} btn-answer" type="submit">Yes</button>
+        <button id="YesButton" class="btn btn-lg center-block {% if not correct %} btn-info {% else %} disabled {% if correct == 1 and answer == 1 %} btn-success {% elif correct == 1 and answer == 0 %} btn-default {% elif correct == 2 and answer == 1 %} btn-danger {% elif correct == 2 and answer == 0 %} btn-success {% endif %} {% endif %} btn-answer" type="submit">Yes</button>
       </div>
       <div class="col-xs-2">
-        <button id="NoButton" class="btn btn-lg {% if not correct %} btn-info {% else %} disabled {% if correct == 1 and answer == 0 %} btn-success {% elif correct == 1 and answer == 1 %} btn-default {% elif correct == 2 and answer == 0 %} btn-danger {% elif correct == 2 and answer == 1 %} btn-success {% endif %} {% endif %} btn-answer" type="submit">No</button>
+        <button id="NoButton" class="btn btn-lg center-block {% if not correct %} btn-info {% else %} disabled {% if correct == 1 and answer == 0 %} btn-success {% elif correct == 1 and answer == 1 %} btn-default {% elif correct == 2 and answer == 0 %} btn-danger {% elif correct == 2 and answer == 1 %} btn-success {% endif %} {% endif %} btn-answer" type="submit">No</button>
       </div>
       <div class="col-xs-4">
       </div>
     </div>
     {% if correct %}
     <div class="row" style="margin-top:40px">
-      <div class="col-xs-5">
-      </div>
-      <div class="col-xs-2">
-        <button id="Continue" class="btn btn-lg btn-success " type="button">Continue</button>
-      </div>
-      <div class="col-xs-5">
-      </div>
+      <button id="Continue" class="btn btn-lg btn-success center-block" type="button">Continue</button>
     </div>
     {% endif %}
   </form>

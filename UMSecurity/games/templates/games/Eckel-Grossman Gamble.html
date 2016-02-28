@@ -5,12 +5,13 @@
 {% block leftcontent %}
   <div class="" id="InstructionsDIV">
     <h1>{{ gameNum }}<sup>{% if gameNum == 1 %}st{% elif gameNum == 2 %}nd{% elif gameNum == 3 %}rd{% endif %}</sup> Game</h1>
+    <p>Please follow the steps below to play the first game.</p>
     <ul>
-      <li>Please choose one of the nine 50-50 lotteries (rows).</li>
-      <li>The computer will toss a fair coin in your chosen lottery.</li>
-      <li>If it comes up heads, you’ll receive the amount under the “Heads” column. If it comes up tails, you’ll receive the amount under the “Tails” column.</li>
-      <li>Please choose your lottery and then click the submit button.</li>
+      <li>Please choose one of the nine 50-50 lotteries. Each lottery is represented on a separate row.</li>
+      <li>The computer will toss a coin that will be applied to your chosen lottery.</li>
+      <li>If the coin comes up heads, you will receive the amount noted in the “Heads” column. If the coin comes up tails, you will receive the amount under the “Tails” column.</li>
     </ul>
+    <p>Please choose your lottery and then click the Submit button to continue.</p>
   </div>
 {% endblock %}
 
@@ -32,8 +33,8 @@
           <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble1">
             <table>
               <tr>
-                <td>$4</td>
-                <td>$4</td>
+                <td>$4.00</td>
+                <td>$4.00</td>
               </tr>
             </table>
           </button>
@@ -45,8 +46,8 @@
           <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble2">
             <table>
               <tr>
-                <td>$3.5</td>
-                <td>$5</td>
+                <td>$3.50</td>
+                <td>$5.00</td>
               </tr>
             </table>
           </button>
@@ -58,8 +59,8 @@
           <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble3">
             <table>
               <tr>
-                <td>$3</td>
-                <td>$6</td>
+                <td>$3.00</td>
+                <td>$6.00</td>
               </tr>
             </table>
           </button>
@@ -71,8 +72,8 @@
           <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble4">
             <table>
               <tr>
-                <td>$2.5</td>
-                <td>$7</td>
+                <td>$2.50</td>
+                <td>$7.00</td>
               </tr>
             </table>
           </button>
@@ -84,8 +85,8 @@
           <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble5">
             <table>
               <tr>
-                <td>$2</td>
-                <td>$8</td>
+                <td>$2.00</td>
+                <td>$8.00</td>
               </tr>
             </table>
           </button>
@@ -97,8 +98,8 @@
           <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble6">
             <table>
               <tr>
-                <td>$1.5</td>
-                <td>$9</td>
+                <td>$1.50</td>
+                <td>$9.00</td>
               </tr>
             </table>
           </button>
@@ -110,8 +111,8 @@
           <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble7">
             <table>
               <tr>
-                <td>$1</td>
-                <td>$10</td>
+                <td>$1.00</td>
+                <td>$10.00</td>
               </tr>
             </table>
           </button>
@@ -123,8 +124,8 @@
           <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble8">
             <table>
               <tr>
-                <td>$0.5</td>
-                <td>$11</td>
+                <td>$0.50</td>
+                <td>$11.00</td>
               </tr>
             </table>
           </button>
@@ -136,8 +137,8 @@
           <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Gamble9">
             <table>
               <tr>
-                <td>$0</td>
-                <td>$12</td>
+                <td>$0.00</td>
+                <td>$12.00</td>
               </tr>
             </table>
           </button>
