@@ -291,9 +291,42 @@ td.slim button {
     }
 }
 
-@media(max-width: 480px){
+@media(max-width: 520px){
     .btn-lg {
       font-size: 10px;
     }
+
+    #UpperArrow {
+      position: absolute;
+      top: 0px;
+      right: 30.1%;
+      width: 40%;
+      height: 70px;
+    }
+
+    #LowerArrow {
+      position: absolute;
+      top: 160px;
+      right: 30.4%;
+      width: 40%;
+      height: 70px;
+    }
+
+    #InvestmentCalc {
+      position: absolute;
+      top: 70px;
+      right: 34%;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    #ReturnCalc {
+      position: absolute;
+      top: 130px;
+      right: 46%;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
 }
 
