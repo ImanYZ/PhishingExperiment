@@ -9,11 +9,11 @@
     <h1>Thank you for playing!</h1>
     <p><b>You earned a total of ${{ totalEarning }}:</b></p>
     <ul>
-      <li>Your show-up fee is $5.00.</li>
-      <li>You earned ${{ experimentEarning }} for participating in this experiment.</li>
+      <li>You earned $5.00 for participating in this experiment.</li>
+      <li>You earned ${{ experimentEarning }} from the games.</li>
+      <li>You will receive your payment electronically through Wolverine Access. On payment, you will receive a notification email from payroll@umich.edu.</li>
     </ul>
     <p><b>Stay alert, and don’t get fooled by phishing emails.</b></p>
-    <p>Stay alert, and you won't be tricked by phishing emails.</p>
     <ul>
       <li>Check your email for clues that indicate phishing.</li>
       <li>Don't click suspicious links.</li>
@@ -36,16 +36,16 @@
   </div> -->
   <form id="ThankYouForm" action="/Submit" method="post" style="margin-top:40px">
     <div class="form-group">
-      <label for="usr">How do you evaluate the pre-test module?</label>
-      <textarea type="text" class="form-control" style="width:97%;" id="PretestComment" rows="7" placeholder="Please enter your comment about the pre-test module."></textarea>
+      <label for="usr">How can we improve the pre-test module?</label>
+      <textarea type="text" class="form-control" style="width:97%;" id="PretestComment" rows="7" placeholder="Please enter your feedback on the pre-test module."></textarea>
     </div>
     <div class="form-group">
-      <label for="usr">How do you evaluate the training module?</label>
-      <textarea type="text" class="form-control" style="width:97%;" id="TrainingComment" rows="7" placeholder="Please enter your comment about the training module."></textarea>
+      <label for="usr">How can we improve the training module?</label>
+      <textarea type="text" class="form-control" style="width:97%;" id="TrainingComment" rows="7" placeholder="Please enter your feedback on the training module."></textarea>
     </div>
     <div class="form-group">
-      <label for="usr">How do you evaluate the 3 games?</label>
-      <textarea type="text" class="form-control" style="width:97%;" id="GamesComment" rows="7" placeholder="Please enter your comment about the 3 games."></textarea>
+      <label for="usr">How can we improve the 3 games?</label>
+      <textarea type="text" class="form-control" style="width:97%;" id="GamesComment" rows="7" placeholder="Please enter your feedback on the the 3 games."></textarea>
     </div>
     <div class="row" style="margin-bottom:40px;">
       <div class="col-xs-4 ">
@@ -106,7 +106,7 @@
           // Send the data using post
           var jqxhr = $.post( "{% url 'games:thankyousubmit' %}", { 'pretestComment': pretestComment, 'trainingComment': trainingComment, 'gamesComment': gamesComment })
               .done(function(data) {
-                  window.location.href = "https://www.umich.edu/";
+                  window.location.href = "http://safecomputing.umich.edu/main/phishing_alerts/spear-phish.php";
               })
               .fail(function() {
                   alert("Unfortunately your feedback has not been received. Please submit your feedback again. If you have seen this message repeatedly, please make sure you are connected to the Internet, Refresh the page and Submit your feedback again. Also, please feel free to contact us at: oneweb@umich.edu");

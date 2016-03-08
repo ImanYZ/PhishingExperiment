@@ -11,6 +11,8 @@ class User(models.Model):
     experimentearning = models.FloatField(default=0)
     startedstudy = models.DateTimeField(default=timezone.now)
     finishedstudy = models.DateTimeField(default=timezone.now)
+    optout = models.BooleanField(default=0)
+    postpone = models.BooleanField(default=0)
 
     # auto_now_add=True means it will return the date and time when the user signedup, and auto_now means it will return the date and time when it's updated.
     created = models.DateTimeField(auto_now_add=True, auto_now=False)

@@ -9,7 +9,8 @@ from .models import Thankyou
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ['username', 'totalearning', 'experimentearning',
-        'firstgame', 'secondgame', 'thirdgame', 'startedstudy',
+        'firstgame', 'secondgame', 'thirdgame', 'optout',
+        'postpone', 'startedstudy',
         'finishedstudy', 'created', 'updated']
 
     search_fields = ['username']

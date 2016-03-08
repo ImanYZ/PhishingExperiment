@@ -65,12 +65,15 @@
           </ul>
       </li>
       <li id="Instruction4" style="display:none;">Please choose an option for each of the 10 lotteries and then submit your choices.</li>
-      <li id="Instruction5" style="display:none;">After submitting your choices, the game will randomly select one of the 10 lotteries, roll the die, and show you your payoff.</li>
+      <li id="Instruction5" style="display:none;">After submitting your choices, the computer will randomly pick one of the 10 lotteries, roll the die, and determine you your payoff.</li>
       <li id="Instruction6" style="display:none;">You won <b>$<span id="PointsInInstructions">1234</span></b>.</li>
-      <li id="Instruction7" style="display:none;">Are you willing to pay some of your prize money to find out which of the 10 lotteries was chosen?</li>
-      <li id="Instruction8" style="display:none;">The computer has randomly chosen an amount of money between $0 and $4. Please also choose an amount of money between $0 and $4.</li>
-      <li id="Instruction9" style="display:none;">If your chosen amount is greater than or equal to the amount of money picked by the computer, you will find out which lottery was chosen and then pay a total equal to the amount of money chosen by the computer.</li>
-      <li id="Instruction10" style="display:none;">Otherwise, you will not find out which lottery was chosen and will pay nothing.</li>
+      <li id="Instruction7" style="display:none;">Are you willing to pay some money to find out which of the 10 lotteries was used?</li>
+      <li id="Instruction8" style="display:none;">The computer has randomly picked an amount of money between $0 and $4. Please choose any amount between $0 and $4, inclusive, to indicate your willingness to pay for the information.
+        <ul>
+          <li id="Instruction9" style="display:none;">If your chosen amount is greater than or equal to the amount picked by the computer, you will find out which lottery was used and then pay the price equal to the amount picked by the computer.</li>
+          <li id="Instruction10" style="display:none;">Otherwise, you will not find out which lottery was used and will pay nothing.</li>
+        </ul>
+      </li>
     </ul>
     <p id="Instruction11" style="display:none;">
       Please enter your chosen amount to continue.
@@ -697,7 +700,7 @@
 
         $("#WillingnessAmount").on("input", function(){
             var value = $(this).val();
-            if (value != "" && $.isNumeric(value) && parseInt(value) >= 0 && parseInt(value) <= 4) {
+            if (value != "" && $.isNumeric(value) && parseFloat(value) >= 0 && parseFloat(value) <= 4) {
                 $("#WillingnessBtn").show();
                 $("#WillingnessError").hide();
             }

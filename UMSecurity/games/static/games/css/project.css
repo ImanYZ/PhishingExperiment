@@ -82,6 +82,14 @@ h4 p {
   height: 100%;
 }
 
+#UMICHLogInURLDIV {
+  position: absolute;
+  top: 7%;
+  left: 19%;
+  width: 65.5%;
+  height: 4%;
+}
+
 #InstructionsDIV {
   padding-left: 22px;
 }

@@ -5,11 +5,15 @@
 {% block leftcontent %}
   <div class="" id="InstructionsDIV">
     <h1>{{ gameNum }}<sup>{% if gameNum == 1 %}st{% elif gameNum == 2 %}nd{% elif gameNum == 3 %}rd{% endif %}</sup> Game</h1>
-    <p>Please follow the steps below to play the first game.</p>
+    <p>Please follow the steps below to play.</p>
     <ul>
       <li>Please choose one of the nine 50-50 lotteries. Each lottery is represented on a separate row.</li>
-      <li>The computer will toss a coin that will be applied to your chosen lottery.</li>
-      <li>If the coin comes up heads, you will receive the amount noted in the “Heads” column. If the coin comes up tails, you will receive the amount under the “Tails” column.</li>
+      <li>The computer will toss a coin that will be applied to your chosen lottery.
+        <ul>
+          <li>If the coin comes up heads, you will receive the amount under the “Heads” column.</li>
+          <li>If the coin comes up tails, you will receive the amount under the “Tails” column.</li>
+        </ul>
+      </li>
     </ul>
     <p>Please choose your lottery and then click the Submit button to continue.</p>
   </div>
@@ -224,7 +228,7 @@
               coinVal = "tails";
             }
             $("#ResultNode").html("<p>You chose lottery " + 
-              chosen + ".</p><p>The coin toss's result is " + coinVal + 
+              chosen + ".</p><p>The coin comes up " + coinVal + 
               ".</p><p>&#10140; You earned $" + originalPoints + ".</p>");
             $("#SubmitSection").hide();
             $("#SubmitBtn").hide();
@@ -300,11 +304,11 @@
                         }
                         setTimeout(function() {
                             $("#ResultNode").html("<p>You chose lottery " + 
-                              chosen + ".</p><p>The coin toss's result is " + coinVal +
+                              chosen + ".</p><p>The coin comes up " + coinVal +
                               ".</p><p>&#10140; You earned $" + result + ".</p>");
                             $("#Continue").show();
                         }, 2500);
-                    }, 2500);
+                    }, 1000);
                 },
                 error: function (data) {
                     alert( "An error occurred. Please try again!" );
