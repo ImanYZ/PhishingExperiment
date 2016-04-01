@@ -4,6 +4,7 @@ from django.utils import timezone
 
 class User(models.Model):
     username = models.CharField(max_length=200)
+    version = models.CharField(max_length=13, default="")
     firstgame = models.CharField(max_length=13, default="")
     secondgame = models.CharField(max_length=13, default="")
     thirdgame = models.CharField(max_length=13, default="")

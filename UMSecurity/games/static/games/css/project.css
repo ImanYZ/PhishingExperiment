@@ -61,7 +61,7 @@ ul ul {
   width: 100%;
 }
 
-h4 p {
+h4, p, .alert {
    line-height: 160%;
 }
 
@@ -92,6 +92,7 @@ h4 p {
 
 #InstructionsDIV {
   padding-left: 22px;
+  padding-right: 22px;
 }
 
 #InstructionsDIV ul {
@@ -103,8 +104,12 @@ h4 p {
   font-size: 19px;
 }
 
-#InstructionsDIV p {
+#InstructionsDIV p, .alert {
   font-size: 19px;
+}
+
+#WarningInResults {
+  margin-bottom: 28px;
 }
 
 td.slim {
@@ -259,6 +264,25 @@ td.slim button {
   top: 340px;
 }
 
+.ui-accordion-content
+{
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    border-style: none;
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+.report thead tr th, .report tbody tr th, .report tbody tr td
+{
+    text-align: left;
+}
+
+#CommentsCategories ul, #CommentsCategories p, #ImansComments ul, #ImansComments p
+{
+  padding-right:40px;
+  padding-left:40px;
+}
 @media(max-width: 767px){
     .btn-lg {
       font-size: 16px;

@@ -1,18 +1,21 @@
 from django.conf.urls import url
 from django.views.generic.base import RedirectView
+from django.conf import settings
 
 from . import views
 
 app_name = 'games'
 urlpatterns = [
     url(r'^$', views.welcome, name='welcome'),
+    url(r'^favicon\.ico$', RedirectView.as_view(url=settings.STATIC_URL + 'games/media/blockm.png')),
     url(r'^login/$', views.login, name='login'),
     url(r'^logout/$', views.logout, name='logout'),
     url(r'^welcome/$', views.welcome, name='welcome'),
     url(r'^pretest/(?P<question>[0-9]+)/$', views.pretest, name='pretest'),
     url(r'^pretest/Submit$', views.pretestsubmit, name='pretestsubmit'),
     url(r'^pretest/results$', views.pretestresults, name='pretestresults'),
-    url(r'^training/$', views.training, name='training'),
+    url(r'^training/(?P<question>[0-9]+)$', views.training, name='training'),
+    url(r'^training/Submit$', views.pretestsubmit, name='pretestsubmit'),
     url(r'^optout/$', views.optout, name='optout'),
     url(r'^postpone/$', views.postpone, name='postpone'),
     url(r'^gameselection/$', views.gameselection, name='gameselection'),
@@ -30,4 +33,6 @@ urlpatterns = [
     url(r'^returning/final$', views.final, name='final'),
     url(r'^thankyou/$', views.thankyou, name='thankyou'),
     url(r'^thankyou/submit$', views.thankyousubmit, name='thankyousubmit'),
+    url(r'^results/$', views.results, name='results'),
+    url(r'^(?i)downloadCSV', views.downloadCSV, name='downloadCSV'),
 ]

@@ -8,7 +8,7 @@ from .models import Pretest
 from .models import Thankyou
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['username', 'totalearning', 'experimentearning',
+    list_display = ['username', 'version', 'totalearning', 'experimentearning',
         'firstgame', 'secondgame', 'thirdgame', 'optout',
         'postpone', 'startedstudy',
         'finishedstudy', 'created', 'updated']

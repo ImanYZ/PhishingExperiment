@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="Iman YeckehZaare">
 
-    <link rel="icon" href="{% static 'games/media/blockm.png' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'games/media/blockm.png' %}">
 
     <title>{% block title %}BF Training{% endblock %}</title>
     
@@ -44,19 +44,50 @@
 
     <!-- Fixed navbar -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
+      <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" href="https://www.si.umich.edu/">
             <img src="{% static 'games/media/university-of-michigan-logo.png' %}" alt="University of Michigan - School of Information Logo" width="301px" height="46px" style="max-width:301px; margin-top: -13px;">
           </a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
         </div>
+
+        {% if umid == "yanchen" or umid == "oneweb" or umid == "arkzhang" %}
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stuy Version <span class="caret"></span></a>
+                <ul class="dropdown-menu" id="DropdownMenu">
+                  <li class="{% if version == 'Pilot' %}active{% endif %} DropdownSelector" id="Pilot"><a href="">Pilot</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li class="{% if version == 'BandFStaff' %}active{% endif %} DropdownSelector" id="BandFStaff"><a href="">B&amp;F Staff</a></li>
+                  <li class="{% if version == 'Undergraduate' %}active{% endif %} DropdownSelector" id="Undergraduate"><a href="">Undergraduate Students</a></li>
+                </ul>
+              </li>
+              <li class="{% if page == 'Overview' %}active{% endif %} PageSelector" id="Overview"><a href="">Overview <span class="sr-only">(current)</span></a></li>
+              <li class="{% if page == 'Pretest' %}active{% endif %} PageSelector" id="Pretest"><a href="">Pretest </a></li>
+              <li class="{% if page == 'Lottery' %}active{% endif %} PageSelector" id="Lottery"><a href="">Lottery </a></li>
+              <li class="{% if page == 'Gamble' %}active{% endif %} PageSelector" id="Gamble"><a href="">Gamble </a></li>
+              <li class="{% if page == 'Investment' %}active{% endif %} PageSelector" id="Investment"><a href="">Investment </a></li>
+              <li class="{% if page == 'Comments' %}active{% endif %} PageSelector" id="Comments"><a href="">Comments </a></li>
+              <li class="{% if page == 'DownloadCSV' %}active{% endif %} PageSelector" id="DownloadCSV"><a href="{% url 'games:downloadCSV' %}">Download Dataset in CSV </a></li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        {% endif %}
+
         {% if umid %}
-        <div id="navbar" class="navbar-collapse collapse">
+<!--         <div id="navbar" class="navbar-collapse collapse">
           <div class="navbar-right">
             <a class="navbar-brand" href="{% url 'games:logout' %}">Logout</a>
           </div>
         </div>
-        {% endif %}
+ -->        {% endif %}
       </div>
     </nav>
 
@@ -71,7 +102,7 @@
           <form class="form-signin" action="{% url 'games:login' %}" method="post">{% csrf_token %}
             <h2 class="form-signin-heading">Please sign in</h2>
             <label for="inputEmail" class="sr-only">Please Enter Your Email Address.</label>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Please Enter Your Email Address." required="" autofocus="" id="username" name="username"><br>
+            <input id="inputEmail" class="form-control" placeholder="Please Enter Your Email Address." required="" autofocus="" id="username" name="username"><br>
 <!--             <div class="checkbox">
               <label>
                 <input type="checkbox" value="remember-me"> Remember me
@@ -135,6 +166,41 @@
               $(".transBackground").mCustomScrollbar({
                 mouseWheelPixels: 1000 //change this to a value, that fits your needs
               });
+
+        {% if umid == "yanchen" or umid == "oneweb" or umid == "arkzhang" %}
+              $( ".DropdownSelector" ).click(function( event ) {
+                // Stop form from submitting normally
+                event.preventDefault();
+
+                $(".DropdownSelector").removeClass( "active" );
+                $(this).addClass( "active" );
+
+                var pageSelection = $(".PageSelector").filter(".active").attr('id');
+                var activeVersion = $(this).attr('id');
+
+                window.location.href = "{% url 'games:results' %}?version=" + activeVersion + "&page=" + pageSelection;
+              });
+
+              $( ".PageSelector" ).click(function( event ) {
+                // Stop form from submitting normally
+                event.preventDefault();
+
+                if ($(this).attr('id') == "DownloadCSV") {
+                  window.location.href = "{% url 'games:downloadCSV' %}";
+                }
+                else {
+
+                  $(".PageSelector").removeClass( "active" );
+                  $(this).addClass( "active" );
+
+                  var activeVersion = $("#DropdownMenu").children(".active").attr('id');
+                  var pageSelection = $(this).attr('id');
+
+                  window.location.href = "{% url 'games:results' %}?version=" + activeVersion + "&page=" + pageSelection;
+                }
+              });
+        {% endif %}
+
           });
       })(jQuery);
     </script>

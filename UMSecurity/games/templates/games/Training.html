@@ -9,7 +9,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="{% static 'games/favicon.ico' %}">
+    <link rel="icon" href="{% static 'games/media/blockm.png' %}">
 
     <title>Training Module</title>
     
@@ -103,19 +103,19 @@
 
     <script src="{% static 'games/js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
     <script>
-      (function($){
-          $(window).load(function(){
-              setInterval( function() {
-                var iframeContent = $('#TrainingIframe').contents().find("body").html();
-                if (iframeContent.indexOf("Thank you for exiting the content")  > -1) {
-                  window.location.href = "/gameselection";
-                }
-              }, 1000);
-              $(window).on("beforeunload", function() { 
-                  window.location.href = "/gameselection";
-              })
-          });
-      })(jQuery);
+      // (function($){
+      //     $(window).load(function(){
+      //         setInterval( function() {
+      //           var iframeContent = $('#TrainingIframe').contents().find("body").html();
+      //           if (iframeContent.indexOf("Thank you for exiting the content")  > -1) {
+      //             window.location.href = "/gameselection";
+      //           }
+      //         }, 1000);
+      //         $(window).on("beforeunload", function() { 
+      //             window.location.href = "/gameselection";
+      //         })
+      //     });
+      // })(jQuery);
     </script>
 
     <script src="{% static 'games/js/jquery-ui.js' %}"></script>

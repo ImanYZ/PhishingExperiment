@@ -11,8 +11,8 @@
     <ul>
       <li>You earned $5.00 for participating in this experiment.</li>
       <li>You earned ${{ experimentEarning }} from the games.</li>
-      <li>You will receive your payment electronically through Wolverine Access. On payment, you will receive a notification email from payroll@umich.edu.</li>
-    </ul>
+<!--       <li>You will receive your payment electronically through Wolverine Access. On payment, you will receive a notification email from payroll@umich.edu.</li>
+ -->    </ul>
     <p><b>Stay alert, and don’t get fooled by phishing emails.</b></p>
     <ul>
       <li>Check your email for clues that indicate phishing.</li>
@@ -106,7 +106,7 @@
           // Send the data using post
           var jqxhr = $.post( "{% url 'games:thankyousubmit' %}", { 'pretestComment': pretestComment, 'trainingComment': trainingComment, 'gamesComment': gamesComment })
               .done(function(data) {
-                  window.location.href = "http://safecomputing.umich.edu/main/phishing_alerts/spear-phish.php";
+                  window.location.href = "https://www.umich.edu/";
               })
               .fail(function() {
                   alert("Unfortunately your feedback has not been received. Please submit your feedback again. If you have seen this message repeatedly, please make sure you are connected to the Internet, Refresh the page and Submit your feedback again. Also, please feel free to contact us at: oneweb@umich.edu");
