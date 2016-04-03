@@ -46,7 +46,7 @@ def welcome(request):
         if (request.session.get('umid', False)):
             umid = request.session['umid']
         user, created = User.objects.get_or_create(username=umid)
-        user.version = "Pilot"
+        user.version = "Test"
         user.save()
         request.session['startedStudy'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
     else:
@@ -263,29 +263,37 @@ def pretestresults(request):
             user = User.objects.get(username=umid)
             if user.pretest_set.count() != 0:
                 question = 7
+                answers = [-1]*8
                 pretest = user.pretest_set.all()[0]
                 correct = [-1]*8
                 for i in range(1, question + 1):
                     if i == 1:
                         answer = pretest.question1
+                        answers[1] = pretest.question1
                         correct[1] = pretest.correct1
                     elif i == 2:
                         answer = pretest.question2
+                        answers[2] = pretest.question2
                         correct[2] = pretest.correct2
                     elif i == 3:
                         answer = pretest.question3
+                        answers[3] = pretest.question3
                         correct[3] = pretest.correct3
                     elif i == 4:
                         answer = pretest.question4
+                        answers[4] = pretest.question4
                         correct[4] = pretest.correct4
                     elif i == 5:
                         answer = pretest.question5
+                        answers[5] = pretest.question5
                         correct[5] = pretest.correct5
                     elif i == 6:
                         answer = pretest.question6
+                        answers[6] = pretest.question6
                         correct[6] = pretest.correct6
                     elif i == 7:
                         answer = pretest.question7
+                        answers[7] = pretest.question7
                         correct[7] = pretest.correct7
                     if answer == -1:
                         question = i
@@ -298,7 +306,7 @@ def pretestresults(request):
                         correctResult = correctResult + 1
                     elif correct[i] == 2:
                         wrongResult = wrongResult + 1
-                context = { 'umid': umid, 'answer':answer, 'question':question, 
+                context = { 'umid': umid, 'answers':answers, 'question':question,  'correct':correct, 
                     'correctResult':correctResult, 'wrongResult':wrongResult, 'welcomepage':1 }
                 return render(request, 'games/Pretest Results.html', context)
 

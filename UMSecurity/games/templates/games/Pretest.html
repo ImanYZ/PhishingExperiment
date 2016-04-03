@@ -12,6 +12,8 @@
       <div class="WelcomeText" id="InstructionsDIV" style="margin-top:40px;">
           <h1>Pre-test</h1>
             <p><b>Question {{ question }}</b></p>
+        {% if correct == 1 %}<img alt="Correct" src="{% static 'games/23px-Yes_check.svg.png' %}" title="Correct" width="23" height="23">
+        {% elif correct == 0 %}<img alt="Wrong" src="{% static 'games/20px-X_mark.svg.png' %}" title="Wrong" width="23" height="23">{% endif %}
         {% if question == 1 %}
             <p>You receive an email urging you to click the link below to renew your U-M Library privileges:</p>
             <p><a class="LinkAnchor" href="http://202.57.255.177/">www.umich.edu/renew-library-privileges</a></p>
