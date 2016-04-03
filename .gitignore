@@ -2,10 +2,10 @@
 *.sqlite3
 
 
-*/*/migrations/
-*/*/migrations/*
-*/static_Root/
-*/static_Root/*
+**/migrations/
+**/migrations/*
+**/static_Root/
+**/static_Root/*
 
 
 # Elastic Beanstalk Files
@@ -17,7 +17,7 @@
 
 !.elasticbeanstalk/*.global.yml
 
-*/DataDump.json
-*/settings.py
-*/polls/*
-*/polls/
+**/DataDump.json
+**/settings.py
+**/polls/*
+**/polls/
