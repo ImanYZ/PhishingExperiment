@@ -2,8 +2,8 @@
 *.sqlite3
 
 
-/UMSecurity/games/migrations/
-/UMSecurity/games/migrations/*
+**/migrations/
+**/migrations/*
 */static_Root/
 */static_Root/*
 
@@ -17,7 +17,7 @@
 
 !.elasticbeanstalk/*.global.yml
 
-/UMSecurity/UMSecurity/DataDump.json
-/UMSecurity/UMSecurity/settings.py
+**/DataDump.json
+**/settings.py
 */polls/*
 */polls/
