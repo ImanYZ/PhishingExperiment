@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Thank you!{% endblock %}
+
+{% block leftcontent %}
+  <div class="row">
+    <div class="col-md-1 ">
+    </div>
+    <div class="col-md-10 ">
+      <div class="WelcomeText" id="InstructionsDIV" style="margin-top:40px;">
+        <h1>Thanks For Playing!</h1>
+        <p><b>Stay alert,</b> and you won't be tricked by phishing emails.</p>
+        <ul>
+          <li>Check your own email for clues that indicate phishing attempts.</li>
+          <li>Don't click suspicious links.</li>
+          <li>Don't open suspicious documents, files, or attachments.</li>
+        </ul>
+        <p><b>If you get caught</b>, take action immidiately to minimize the damage.</p>
+        <ul>
+          <li>Change your UMICH password.</li>
+          <li>Contact the ITS Service Center (4help@umich.edu) to report the incident so your U-M account can be checked for signs of compromise.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-1 ">
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block rightcontent %}
+  <div style="margin:40px;">
+    <img src="{% static 'games/media/271145_327_218.png' %}" alt="Welcome Page Fish Image" height="100%">
+  </div>
+  <div class="row">
+    <div class="col-xs-5 ">
+    </div>
+    <div class="col-xs-2 ">
+      <a id="StartBtn" href="/training/final/" class="btn btn-lg btn-success">Continue</a>
+    </div>
+    <div class="col-xs-5 ">
+    </div>
+  </div>
+{% endblock %}
+
+{% block scontent %}
+  <!-- JavaScript code for this project -->
+  <script>
+    $(document).ready(function(){
+    });
+  </script>
+{% endblock %}

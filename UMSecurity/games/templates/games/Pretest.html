@@ -11,9 +11,9 @@
     <div class="col-md-8 ">
       <div class="WelcomeText" id="InstructionsDIV" style="margin-top:40px;">
           <h1>Pre-test</h1>
-            <p><b>Question {{ question }}</b></p>
-        {% if correct == 1 %}<img alt="Correct" src="{% static 'games/23px-Yes_check.svg.png' %}" title="Correct" width="23" height="23">
-        {% elif correct == 0 %}<img alt="Wrong" src="{% static 'games/20px-X_mark.svg.png' %}" title="Wrong" width="23" height="23">{% endif %}
+            <p>{% if correct == 1 %}<img alt="Correct" src="{% static 'games/media/23px-Yes_check.svg.png' %}" title="Correct" width="23" height="23">
+            {% elif correct == 2 %}<img alt="Wrong" src="{% static 'games/media/20px-X_mark.svg.png' %}" title="Wrong" width="23" height="23">{% endif %}
+            <b>Question {{ question }}</b></p>
         {% if question == 1 %}
             <p>You receive an email urging you to click the link below to renew your U-M Library privileges:</p>
             <p><a class="LinkAnchor" href="http://202.57.255.177/">www.umich.edu/renew-library-privileges</a></p>
@@ -86,6 +86,7 @@
             <p>Is this a legitimate link?</p>
         {% endif %}
       </div>
+    </div>
     <div class="col-md-2 ">
     </div>
   </div>
@@ -98,20 +99,22 @@
     <input type="hidden" name="questionrightclicked" id="questionrightclicked" value="0">
     <input type="hidden" name="questionhovered" id="questionhovered" value="0">
     <input type="hidden" name="questionhoveredseconds" id="questionhoveredseconds" value="0">
-    <div class="row" style="margin-top:40px">
-      <div class="col-xs-4">
+    <div class="row" style="margin-bottom:40px">
+      <div class="col-xs-3">
       </div>
       <div class="col-xs-2">
         <button id="YesButton" class="btn btn-lg center-block {% if not correct %} btn-info {% else %} disabled {% if correct == 1 and answer == 1 %} btn-success {% elif correct == 1 and answer == 0 %} btn-default {% elif correct == 2 and answer == 1 %} btn-danger {% elif correct == 2 and answer == 0 %} btn-success {% endif %} {% endif %} btn-answer" type="submit">Yes</button>
       </div>
       <div class="col-xs-2">
+      </div>
+      <div class="col-xs-2">
         <button id="NoButton" class="btn btn-lg center-block {% if not correct %} btn-info {% else %} disabled {% if correct == 1 and answer == 0 %} btn-success {% elif correct == 1 and answer == 1 %} btn-default {% elif correct == 2 and answer == 0 %} btn-danger {% elif correct == 2 and answer == 1 %} btn-success {% endif %} {% endif %} btn-answer" type="submit">No</button>
       </div>
-      <div class="col-xs-4">
+      <div class="col-xs-3">
       </div>
     </div>
     {% if correct %}
-    <div class="row" style="margin-top:40px">
+    <div class="row" style="margin-bottom:40px">
       <button id="Continue" class="btn btn-lg btn-success center-block" type="button">Continue</button>
     </div>
     {% endif %}

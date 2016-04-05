@@ -88,6 +88,50 @@ class Pretest(models.Model):
     def __str__(self):
         return self.user.username
 
+class Training(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    question1 = models.IntegerField(default=-1)
+    question2 = models.IntegerField(default=-1)
+    question3 = models.IntegerField(default=-1)
+    question4 = models.IntegerField(default=-1)
+    correct1 = models.IntegerField(default=-1)
+    correct2 = models.IntegerField(default=-1)
+    correct3 = models.IntegerField(default=-1)
+    correct4 = models.IntegerField(default=-1)
+    questionclicked1 = models.IntegerField(default=-1)
+    questionclicked2 = models.IntegerField(default=-1)
+    questionclicked3 = models.IntegerField(default=-1)
+    questionclicked4 = models.IntegerField(default=-1)
+    questionrightclicked1 = models.IntegerField(default=-1)
+    questionrightclicked2 = models.IntegerField(default=-1)
+    questionrightclicked3 = models.IntegerField(default=-1)
+    questionrightclicked4 = models.IntegerField(default=-1)
+    questionhovered1 = models.IntegerField(default=-1)
+    questionhovered2 = models.IntegerField(default=-1)
+    questionhovered3 = models.IntegerField(default=-1)
+    questionhovered4 = models.IntegerField(default=-1)
+    questionhoveredseconds1 = models.FloatField(default=-1)
+    questionhoveredseconds2 = models.FloatField(default=-1)
+    questionhoveredseconds3 = models.FloatField(default=-1)
+    questionhoveredseconds4 = models.FloatField(default=-1)
+    started = models.DateTimeField(default=timezone.now)
+    finished = models.DateTimeField(default=timezone.now)
+    startedquestion1 = models.DateTimeField(default=timezone.now)
+    finishedquestion1 = models.DateTimeField(default=timezone.now)
+    startedquestion2 = models.DateTimeField(default=timezone.now)
+    finishedquestion2 = models.DateTimeField(default=timezone.now)
+    startedquestion3 = models.DateTimeField(default=timezone.now)
+    finishedquestion3 = models.DateTimeField(default=timezone.now)
+    startedquestion4 = models.DateTimeField(default=timezone.now)
+    finishedquestion4 = models.DateTimeField(default=timezone.now)
+
+    # auto_now_add=True means it will return the date and time when the user signedup, and auto_now means it will return the date and time when it's updated.
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    def __str__(self):
+        return self.user.username
+
 class HoltLaury(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     decision = models.IntegerField(default=0)

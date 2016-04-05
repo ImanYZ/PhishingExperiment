@@ -82,14 +82,6 @@ h4, p, .alert {
   height: 100%;
 }
 
-#UMICHLogInURLDIV {
-  position: absolute;
-  top: 7%;
-  left: 19%;
-  width: 65.5%;
-  height: 4%;
-}
-
 #InstructionsDIV {
   padding-left: 22px;
   padding-right: 22px;
@@ -104,12 +96,314 @@ h4, p, .alert {
   font-size: 19px;
 }
 
-#InstructionsDIV p, .alert {
+#InstructionsDIV p, .alert, .AnswerDescription p {
   font-size: 19px;
+}
+
+.AnswerDescription, .AnswerDescription img {
+  margin-bottom: 28px;
 }
 
 #WarningInResults {
   margin-bottom: 28px;
+}
+
+#NextTraining {
+  margin-top: 28px;
+}
+
+#GotoTrainingDIV {
+  margin-bottom: 28px;
+}
+
+#PhishingEmailTitle1 {
+  position: absolute;
+  top: 12.1%;
+  left: 22%;
+  width: 40%;
+  height: 4.3%;
+}
+
+#PhishingEmailAddress1 {
+  position: absolute;
+  top: 19.6%;
+  left: 36.1%;
+  width: 22%;
+  height: 4%;
+}
+
+#PhishingEmail1stLine1 {
+  position: absolute;
+  top: 28.6%;
+  left: 25%;
+  width: 34%;
+  height: 7%;
+}
+
+#PhishingEmailAdminSignature1 {
+  position: absolute;
+  top: 64%;
+  left: 25%;
+  width: 16.3%;
+  height: 4.3%;
+}
+
+#PhishingEmailLink1 {
+  position: absolute;
+  top: 52%;
+  left: 34%;
+  width: 13%;
+  height: 4.3%;
+}
+
+#PhishingEmailLink1Hint {
+  position: absolute;
+  top: 49%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailAddress2 {
+  position: absolute;
+  top: 22%;
+  left: 46%;
+  width: 13%;
+  height: 4%;
+}
+
+#PhishingEmail1stLine2 {
+  position: absolute;
+  top: 37%;
+  left: 28.9%;
+  width: 52.9%;
+  height: 7%;
+}
+
+#PhishingEmailVerification2 {
+  position: absolute;
+  top: 43.9%;
+  left: 64%;
+  width: 10%;
+  height: 4%;
+}
+
+#PhishingEmailManagementCenter2 {
+  position: absolute;
+  top: 46.9%;
+  left: 28.9%;
+  width: 16%;
+  height: 4%;
+}
+
+#PhishingEmailAdminSignature2 {
+  position: absolute;
+  top: 64.9%;
+  left: 28.9%;
+  width: 13%;
+  height: 4.3%;
+}
+
+#PhishingEmailLink2 {
+  position: absolute;
+  top: 49.9%;
+  left: 39.1%;
+  width: 25%;
+  height: 4.3%;
+}
+
+#PhishingEmailLink2Hint {
+  position: absolute;
+  top: 84.1%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailLink2AnswerHint {
+  position: absolute;
+  top: 36.9%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailLink3 {
+  position: absolute;
+  top: 16%;
+  left: 40%;
+  width: 11.8%;
+  height: 4.3%;
+}
+
+#PhishingEmailLink3Hint {
+  position: absolute;
+  top: 84.1%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailLink3AnswerHint {
+  position: absolute;
+  top: 14.2%;
+  left: 0%;
+  width: 67%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailLink31 {
+  position: absolute;
+  top: 41.8%;
+  left: 37.3%;
+  width: 22%;
+  height: 4.3%;
+}
+
+#PhishingEmailLink3Hint1 {
+  position: absolute;
+  top: 84.1%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailLink3AnswerHint1 {
+  position: absolute;
+  top: 19%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailLink32 {
+  position: absolute;
+  top: 52%;
+  left: 33.7%;
+  width: 13.9%;
+  height: 4.3%;
+}
+
+#PhishingEmailLink3Hint2 {
+  position: absolute;
+  top: 84.1%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailLink3AnswerHint2 {
+  position: absolute;
+  top: 31.9%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailLink33 {
+  position: absolute;
+  top: 72.4%;
+  left: 19.9%;
+  width: 28.9%;
+  height: 4.3%;
+}
+
+#PhishingEmailLink3Hint3 {
+  position: absolute;
+  top: 84.1%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailLink3AnswerHint3 {
+  position: absolute;
+  top: 49%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmail1stLine3 {
+  position: absolute;
+  top: 34%;
+  left: 19.9%;
+  width: 31%;
+  height: 4.3%;
+}
+
+#PhishingEmailAthenticity3 {
+  position: absolute;
+  top: 63.4%;
+  left: 19.9%;
+  width: 76%;
+  height: 6.7%;
+}
+
+#PhishingEmailLink4 {
+  position: absolute;
+  top: 32.5%;
+  left: 34.9%;
+  width: 13%;
+  height: 4.3%;
+}
+
+#PhishingEmailLink4Hint {
+  position: absolute;
+  top: 84.1%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailLink4AnswerHint {
+  position: absolute;
+  top: 13%;
+  left: 0%;
+  width: 100%;
+  height: 4.3%;
+  max-width:562px;
+  display:none;
+}
+
+#PhishingEmailAddress4 {
+  position: absolute;
+  top: 19%;
+  left: 25%;
+  width: 46%;
+  height: 4.3%;
+}
+
+#PhishingEmail1stLine4 {
+  position: absolute;
+  top: 28.6%;
+  left: 34%;
+  width: 49%;
+  height: 4.3%;
 }
 
 td.slim {

@@ -1,124 +1,393 @@
+{% extends "base.html" %}
+
 {% load staticfiles %}
 
-<!DOCTYPE html>
-<!-- saved from url=(0040)http://getbootstrap.com/examples/theme/# -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="{% static 'games/media/blockm.png' %}">
+{% block title %}Training!{% endblock %}
 
-    <title>Training Module</title>
-    
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'games/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
-    <!-- Bootstrap theme -->
-    <link href="{% static 'games/css/bootstrap-theme.min.css' %}" rel="stylesheet" type="text/css">
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="{% static 'games/css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet" type="text/css">
-
-    <!-- Custom styles for this project -->
-    <link href="{% static 'games/css/project.css' %}" rel="stylesheet" type="text/css">
-
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="{% static 'games/js/ie-emulation-modes-warning.js' %}"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <link rel="stylesheet" href="{% static 'games/css/jquery.mCustomScrollbar.css' %}" type="text/css" />
-
-    <link rel="stylesheet" href="{% static 'games/css/jquery-ui.css' %}" type="text/css" />
-
-  </head>
-
-  <body role="document" style="{% if umid %}padding:0;{% endif %} background-image:url({% static 'games/media/Main_Backgound_Image.jpg' %})">
-
-  {% if not umid %}
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="https://www.si.umich.edu/">
-            <img src="{% static 'games/media/university-of-michigan-logo.png' %}" alt="University of Michigan - School of Information Logo" width="301px" height="46px" style="max-width:301px; margin-top: -13px;">
-          </a>
-        </div>
-      </div>
-    </nav>
-
-    <div class="container theme-showcase" role="main">
-
-      <div class="container">
-
-        <div class="col-xs-4">
-        </div>
-        <div class="col-xs-4">
-          <form class="form-signin" action="/login/" method="post">{% csrf_token %}
-            <h2 class="form-signin-heading">Please sign in</h2>
-            <label for="inputEmail" class="sr-only">Please Enter Your Email Address.</label>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Please Enter Your Email Address." required="" autofocus="" id="username" name="username"><br>
-<!--             <div class="checkbox">
-              <label>
-                <input type="checkbox" value="remembeqr-me"> Remember me
-              </label>
-            </div>
- -->
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-          </form>
-        </div> 
-        <div class="col-xs-4">
-        </div>
-      </div>
-
-      <div class="navbar navbar-inverse navbar-fixed-bottom">
-        <p>&copy; University of Michigan, School of Information 2016</p>
-      </div>
-
+{% block welcontent %}
+  <div class="row">
+    <div class="col-md-2 ">
     </div>
-    <!-- /container -->
+    <div class="col-md-8 ">
+      <div class="WelcomeText" id="InstructionsDIV" style="margin-top:40px;">
+          <h1>Training</h1>
+            <p>{% if correct == 1 %}<img alt="Correct" src="{% static 'games/media/23px-Yes_check.svg.png' %}" title="Correct" width="23" height="23">
+            {% elif correct == 2 %}<img alt="Wrong" src="{% static 'games/media/20px-X_mark.svg.png' %}" title="Wrong" width="23" height="23">{% endif %}
+            <b>Question {{ question }}</b></p>
+        {% if question == 1 %}
+          <div style="margin-bottom:19px">
+            <p>Is this email a phishing attempt? (Move your mouse over the messages to see the clues.)</p>
+            <div class="center-block" style="position:relative;">
+                <img src="{% static 'games/media/220339.png' %}" alt="Upgrade to secure your account." class="img-responsive center-block">
+                <div id="PhishingEmailTitle1" class="LinkAnchor DoNotOpen"></div>
+                <div id="PhishingEmailAddress1" class="LinkAnchor DoNotOpen"></div>
+                <div id="PhishingEmail1stLine1" class="LinkAnchor DoNotOpen"></div>
+                <div id="PhishingEmailAdminSignature1" class="LinkAnchor DoNotOpen"></div>
+                <div id="PhishingEmailLink1Hint">
+                  <img src="{% static 'games/media/185316_800_246.png' %}" alt='Hover your mouse on links to see the url they are linking to.' class="img-responsive center-block">
+                </div>
+                <div id="PhishingEmailLink1" class="LinkAnchor DoNotOpen"></div>
+            </div>
+          </div>
+        {% elif question == 2 %}
+          <div style="margin-bottom:19px">
+            <p>Is this email a phishing attempt? (Move your mouse over the links as you would in your own email.)</p>
+            <div class="center-block" style="position:relative;">
+                <img src="{% static 'games/media/220346.png' %}" alt="Upgrade to secure your account." class="img-responsive center-block">
+                {% if correct == 1 or correct == 2 %}
+                <div id="PhishingEmailAddress2" class="LinkAnchor DoNotOpen"></div>
+                <div id="PhishingEmail1stLine2" class="LinkAnchor DoNotOpen"></div>
+                <div id="PhishingEmailVerification2" class="LinkAnchor DoNotOpen"></div>
+                <div id="PhishingEmailManagementCenter2" class="LinkAnchor DoNotOpen"></div>
+                <div id="PhishingEmailAdminSignature2" class="LinkAnchor DoNotOpen"></div>
+                <div id="PhishingEmailLink2AnswerHint">
+                  <img src="{% static 'games/media/185324_796_311.png' %}" alt='Hover your mouse on links to see the url they are linking to.' class="img-responsive center-block">
+                </div>
+                {% else %}
+                <div id="PhishingEmailLink2Hint">
+                  <img src="{% static 'games/media/262423_558_121.png' %}" alt='Hover your mouse on links to see the url they are linking to.' class="img-responsive center-block">
+                </div>
+                {% endif %}
+                <div id="PhishingEmailLink2" class="LinkAnchor DoNotOpen"></div>
+            </div>
+          </div>
+        {% elif question == 3 %}
+          <div style="margin-bottom:19px">
+            <p>Is this email a phishing attempt? (Move your mouse over the links as you would in your own email.)</p>
+            <div class="center-block" style="position:relative;">
+                <img src="{% static 'games/media/220362.png' %}" alt="UMICH Password Change" class="img-responsive center-block">
+                {% if correct == 1 or correct == 2 %}
+                <div id="PhishingEmail1stLine3" class="LinkAnchor DoNotOpen"></div>
+                <div id="PhishingEmailAthenticity3" class="LinkAnchor DoNotOpen"></div>
+                <div id="PhishingEmailLink3AnswerHint">
+                  <img src="{% static 'games/media/292891_580_441.png' %}" alt='Hover your mouse on links to see the url they are linking to.' class="img-responsive center-block">
+                </div>
+                <div id="PhishingEmailLink3AnswerHint1">
+                  <img src="{% static 'games/media/292887_772_454.png' %}" alt='Hover your mouse on links to see the url they are linking to.' class="img-responsive center-block">
+                </div>
+                <div id="PhishingEmailLink3AnswerHint2">
+                  <img src="{% static 'games/media/185344_819_389.png' %}" alt='Hover your mouse on links to see the url they are linking to.' class="img-responsive center-block">
+                </div>
+                <div id="PhishingEmailLink3AnswerHint3">
+                  <img src="{% static 'games/media/292895_600_238.png' %}" alt='Hover your mouse on links to see the url they are linking to.' class="img-responsive center-block">
+                </div>
+                {% else %}
+                <div id="PhishingEmailLink3Hint">
+                  <img src="{% static 'games/media/292881_534_55.png' %}" alt='Hover your mouse on links to see the url they are linking to.' class="img-responsive center-block">
+                </div>
+                <div id="PhishingEmailLink3Hint1">
+                  <img src="{% static 'games/media/296019_519_76.png' %}" alt='Hover your mouse on links to see the url they are linking to.' class="img-responsive center-block">
+                </div>
+                <div id="PhishingEmailLink3Hint2">
+                  <img src="{% static 'games/media/262431_657_134.png' %}" alt='Hover your mouse on links to see the url they are linking to.' class="img-responsive center-block">
+                </div>
+                <div id="PhishingEmailLink3Hint3">
+                  <img src="{% static 'games/media/292881_534_55.png' %}" alt='Hover your mouse on links to see the url they are linking to.' class="img-responsive center-block">
+                </div>
+                {% endif %}
+                <div id="PhishingEmailLink3" class="LinkAnchor DoNotOpen"></div>
+                <div id="PhishingEmailLink31" class="LinkAnchor DoNotOpen"></div>
+                <div id="PhishingEmailLink32" class="LinkAnchor DoNotOpen"></div>
+                <div id="PhishingEmailLink33" class="LinkAnchor DoNotOpen"></div>
+            </div>
+          </div>
+        {% elif question == 4 %}
+          <div style="margin-bottom:19px">
+            <p>Is this email a phishing attempt? (Move your mouse over the links as you would in your own email.)</p>
+            <div class="center-block" style="position:relative;">
+                <img src="{% static 'games/media/274445.png' %}" alt="View shared document." class="img-responsive center-block">
+                {% if correct == 1 or correct == 2 %}
+                <div id="PhishingEmailAddress4" class="LinkAnchor DoNotOpen"></div>
+                <div id="PhishingEmail1stLine4" class="LinkAnchor DoNotOpen"></div>
+                <div id="PhishingEmailLink4AnswerHint">
+                  <img src="{% static 'games/media/271141_720_470.png' %}" alt='Hover your mouse on links to see the url they are linking to.' class="img-responsive center-block">
+                </div>
+                {% else %}
+                <div id="PhishingEmailLink4Hint">
+                  <img src="{% static 'games/media/262439_563_93.png' %}" alt='Hover your mouse on links to see the url they are linking to.' class="img-responsive center-block">
+                </div>
+                {% endif %}
+                <div id="PhishingEmailLink4" class="LinkAnchor DoNotOpen"></div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-md-2 ">
+    </div>
+  </div>
 
-  {% else %}
+  <form id="PretestForm" action="/training/Submit" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="question" id="question" value="{{ question }}">
+    <input type="hidden" name="answer" id="answer" value="0">
+    <input type="hidden" name="questionclicked" id="questionclicked" value="0">
+    <input type="hidden" name="questionrightclicked" id="questionrightclicked" value="0">
+    <input type="hidden" name="questionhovered" id="questionhovered" value="0">
+    <input type="hidden" name="questionhoveredseconds" id="questionhoveredseconds" value="0">
+    <div class="row" style="margin-bottom:40px">
+      <div class="col-xs-3">
+      </div>
+      <div class="col-xs-2">
+        <button id="YesButton" class="btn btn-lg center-block {% if not correct %} btn-info {% else %} disabled {% if correct == 1 and answer == 1 %} btn-success {% elif correct == 1 and answer == 0 %} btn-default {% elif correct == 2 and answer == 1 %} btn-danger {% elif correct == 2 and answer == 0 %} btn-success {% endif %} {% endif %} btn-answer" type="submit">Yes</button>
+      </div>
+      <div class="col-xs-2">
+      </div>
+      <div class="col-xs-2">
+        <button id="NoButton" class="btn btn-lg center-block {% if not correct %} btn-info {% else %} disabled {% if correct == 1 and answer == 0 %} btn-success {% elif correct == 1 and answer == 1 %} btn-default {% elif correct == 2 and answer == 0 %} btn-danger {% elif correct == 2 and answer == 1 %} btn-success {% endif %} {% endif %} btn-answer" type="submit">No</button>
+      </div>
+      <div class="col-xs-3">
+      </div>
+    </div>
+    {% if correct %}
+    <div class="row" style="margin-bottom:40px">
+      <div class="col-xs-3">
+      </div>
+      <div class="col-xs-6">
+        <div role="alert" class="alert {% if correct == 1 %}alert-success{% elif correct == 2 %}alert-danger{% endif %}">
+          {% if correct == 1 and answer == 0 %}
+            <p><b>Correct. It's not a phishing attempt!</b></p>
+          {% elif correct == 1 and answer == 1 %}
+            <p><b>Correct. It's a phishing attempt!</b> You avoided the trap.</p>
+          {% elif correct == 2 and answer == 0 %}
+            <p><b>Oh, no! This is a phishing attempt! You took the bait.</b></p>
+          {% elif correct == 2 and answer == 1 %}
+            <p>This is a legitimate email message. <b>It's not a phishing attempt.</b></p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-xs-3">
+      </div>
+    </div>
+    <div class="row AnswerDescription">
+      <div class="col-xs-2">
+      </div>
+      <div class="col-xs-8">
+      {% if correct == 2 and question == 1 %}
+        <p>If you click the link in the email, you would be taken to the web page shown here:</p>
+        <img src="{% static 'games/media/75591_306_213.png' %}" alt="Enter your U-M personal information." class="img-responsive center-block">
+        <p>Any information you entered would be stolen and could be used to compromise your U-M account, access your emails, change your personal information in Wolverine Access, and more.</p>
+      {% elif correct == 2 and question == 2 %}
+        <p>If you click the link in the email, you would be taken to the web page shown here:</p>
+        <img src="{% static 'games/media/27253_465_189.png' %}" alt="Enter your U-M personal information." class="img-responsive center-block">
+        <p>Any information you entered would be stolen and could be used to compromise your U-M account, access your emails, change your personal information in Wolverine Access, and more.</p>
+      {% elif correct == 2 and question == 3 %}
+        <p>This message was sent in 2014 to urge members of the U-M community to change their passwords as a precaution because of the Heartbleed bug.</p>
+        <p>Note that it told people to change their passwords themselves. It did not ask for password or personal information.</p>
+      {% elif correct == 2 and question == 4 %}
+        <p>If you clicked the link in the email, you would be taken to the page shown here.<br>If you logged in, your password would be stolen, and your U-M account would be compromised.</p>
+        <img src="{% static 'games/media/40168_457_186.png' %}" alt="Enter your email and password." class="img-responsive center-block">
+      {% endif %}
+        <button id="Continue" class="btn btn-lg btn-success center-block" type="button">Continue</button>
+      </div>
+      <div class="col-xs-2">
+      </div>
+    </div>
+    {% endif %}
+  </form>
+{% endblock %}
 
-    <iframe id="TrainingIframe" src="{% static 'games/Phishing_Game_Keyboard_Accessible/index.html' %}" height="100%" width="100%" ></iframe>
+{% block scontent %}
+  <script src="{% static 'games/js/jquery.balloon.js' %}"></script>
+  <!-- JavaScript code for this project -->
+  <script>
+    $(document).ready(function(){
 
-<!--     <div style="position:absolute; top:40px; right:40px;"><a id="GotoGames" href="../lottery" class="btn btn-lg btn-success" type="button">Go to Games</a></div>
- -->
-  {% endif %}
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="{% static 'games/js/jquery.min.js' %}"></script>
-    <script>window.jQuery || document.write('<script src="{% static "games/js/jquery.min.js" %}"><\/script>')</script>
-    <script src="{% static 'games/js/bootstrap.min.js' %}"></script>
-    <!-- <script src="bootstrap-3.3.6-dist/js/docs.min.js"></script> -->
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="{% static 'games/js/ie10-viewport-bug-workaround.js' %}"></script>
+      function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie != '') {
+              var cookies = document.cookie.split(';');
+              for (var i = 0; i < cookies.length; i++) {
+                  var cookie = jQuery.trim(cookies[i]);
+                  // Does this cookie string begin with the name we want?
+                  if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+      var csrftoken = getCookie('csrftoken');
 
-    <script src="{% static 'games/js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
-    <script>
-      // (function($){
-      //     $(window).load(function(){
-      //         setInterval( function() {
-      //           var iframeContent = $('#TrainingIframe').contents().find("body").html();
-      //           if (iframeContent.indexOf("Thank you for exiting the content")  > -1) {
-      //             window.location.href = "/gameselection";
-      //           }
-      //         }, 1000);
-      //         $(window).on("beforeunload", function() { 
-      //             window.location.href = "/gameselection";
-      //         })
-      //     });
-      // })(jQuery);
-    </script>
+      function csrfSafeMethod(method) {
+          // these HTTP methods do not require CSRF protection
+          return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+      }
+      $.ajaxSetup({
+          beforeSend: function(xhr, settings) {
+              if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+              }
+          }
+      });
 
-    <script src="{% static 'games/js/jquery-ui.js' %}"></script>
+      $(function() {
+        $('#PhishingEmailTitle1').balloon({ 
+          position: "bottom",
+          contents: "U-M will never ask you to update or validate your account to secure it.<br>You keep your U-M account as long as you are affiliated with the university.",
+          css: {
+            backgroundColor: "yellow",
+          } });
+        $('#PhishingEmailAddress1').balloon({ 
+          position: "bottom",
+          contents: "This is not a U-M address.<br>It doesn't make sense for a message about your U-M mail to come from outside the university.",
+          css: {
+            backgroundColor: "yellow",
+          } });
+        $('#PhishingEmail1stLine1').balloon({ 
+          position: "bottom",
+          contents: "This can't happen.<br>Your M+Googlr mailbox has unlimited storage.",
+          css: {
+            backgroundColor: "yellow",
+          } });
+        $('#PhishingEmailAdminSignature1').balloon({ 
+          position: "top",
+          contents: "A search of the U-M website reveals that there is no department with this name at U-M.",
+          css: {
+            backgroundColor: "yellow",
+          } });
+        $('#PhishingEmailAddress2').balloon({ 
+          position: "bottom",
+          contents: "This is not a U-M address.",
+          css: {
+            backgroundColor: "yellow",
+          } });
+        $('#PhishingEmail1stLine2').balloon({ 
+          position: "bottom",
+          contents: "Notice the capitalization mistakes and the grammatical errors.",
+          css: {
+            backgroundColor: "yellow",
+          } });
+        $('#PhishingEmailVerification2').balloon({ 
+          position: "bottom",
+          contents: "U-M will not ask you to verify or update your account.<br>You keep your account as long as you have an affiliation with U-M.",
+          css: {
+            backgroundColor: "yellow",
+          } });
+        $('#PhishingEmailManagementCenter2').balloon({ 
+          position: "bottom",
+          contents: "There is no such center at U-M.<br>Search the U-M website to check the names of the departments, colleges, centers, and so on.",
+          css: {
+            backgroundColor: "yellow",
+          } });
+        $('#PhishingEmailAdminSignature2').balloon({ 
+          position: "top",
+          contents: "There are no services offered at the University of Michigan with this name.<br>Search the U-M website to check for service names.",
+          css: {
+            backgroundColor: "yellow",
+          } });
+        $('#PhishingEmail1stLine3').balloon({ 
+          position: "bottom",
+          contents: "Note that you are being asked to change your password yourself.<br>There are no threats about lost access or requests for your password or other personal information.",
+          css: {
+            backgroundColor: "yellow",
+          } });
+        $('#PhishingEmailAthenticity3').balloon({ 
+          position: "bottom",
+          contents: "So true. U-M will never ask you to provide or validate your password in email.",
+          css: {
+            backgroundColor: "yellow",
+          } });
+        $('#PhishingEmailAddress4').balloon({ 
+          position: "bottom",
+          contents: "Do you know this person? Are you expecting them to share a document with you?<br>If not, contact them and check.",
+          css: {
+            backgroundColor: "yellow",
+          } });
+        $('#PhishingEmail1stLine4').balloon({ 
+          position: "bottom",
+          contents: "Note the awkward grammar here.<br>Also, legitimate Google Document invitations do not ask you to log in to view.<br>Compare this to legitimate Google Doc invitations that you have received in the past.",
+          css: {
+            backgroundColor: "yellow",
+          } });
+      });
 
-  </body>
-</html>
+      {% for i in "xxxx" %}
+        $( "#PhishingEmailLink{{ forloop.counter }}" ).mouseover(function( event ) {
+          $( "#PhishingEmailLink{{ forloop.counter }}Hint" ).show();
+          $( "#PhishingEmailLink{{ forloop.counter }}AnswerHint" ).show();
+        });
+
+        $( "#PhishingEmailLink{{ forloop.counter }}" ).mouseout(function( event ) {
+          $( "#PhishingEmailLink{{ forloop.counter }}Hint" ).hide();
+          $( "#PhishingEmailLink{{ forloop.counter }}AnswerHint" ).hide();
+        });
+      {% endfor %}
+
+      {% for i in "xxx" %}
+        $( "#PhishingEmailLink3{{ forloop.counter }}" ).mouseover(function( event ) {
+          $( "#PhishingEmailLink3Hint{{ forloop.counter }}" ).show();
+          $( "#PhishingEmailLink3AnswerHint{{ forloop.counter }}" ).show();
+        });
+
+        $( "#PhishingEmailLink3{{ forloop.counter }}" ).mouseout(function( event ) {
+          $( "#PhishingEmailLink3Hint{{ forloop.counter }}" ).hide();
+          $( "#PhishingEmailLink3AnswerHint{{ forloop.counter }}" ).hide();
+        });
+      {% endfor %}
+
+      $( "#NoButton" ).click(function( event ) {
+        // Stop form from submitting normally
+        event.preventDefault();
+
+        if (!$(this).hasClass("disabled")) {
+          // Get some values from elements on the page:
+          $("#answer").val(0);
+
+          $( "#PretestForm" ).submit();
+        }
+      });
+
+      $( "#YesButton" ).click(function( event ) {
+        // Stop form from submitting normally
+        event.preventDefault();
+
+        if (!$(this).hasClass("disabled")) {
+          // Get some values from elements on the page:
+          $("#answer").val(1);
+
+          $( "#PretestForm" ).submit();
+        }
+      });
+
+      $( "#Continue" ).click(function( event ) {
+        // Stop form from submitting normally
+        event.preventDefault();
+
+        if ({{ question }} < 4) {
+          window.location.href = '../' + ({{ question }} + 1) + '/intro/';
+        }
+        else {
+          window.location.href = '../thankyou/';
+        }
+      });
+
+      $(".LinkAnchor").mousedown(function(event) {
+          switch (event.which) {
+              case 1:
+                  event.preventDefault();
+                  var url = $(this).attr('href');
+                  $("#questionclicked").val("1");
+                  // window.location.href = url;
+                  if (!$(this).hasClass("DoNotOpen")) {
+                    window.open(url, '_blank');
+                  }
+                  break;
+              default:
+                  $("#questionrightclicked").val("1");
+          }
+      });
+      $(".LinkAnchor").hover(
+        function(){       
+          $(this).data('inTime', new Date().getTime());
+          $("#questionhovered").val("1");
+        },    
+        function(){       
+          var outTime = new Date().getTime();       
+          var hoverTime = (outTime - $(this).data('inTime'))/1000;        
+          $("#questionhoveredseconds").val(hoverTime);
+        });
+    });
+  </script>
+{% endblock %}

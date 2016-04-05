@@ -164,7 +164,9 @@
       (function($){
           $(window).load(function(){
               $(".transBackground").mCustomScrollbar({
-                mouseWheelPixels: 1000 //change this to a value, that fits your needs
+                scrollButtons:{enable:true},
+                theme:"3d",
+                scrollbarPosition:"outside"
               });
 
         {% if umid == "yanchen" or umid == "oneweb" or umid == "arkzhang" %}

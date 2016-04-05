@@ -5,6 +5,7 @@ from .models import HoltLaury
 from .models import Gamble
 from .models import Investment
 from .models import Pretest
+from .models import Training
 from .models import Thankyou
 
 class UserAdmin(admin.ModelAdmin):
@@ -94,6 +95,30 @@ class PretestAdmin(admin.ModelAdmin):
     search_fields = ['user']
 
 admin.site.register(Pretest, PretestAdmin)
+
+class TrainingAdmin(admin.ModelAdmin):
+    list_display = ['user',
+        'question1', 'question2',
+        'question3', 'question4', 
+        'correct1', 'correct2',
+        'correct3', 'correct4', 
+        'questionclicked1', 'questionclicked2',
+        'questionclicked3', 'questionclicked4', 
+        'questionrightclicked1', 'questionrightclicked2',
+        'questionrightclicked3', 'questionrightclicked4', 
+        'questionhovered1', 'questionhovered2',
+        'questionhovered3', 'questionhovered4', 
+        'questionhoveredseconds1', 'questionhoveredseconds2',
+        'questionhoveredseconds3', 'questionhoveredseconds4', 
+        'started', 'finished', 
+        'startedquestion1', 'finishedquestion1', 
+        'startedquestion2', 'finishedquestion2', 
+        'startedquestion3', 'startedquestion4', 
+        'created', 'updated']
+
+    search_fields = ['user']
+
+admin.site.register(Training, TrainingAdmin)
 
 class ThankyouAdmin(admin.ModelAdmin):
     list_display = ['user', 'trainingComment', 'gamesComment',

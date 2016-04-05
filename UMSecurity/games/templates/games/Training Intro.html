@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Training Question Introduction!{% endblock %}
+
+{% block welcontent %}
+  <div class="row">
+    <div class="col-md-2 ">
+    </div>
+    <div class="col-md-8 ">
+      <div class="WelcomeText" id="InstructionsDIV" style="margin-top:40px;">
+          <h1>Phishing Awareness Training!</h1>
+          <p><b>Question {{ question }}</b></p>
+        {% if question == 1 %}
+            <p>Phishing happens all the time, even at the University of Michigan. It's a daily occurrence and all too often, people, including University leadership and our best and brightest staff and faculty members, fall for phishing scams.</p>
+            <p>Can you recognize phishing emails? Do you want to be able to help your friends, family, and colleagues recognize them?</p>
+            <p>Play this game to test your knowledge and learn to identify phishing clues.</p>
+            <p>In this game, you will start with a practice round that shows you some clues to watch for. Then you will test your phish detection skills on three emails. Good luck!</p>
+        {% elif question == 2 %}
+            <p><b>Can You Identify Phishing Emails?</b></p>
+            <p>Next, you will examine three emails and decide if they are phishing attempts.</p>
+            <p>Move your mouse over each message just as you would with your own email to see what URLs the links go to.</p>
+        {% elif question == 3 %}
+          <div style="margin-bottom:19px">
+            <p><b>What about emails with multiple links?</b></p>
+            <p>Again, move your mouse over each link just as you would with your own email to see what URLs the links go to.</p>
+          </div>
+        {% elif question == 4 %}
+          <div style="margin-bottom:19px">
+            <p><b>What if someone has shared an important document with you?</b></p>
+            <p>Again, move your mouse over each link just as you would with your own email to see what URLs the links go to.</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-md-2 ">
+    </div>
+  </div>
+
+  <div class="row" style="margin-bottom:40px">
+    <div class="col-xs-5 ">
+    </div>
+    <div class="col-xs-2 ">
+      <a href="/training/{{ question }}" class="btn btn-lg btn-success center-block" type="a">Continue</a>
+    </div>
+    <div class="col-xs-5 ">
+    </div>
+  </div>
+{% endblock %}
+
+{% block scontent %}
+  <!-- JavaScript code for this project -->
+  <script>
+  </script>
+{% endblock %}

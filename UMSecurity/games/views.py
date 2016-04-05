@@ -20,6 +20,7 @@ from .models import HoltLaury
 from .models import Gamble
 from .models import Investment
 from .models import Pretest
+from .models import Training
 from .models import Thankyou
 
 @ensure_csrf_cookie
@@ -318,22 +319,213 @@ def pretestresults(request):
         context = { 'umid': '', 'welcomepage': 1 }
         return render(request, 'games/Welcome.html', context)
 
-def training(request):
+def trainingwelcome(request):
+    if ('REMOTE_USER' in request.META or request.session.get('umid', False)):
+        if ('REMOTE_USER' in request.META):
+            umid = request.META['REMOTE_USER']
+        if (request.session.get('umid', False)):
+            umid = request.session['umid']
+    else:
+        umid = ""
+    context = { 'umid': umid }
+    return render(request, 'games/Training Welcome.html', context)
+
+def trainingintro(request, question):
+    if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+        (request.session.get('umid', False) and request.session['umid'] != "")):
+        if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+            umid = request.META['REMOTE_USER']
+        if (request.session.get('umid', False) and request.session['umid'] != ""):
+            umid = request.session['umid']
+        request.session['started'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
+        user = User.objects.get(username=umid)
+        if user.training_set.count() != 0:
+            if question == "":
+                question = "1"
+            question = int(question)
+            context = { 'umid': umid, 'question':question, 'welcomepage': 1 }
+            return render(request, 'games/Training Intro.html', context)
+
+        context = { 'umid': umid, 'question':1, 'welcomepage': 1 }
+        return render(request, 'games/Training Intro.html', context)
+
+    context = { 'umid': '', 'welcomepage': 1, 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
+
+@ensure_csrf_cookie
+def training(request, question):
+    if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+        (request.session.get('umid', False) and request.session['umid'] != "")):
+        if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+            umid = request.META['REMOTE_USER']
+        if (request.session.get('umid', False) and request.session['umid'] != ""):
+            umid = request.session['umid']
+        user = User.objects.get(username=umid)
+        if user.training_set.count() != 0:
+            if question == "":
+                question = "1"
+            question = int(question)
+            training = user.training_set.all()[0]
+            for i in range(1, question + 1):
+                if i == 1:
+                    answer = training.question1
+                    correct = training.correct1
+                elif i == 2:
+                    answer = training.question2
+                    correct = training.correct2
+                elif i == 3:
+                    answer = training.question3
+                    correct = training.correct3
+                elif i == 4:
+                    answer = training.question4
+                    correct = training.correct4
+                if answer == -1:
+                    question = i
+                    context = { 'umid': umid, 'answer':answer, 'question':question, 'welcomepage': 1 }
+                    return render(request, 'games/Training.html', context)
+            context = { 'umid': umid, 'answer':answer, 'question':question, 'correct':correct, 'welcomepage': 1 }
+            return render(request, 'games/Training.html', context)
+
+        context = { 'umid': umid, 'question':1, 'welcomepage': 1 }
+        return render(request, 'games/Training.html', context)
+
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
+
+def trainingsubmit(request):
     try:
-        if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
-            (request.session.get('umid', False) and request.session['umid'] != "")):
-            if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
-                umid = request.META['REMOTE_USER']
-            if (request.session.get('umid', False) and request.session['umid'] != ""):
-                umid = request.session['umid']
-        else:
-            umid = ""
-        context = { 'umid': umid }
-        # return render(request, 'games/Training.html', context)
-        return redirect('/static/games/Phishing_Game_Keyboard_Accessible/index.html')
+        if request.method == 'POST':
+            if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+                (request.session.get('umid', False) and request.session['umid'] != "")):
+                if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+                    umid = request.META['REMOTE_USER']
+                if (request.session.get('umid', False) and request.session['umid'] != ""):
+                    umid = request.session['umid']
+                if ('answer' in request.POST and request.POST['answer'] != '' and
+                 'questionclicked' in request.POST and request.POST['questionclicked'] != '' and
+                 'questionrightclicked' in request.POST and request.POST['questionrightclicked'] != '' and
+                 'questionhovered' in request.POST and request.POST['questionhovered'] != '' and
+                 'questionhoveredseconds' in request.POST and request.POST['questionhoveredseconds'] != '' and
+                 'question' in request.POST and request.POST['question'] != ''):
+                    
+                    answer = int(request.POST['answer'])
+                    questionclicked = int(request.POST['questionclicked'])
+                    questionrightclicked = int(request.POST['questionrightclicked'])
+                    questionhovered = int(request.POST['questionhovered'])
+                    questionhoveredseconds = float(request.POST['questionhoveredseconds'])
+                    question = int(request.POST['question'])
+                    user = User.objects.get(username=umid)
+                    training = None
+                    if user.training_set.count() != 0:
+                        training = user.training_set.all()[0]
+                    if question == 1:
+                        if answer == 1:
+                            correct1 = 1
+                        else:
+                            correct1 = 2
+                        if training == None:
+                            user.training_set.create(
+                                question1=answer,
+                                correct1=correct1,
+                                questionclicked1=questionclicked,
+                                questionrightclicked1=questionrightclicked,
+                                questionhovered1=questionhovered,
+                                questionhoveredseconds1=questionhoveredseconds,
+                                startedquestion1=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                                finishedquestion1=datetime.datetime.now())
+                        return redirect('../training/1/')
+                    if question == 2:
+                        if answer == 1:
+                            correct2 = 1
+                        else:
+                            correct2 = 2
+                        if training.question2 == -1:
+                            user.training_set.update(
+                                question2=answer,
+                                correct2=correct2,
+                                questionclicked2=questionclicked,
+                                questionrightclicked2=questionrightclicked,
+                                questionhovered2=questionhovered,
+                                questionhoveredseconds2=questionhoveredseconds,
+                                startedquestion2=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                                finishedquestion2=datetime.datetime.now())
+                        return redirect('../training/2/')
+                    if question == 3:
+                        if answer == 0:
+                            correct3 = 1
+                        else:
+                            correct3 = 2
+                        if training.question3 == -1:
+                            user.training_set.update(
+                                question3=answer,
+                                correct3=correct3,
+                                questionclicked3=questionclicked,
+                                questionrightclicked3=questionrightclicked,
+                                questionhovered3=questionhovered,
+                                questionhoveredseconds3=questionhoveredseconds,
+                                startedquestion3=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                                finishedquestion3=datetime.datetime.now())
+                        return redirect('../training/3/')
+                    if question == 4:
+                        if answer == 1:
+                            correct4 = 1
+                        else:
+                            correct4 = 2
+                        if training.question4 == -1:
+                            user.training_set.update(
+                                question4=answer,
+                                correct4=correct4,
+                                questionclicked4=questionclicked,
+                                questionrightclicked4=questionrightclicked,
+                                questionhovered4=questionhovered,
+                                questionhoveredseconds4=questionhoveredseconds,
+                                startedquestion4=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                                finishedquestion4=datetime.datetime.now())
+                        return redirect('../training/4/')
+        context = { 'umid': '', 'welcomepage': 1 }
+        return render(request, 'games/Welcome.html', context)
     except:
         context = { 'umid': '', 'welcomepage': 1 }
         return render(request, 'games/Welcome.html', context)
+
+def trainingthankyou(request):
+    if ('REMOTE_USER' in request.META or request.session.get('umid', False)):
+        if ('REMOTE_USER' in request.META):
+            umid = request.META['REMOTE_USER']
+        if (request.session.get('umid', False)):
+            umid = request.session['umid']
+    else:
+        umid = ""
+    context = { 'umid': umid }
+    return render(request, 'games/Training Thankyou.html', context)
+
+def trainingfinal(request):
+    if ('REMOTE_USER' in request.META or request.session.get('umid', False)):
+        if ('REMOTE_USER' in request.META):
+            umid = request.META['REMOTE_USER']
+        if (request.session.get('umid', False)):
+            umid = request.session['umid']
+    else:
+        umid = ""
+    context = { 'umid': umid, 'welcomepage': 1 }
+    return render(request, 'games/Training Final.html', context)
+
+# def training(request):
+#     try:
+#         if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+#             (request.session.get('umid', False) and request.session['umid'] != "")):
+#             if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+#                 umid = request.META['REMOTE_USER']
+#             if (request.session.get('umid', False) and request.session['umid'] != ""):
+#                 umid = request.session['umid']
+#         else:
+#             umid = ""
+#         context = { 'umid': umid }
+#         # return render(request, 'games/Training.html', context)
+#         return redirect('/static/games/Phishing_Game_Keyboard_Accessible/index.html')
+#     except:
+#         context = { 'umid': '', 'welcomepage': 1 }
+#         return render(request, 'games/Welcome.html', context)
 
 def gameselection(request):
     try:
