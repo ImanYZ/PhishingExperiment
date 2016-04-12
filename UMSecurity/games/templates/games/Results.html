@@ -1274,7 +1274,7 @@
         yAxisData[{{ forloop.counter|add:"-1" }}] = {{ yAxisPoint }};
       {% endfor %}
 
-      drawRegression(xAxisData, yAxisData, "#GambleLotteryRiskSeekingDiagram", "Eckel-Grossman Risk Loving Effect on Holt-Laury Risk Aversion", -25, {{ usersRiskSeekingRiskAversionSlope }}, {{ usersRiskSeekingRiskAversionIntercept }}, {{ usersRiskSeekingRiskAversionR_value }}, {{ usersRiskSeekingRiskAversionP_value }}, {{ usersRiskSeekingRiskAversionStd_err }}, "Eckel-Grossman Risk Loving (Option #)", "Risk Loving (Option #)", 1);
+      drawRegression(xAxisData, yAxisData, "#GambleLotteryRiskSeekingDiagram", "Eckel-Grossman Risk Loving Effect on Holt-Laury Risk Aversion", -25, {{ usersRiskSeekingRiskAversionSlope }}, {{ usersRiskSeekingRiskAversionIntercept }}, {{ usersRiskSeekingRiskAversionR_value }}, {{ usersRiskSeekingRiskAversionP_value }}, {{ usersRiskSeekingRiskAversionStd_err }}, "Eckel-Grossman Risk Loving (Option #)", "Holt-Laury Risk Aversion (Option #)", 1);
 
       xAxisData = [];
       {% for xAxisPoint in secondsDurations %}

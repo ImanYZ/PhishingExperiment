@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^training/final/$', views.trainingfinal, name='trainingfinal'),
     url(r'^optout/$', views.optout, name='optout'),
     url(r'^postpone/$', views.postpone, name='postpone'),
+    url(r'^consent/$', views.consent, name='consent'),
     url(r'^gameselection/$', views.gameselection, name='gameselection'),
     url(r'^nextgame/(?P<current>[a-zA-Z]+)/$', views.nextgame, name='nextgame'),
     url(r'^lottery/$', views.lottery, name='lottery'),
@@ -37,6 +38,8 @@ urlpatterns = [
     url(r'^returning/final$', views.final, name='final'),
     url(r'^thankyou/$', views.thankyou, name='thankyou'),
     url(r'^thankyou/submit$', views.thankyousubmit, name='thankyousubmit'),
+    url(r'^survey/$', views.survey, name='survey'),
+    url(r'^survey/submit$', views.surveysubmit, name='surveysubmit'),
     url(r'^results/$', views.results, name='results'),
     url(r'^(?i)downloadCSV', views.downloadCSV, name='downloadCSV'),
 ]

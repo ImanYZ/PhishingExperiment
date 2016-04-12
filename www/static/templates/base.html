@@ -91,6 +91,27 @@
       </div>
     </nav>
 
+  {% if correct and not correctResult %}
+    <div id="GoldenFish">
+      <img src="{% static 'games/media/Animal-biggoldfishanimated.gif' %}" alt="Smiley Fish Swiming" height="100" width="130">
+    </div>
+    <div id="TropicalFishes">
+      <img src="{% static 'games/media/fish-school-of-tropical-fish-animated-gif-clr.gif' %}" alt="Smiley Fish Swiming" height="100" width="130">
+    </div>
+    {% if correct == 2 %}
+    <div id="HookedLine">
+      <img src="{% static 'games/media/Hook-line.png' %}" alt="Hooked Line" height="1" width="2200">
+    </div>
+    {% endif %}
+
+  {% endif %}
+
+  {% if trainingThankYou %}
+    <div id="GoldenFish">
+      <img src="{% static 'games/media/kpani_to12246_59408070.gif' %}" alt="Smiley Fish Swiming" height="156" width="182">
+    </div>
+  {% endif %}
+
     <div class="container theme-showcase" role="main">
 
       {% if not umid %}
@@ -160,7 +181,63 @@
     <script src="{% static 'games/js/ie10-viewport-bug-workaround.js' %}"></script>
 
     <script src="{% static 'games/js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
-    <script>
+
+  {% if correct and not correctResult %}
+    <script type="text/javascript">
+      var windowWidth = $( window ).width() + 160;
+      var windowHeight = $( window ).height() + 160;
+      $( "#TropicalFishes" ).animate({
+        right: "+=" + windowWidth.toString(),
+      }, 13000, function() {
+        // Animation complete.
+      });
+    {% if correct == 1 %}
+      $( "#GoldenFish" ).animate({
+        left: "+=" + windowWidth.toString(),
+      }, 13000, function() {
+        // Animation complete.
+      });
+    {% else %}
+      var $goldenFishObj = $("#GoldenFish");
+      // For webkit browsers: e.g. Chrome
+      $goldenFishObj.css({ WebkitTransform: 'rotate(315deg) scale(-1, 1)' });
+      // For Mozilla browser: e.g. Firefox
+      $goldenFishObj.css({ '-moz-transform': 'rotate(315deg) scale(-1, 1)' });
+      $goldenFishObj.css({ '-ms-transform': 'rotate(315deg) scale(-1, 1)' });
+      $goldenFishObj.css({ '-o-transform': 'rotate(315deg) scale(-1, 1)' });
+      $goldenFishObj.css({ 'transform': 'rotate(315deg) scale(-1, 1)' });
+      $goldenFishObj.css({ 'zoom': 1 });
+
+      $( "#GoldenFish" ).animate({
+        left: "+=" + windowWidth.toString(),
+        bottom: "+=" + windowHeight.toString(),
+      }, 10000, function() {
+        // Animation complete.
+      });
+      $( "#HookedLine" ).animate({
+        left: "+=" + windowWidth.toString(),
+        bottom: "+=" + windowHeight.toString(),
+      }, 10000, function() {
+        // Animation complete.
+      });
+    {% endif %}
+    </script>
+  {% endif %}
+
+  {% if trainingThankYou %}
+    <script type="text/javascript">
+      var windowWidth = $( window ).width() + 160;
+      var windowHeight = $( window ).height() + 160;
+      $( "#GoldenFish" ).animate({
+        left: "+=" + windowWidth.toString(),
+      }, 13000, function() {
+        // Animation complete.
+      });
+    </script>
+
+  {% endif %}
+
+    <script type="text/javascript">
       (function($){
           $(window).load(function(){
               $(".transBackground").mCustomScrollbar({

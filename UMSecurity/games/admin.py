@@ -9,10 +9,12 @@ from .models import Training
 from .models import Thankyou
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['username', 'version', 'totalearning', 'experimentearning',
-        'firstgame', 'secondgame', 'thirdgame', 'optout',
-        'postpone', 'startedstudy',
-        'finishedstudy', 'created', 'updated']
+    list_display = ['username', 'version', 'totalearning', 'experimentearning', 
+        'firstgame', 'secondgame', 'thirdgame', 'optout', 'postpone', 
+        'age', 'gender', 'emailsperday', 'ownpc', 'ownsmartphone', 'ownpda', 
+        'ownotherdevice', 'otherdevice', 'internetuse', 'startedstudy', 'finishedstudy', 
+        'fullname', 'street', 'city', 'state', 'zipcode', 'yearsofeduction', 'ethnicity', 
+        'maritalstatus', 'created', 'updated']
 
     search_fields = ['username']
 

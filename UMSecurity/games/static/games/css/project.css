@@ -112,6 +112,34 @@ h4, p, .alert {
   margin-top: 28px;
 }
 
+#GoldenFish {
+  position:fixed;
+  bottom:70px;
+  left:-130px;
+  -moz-transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
+
+#HookedLine {
+  position:fixed;
+  bottom:923px;
+  left:-341px;
+  -moz-transform: rotate(315deg) scale(-1, 1);
+  -webkit-transform: rotate(315deg) scale(-1, 1);
+  -o-transform: rotate(315deg) scale(-1, 1);
+  -ms-transform: rotate(315deg) scale(-1, 1);
+  transform: rotate(315deg) scale(-1, 1);
+}
+
+#TropicalFishes {
+  position:fixed;
+  bottom:130px;
+  right:-130px;
+}
+
 #GotoTrainingDIV {
   margin-bottom: 28px;
 }

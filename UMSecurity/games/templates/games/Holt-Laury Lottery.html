@@ -5,11 +5,11 @@
 {% block leftcontent %}
   <div class="" id="InstructionsDIV">
     <h1>{{ gameNum }}<sup>{% if gameNum == 1 %}st{% elif gameNum == 2 %}nd{% elif gameNum == 3 %}rd{% endif %}</sup> Game</h1>
-    <h4 id="PartNum">Part 1</h4>
-    <p id="Instruction0" style="display:none;">This game involves a lottery which is based on the results of a rolled 10-sided die.</p>
+    <h3 id="PartNum">Part 1</h3>
+    <p id="Instruction0" style="display:none;">This game involves a lottery which is based on the results of a rolled ten-sided die.</p>
     <ul>
       <li id="Instruction1" style="display:none;">There are 10 lotteries and each lottery is represented by a row in the following table.</li>
-      <li id="Instruction2" style="display:none;">For each lottery, please choose either option A or B. The roll of the die will determine your payoff in the chosen lottery.</li>
+      <li id="Instruction2" style="display:none;">For each lottery, please choose either option A or B. The roll of a ten-sided die will determine your payoff in the chosen lottery. Each outcome, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, is equally likely.</li>
       <li id="Instruction3" style="display:none;">For example, in the fifth row:
           <table class="table holt-laury-table">
             <thead>
@@ -65,7 +65,7 @@
           </ul>
       </li>
       <li id="Instruction4" style="display:none;">Please choose an option for each of the 10 lotteries and then submit your choices.</li>
-      <li id="Instruction5" style="display:none;">After submitting your choices, the computer will randomly pick one of the 10 lotteries, roll the die, and determine you your payoff.</li>
+      <li id="Instruction5" style="display:none;">The computer will then randomly pick one of the 10 lotteries, roll the die, and determine your payoff.</li>
       <li id="Instruction6" style="display:none;">You won <b>$<span id="PointsInInstructions">1234</span></b>.</li>
       <li id="Instruction7" style="display:none;">Are you willing to pay some money to find out which of the 10 lotteries was used?</li>
       <li id="Instruction8" style="display:none;">The computer has randomly picked an amount of money between $0 and $4. Please choose any amount between $0 and $4, inclusive, to indicate your willingness to pay for the information.
@@ -119,326 +119,328 @@
   <input type="hidden" name="Decision9" id="Decision9" value="">
   <input type="hidden" name="Decision10" id="Decision10" value="">
 
-  <table class="table holt-laury-table">
-    <thead>
-      <tr id="row0" class="text-center">
-        <td class="ColumnHeader">Lottery</td>
-        <td class="ColumnHeader">Option A</td>
-        <td class="ColumnHeader">Option B</td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr id="row1" class="text-center">
-        <td class="ColumnHeader">1</td>
-        <td class="slim">
-          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision1OptionA" name="A">
-            <table style="background-color: none; width:100%; width:100%;">
-              <tr class="die0">
-                <td style="text-align:left;">die is 1: </td>
-                <td style="text-align:right;">$5</td>
-              </tr>
-              <tr class="die1">
-                <td style="text-align:left;">die is 2-10: </td>
-                <td style="text-align:right;">$4</td>
-              </tr>
-            </table>
-          </button>
-        </td>
-        <td class="slim">
-          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision1OptionB" name="B">
-            <table style="background-color: none; width:100%;">
-              <tr class="die0">
-                <td style="text-align:left;">die is 1: </td>
-                <td style="text-align:right;">$10</td>
-              </tr>
-              <tr class="die1">
-                <td style="text-align:left;">die is 2-10: </td>
-                <td style="text-align:right;">$1</td>
-              </tr>
-            </table>
-          </button>
-        </td>
-      </tr>
-      <tr id="row2" class="text-center">
-        <td class="ColumnHeader">2</td>
-        <td class="slim">
-          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision2OptionA" name="A">
-            <table style="background-color: none; width:100%;">
-              <tr class="die0">
-                <td style="text-align:left;">die is 1-2: </td>
-                <td style="text-align:right;">$5</td>
-              </tr>
-              <tr class="die1">
-                <td style="text-align:left;">die is 3-10: </td>
-                <td style="text-align:right;">$4</td>
-              </tr>
-            </table>
-          </button>
-        </td>
-        <td class="slim">
-          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision2OptionB" name="B">
-            <table style="background-color: none; width:100%;">
-              <tr class="die0">
-                <td style="text-align:left;">die is 1-2: </td>
-                <td style="text-align:right;">$10</td>
-              </tr>
-              <tr class="die1">
-                <td style="text-align:left;">die is 3-10: </td>
-                <td style="text-align:right;">$1</td>
-              </tr>
-            </table>
-          </button>
-        </td>
-      </tr>
-      <tr id="row3" class="text-center">
-        <td class="ColumnHeader">3</td>
-        <td class="slim">
-          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision3OptionA" name="A">
-            <table style="background-color: none; width:100%;">
-              <tr class="die0">
-                <td style="text-align:left;">die is 1-3: </td>
-                <td style="text-align:right;">$5</td>
-              </tr>
-              <tr class="die1">
-                <td style="text-align:left;">die is 4-10: </td>
-                <td style="text-align:right;">$4</td>
-              </tr>
-            </table>
-          </button>
-        </td>
-        <td class="slim">
-          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision3OptionB" name="B">
-            <table style="background-color: none; width:100%;">
-              <tr class="die0">
-                <td style="text-align:left;">die is 1-3: </td>
-                <td style="text-align:right;">$10</td>
-              </tr>
-              <tr class="die1">
-                <td style="text-align:left;">die is 4-10: </td>
-                <td style="text-align:right;">$1</td>
-              </tr>
-            </table>
-          </button>
-        </td>
-      </tr>
-      <tr id="row4" class="text-center">
-        <td class="ColumnHeader">4</td>
-        <td class="slim">
-          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision4OptionA" name="A">
-            <table style="background-color: none; width:100%;">
-              <tr class="die0">
-                <td style="text-align:left;">die is 1-4: </td>
-                <td style="text-align:right;">$5</td>
-              </tr>
-              <tr class="die1">
-                <td style="text-align:left;">die is 5-10: </td>
-                <td style="text-align:right;">$4</td>
-              </tr>
-            </table>
-          </button>
-        </td>
-        <td class="slim">
-          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision4OptionB" name="B">
-            <table style="background-color: none; width:100%;">
-              <tr class="die0">
-                <td style="text-align:left;">die is 1-4: </td>
-                <td style="text-align:right;">$10</td>
-              </tr>
-              <tr class="die1">
-                <td style="text-align:left;">die is 5-10: </td>
-                <td style="text-align:right;">$1</td>
-              </tr>
-            </table>
-          </button>
-        </td>
-      </tr>
-      <tr id="row5" class="text-center">
-        <td class="ColumnHeader">5</td>
-        <td class="slim">
-          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision5OptionA" name="A">
-            <table style="background-color: none; width:100%;">
-              <tr class="die0">
-                <td style="text-align:left;">die is 1-5: </td>
-                <td style="text-align:right;">$5</td>
-              </tr>
-              <tr class="die1">
-                <td style="text-align:left;">die is 6-10: </td>
-                <td style="text-align:right;">$4</td>
-              </tr>
-            </table>
-          </button>
-        </td>
-        <td class="slim">
-          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision5OptionB" name="B">
-            <table style="background-color: none; width:100%;">
-              <tr class="die0">
-                <td style="text-align:left;">die is 1-5: </td>
-                <td style="text-align:right;">$10</td>
-              </tr>
-              <tr class="die1">
-                <td style="text-align:left;">die is 6-10: </td>
-                <td style="text-align:right;">$1</td>
-              </tr>
-            </table>
-          </button>
-        </td>
-      </tr>
-      <tr id="row6" class="text-center">
-        <td class="ColumnHeader">6</td>
-        <td class="slim">
-          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision6OptionA" name="A">
-            <table style="background-color: none; width:100%;">
-              <tr class="die0">
-                <td style="text-align:left;">die is 1-6: </td>
-                <td style="text-align:right;">$5</td>
-              </tr>
-              <tr class="die1">
-                <td style="text-align:left;">die is 7-10: </td>
-                <td style="text-align:right;">$4</td>
-              </tr>
-            </table>
-          </button>
-        </td>
-        <td class="slim">
-          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision6OptionB" name="B">
-            <table style="background-color: none; width:100%;">
-              <tr class="die0">
-                <td style="text-align:left;">die is 1-6: </td>
-                <td style="text-align:right;">$10</td>
-              </tr>
-              <tr class="die1">
-                <td style="text-align:left;">die is 7-10: </td>
-                <td style="text-align:right;">$1</td>
-              </tr>
-            </table>
-          </button>
-        </td>
-      </tr>
-      <tr id="row7" class="text-center">
-        <td class="ColumnHeader">7</td>
-        <td class="slim">
-          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision7OptionA" name="A">
-            <table style="background-color: none; width:100%;">
-              <tr class="die0">
-                <td style="text-align:left;">die is 1-7: </td>
-                <td style="text-align:right;">$5</td>
-              </tr>
-              <tr class="die1">
-                <td style="text-align:left;">die is 8-10: </td>
-                <td style="text-align:right;">$4</td>
-              </tr>
-            </table>
-          </button>
-        </td>
-        <td class="slim">
-          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision7OptionB" name="B">
-            <table style="background-color: none; width:100%;">
-              <tr class="die0">
-                <td style="text-align:left;">die is 1-7: </td>
-                <td style="text-align:right;">$10</td>
-              </tr>
-              <tr class="die1">
-                <td style="text-align:left;">die is 8-10: </td>
-                <td style="text-align:right;">$1</td>
-              </tr>
-            </table>
-          </button>
-        </td>
-      </tr>
-      <tr id="row8" class="text-center">
-        <td class="ColumnHeader">8</td>
-        <td class="slim">
-          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision8OptionA" name="A">
-            <table style="background-color: none; width:100%;">
-              <tr class="die0">
-                <td style="text-align:left;">die is 1-8: </td>
-                <td style="text-align:right;">$5</td>
-              </tr>
-              <tr class="die1">
-                <td style="text-align:left;">die is 9-10: </td>
-                <td style="text-align:right;">$4</td>
-              </tr>
-            </table>
-          </button>
-        </td>
-        <td class="slim">
-          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision8OptionB" name="B">
-            <table style="background-color: none; width:100%;">
-              <tr class="die0">
-                <td style="text-align:left;">die is 1-8: </td>
-                <td style="text-align:right;">$10</td>
-              </tr>
-              <tr class="die1">
-                <td style="text-align:left;">die is 9-10: </td>
-                <td style="text-align:right;">$1</td>
-              </tr>
-            </table>
-          </button>
-        </td>
-      </tr>
-      <tr id="row9" class="text-center">
-        <td class="ColumnHeader">9</td>
-        <td class="slim">
-          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision9OptionA" name="A">
-            <table style="background-color: none; width:100%;">
-              <tr class="die0">
-                <td style="text-align:left;">die is 1-9: </td>
-                <td style="text-align:right;">$5</td>
-              </tr>
-              <tr class="die1">
-                <td style="text-align:left;">die is 10: </td>
-                <td style="text-align:right;">$4</td>
-              </tr>
-            </table>
-          </button>
-        </td>
-        <td class="slim">
-          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision9OptionB" name="B">
-            <table style="background-color: none; width:100%;">
-              <tr class="die0">
-                <td style="text-align:left;">die is 1-9: </td>
-                <td style="text-align:right;">$10</td>
-              </tr>
-              <tr class="die1">
-                <td style="text-align:left;">die is 10: </td>
-                <td style="text-align:right;">$1</td>
-              </tr>
-            </table>
-          </button>
-        </td>
-      </tr>
-      <tr id="row10" class="text-center">
-        <td class="ColumnHeader">10</td>
-        <td class="slim">
-          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision10OptionA" name="A">
-            <table style="background-color: none; width:100%;">
-              <tr class="die0">
-                <td style="text-align:left;">die is 1-10: </td>
-                <td style="text-align:right;">$5</td>
-              </tr>
-            </table>
-          </button>
-        </td>
-        <td class="slim">
-          <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision10OptionB" name="B">
-            <table style="background-color: none; width:100%;">
-              <tr class="die0">
-                <td style="text-align:left;">die is 1-10: </td>
-                <td style="text-align:right;">$10</td>
-              </tr>
-            </table>
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="3"><!-- <h4 id="SubmitSection">If you select an option for every row, the submit button will appear.&nbsp;&nbsp;&nbsp;</h4> -->
-          <input type="submit" class="btn btn-lg btn-default pull-right disabled" id="SubmitBtn" value="Submit">
-          <h4 id="errorMessage" style="color: red; display:none;">Please select an option for evey row.</h4>
-          <h4 class="text-success" id="ResultNode"></h4>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div style="margin-top:31px;">
+    <table class="table holt-laury-table">
+      <thead>
+        <tr id="row0" class="text-center">
+          <td class="ColumnHeader">Lottery</td>
+          <td class="ColumnHeader">Option A</td>
+          <td class="ColumnHeader">Option B</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr id="row1" class="text-center">
+          <td class="ColumnHeader">1</td>
+          <td class="slim">
+            <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision1OptionA" name="A">
+              <table style="background-color: none; width:100%; width:100%;">
+                <tr class="die0">
+                  <td style="text-align:left;">die is 1: </td>
+                  <td style="text-align:right;">$5</td>
+                </tr>
+                <tr class="die1">
+                  <td style="text-align:left;">die is 2-10: </td>
+                  <td style="text-align:right;">$4</td>
+                </tr>
+              </table>
+            </button>
+          </td>
+          <td class="slim">
+            <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision1OptionB" name="B">
+              <table style="background-color: none; width:100%;">
+                <tr class="die0">
+                  <td style="text-align:left;">die is 1: </td>
+                  <td style="text-align:right;">$10</td>
+                </tr>
+                <tr class="die1">
+                  <td style="text-align:left;">die is 2-10: </td>
+                  <td style="text-align:right;">$1</td>
+                </tr>
+              </table>
+            </button>
+          </td>
+        </tr>
+        <tr id="row2" class="text-center">
+          <td class="ColumnHeader">2</td>
+          <td class="slim">
+            <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision2OptionA" name="A">
+              <table style="background-color: none; width:100%;">
+                <tr class="die0">
+                  <td style="text-align:left;">die is 1-2: </td>
+                  <td style="text-align:right;">$5</td>
+                </tr>
+                <tr class="die1">
+                  <td style="text-align:left;">die is 3-10: </td>
+                  <td style="text-align:right;">$4</td>
+                </tr>
+              </table>
+            </button>
+          </td>
+          <td class="slim">
+            <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision2OptionB" name="B">
+              <table style="background-color: none; width:100%;">
+                <tr class="die0">
+                  <td style="text-align:left;">die is 1-2: </td>
+                  <td style="text-align:right;">$10</td>
+                </tr>
+                <tr class="die1">
+                  <td style="text-align:left;">die is 3-10: </td>
+                  <td style="text-align:right;">$1</td>
+                </tr>
+              </table>
+            </button>
+          </td>
+        </tr>
+        <tr id="row3" class="text-center">
+          <td class="ColumnHeader">3</td>
+          <td class="slim">
+            <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision3OptionA" name="A">
+              <table style="background-color: none; width:100%;">
+                <tr class="die0">
+                  <td style="text-align:left;">die is 1-3: </td>
+                  <td style="text-align:right;">$5</td>
+                </tr>
+                <tr class="die1">
+                  <td style="text-align:left;">die is 4-10: </td>
+                  <td style="text-align:right;">$4</td>
+                </tr>
+              </table>
+            </button>
+          </td>
+          <td class="slim">
+            <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision3OptionB" name="B">
+              <table style="background-color: none; width:100%;">
+                <tr class="die0">
+                  <td style="text-align:left;">die is 1-3: </td>
+                  <td style="text-align:right;">$10</td>
+                </tr>
+                <tr class="die1">
+                  <td style="text-align:left;">die is 4-10: </td>
+                  <td style="text-align:right;">$1</td>
+                </tr>
+              </table>
+            </button>
+          </td>
+        </tr>
+        <tr id="row4" class="text-center">
+          <td class="ColumnHeader">4</td>
+          <td class="slim">
+            <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision4OptionA" name="A">
+              <table style="background-color: none; width:100%;">
+                <tr class="die0">
+                  <td style="text-align:left;">die is 1-4: </td>
+                  <td style="text-align:right;">$5</td>
+                </tr>
+                <tr class="die1">
+                  <td style="text-align:left;">die is 5-10: </td>
+                  <td style="text-align:right;">$4</td>
+                </tr>
+              </table>
+            </button>
+          </td>
+          <td class="slim">
+            <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision4OptionB" name="B">
+              <table style="background-color: none; width:100%;">
+                <tr class="die0">
+                  <td style="text-align:left;">die is 1-4: </td>
+                  <td style="text-align:right;">$10</td>
+                </tr>
+                <tr class="die1">
+                  <td style="text-align:left;">die is 5-10: </td>
+                  <td style="text-align:right;">$1</td>
+                </tr>
+              </table>
+            </button>
+          </td>
+        </tr>
+        <tr id="row5" class="text-center">
+          <td class="ColumnHeader">5</td>
+          <td class="slim">
+            <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision5OptionA" name="A">
+              <table style="background-color: none; width:100%;">
+                <tr class="die0">
+                  <td style="text-align:left;">die is 1-5: </td>
+                  <td style="text-align:right;">$5</td>
+                </tr>
+                <tr class="die1">
+                  <td style="text-align:left;">die is 6-10: </td>
+                  <td style="text-align:right;">$4</td>
+                </tr>
+              </table>
+            </button>
+          </td>
+          <td class="slim">
+            <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision5OptionB" name="B">
+              <table style="background-color: none; width:100%;">
+                <tr class="die0">
+                  <td style="text-align:left;">die is 1-5: </td>
+                  <td style="text-align:right;">$10</td>
+                </tr>
+                <tr class="die1">
+                  <td style="text-align:left;">die is 6-10: </td>
+                  <td style="text-align:right;">$1</td>
+                </tr>
+              </table>
+            </button>
+          </td>
+        </tr>
+        <tr id="row6" class="text-center">
+          <td class="ColumnHeader">6</td>
+          <td class="slim">
+            <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision6OptionA" name="A">
+              <table style="background-color: none; width:100%;">
+                <tr class="die0">
+                  <td style="text-align:left;">die is 1-6: </td>
+                  <td style="text-align:right;">$5</td>
+                </tr>
+                <tr class="die1">
+                  <td style="text-align:left;">die is 7-10: </td>
+                  <td style="text-align:right;">$4</td>
+                </tr>
+              </table>
+            </button>
+          </td>
+          <td class="slim">
+            <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision6OptionB" name="B">
+              <table style="background-color: none; width:100%;">
+                <tr class="die0">
+                  <td style="text-align:left;">die is 1-6: </td>
+                  <td style="text-align:right;">$10</td>
+                </tr>
+                <tr class="die1">
+                  <td style="text-align:left;">die is 7-10: </td>
+                  <td style="text-align:right;">$1</td>
+                </tr>
+              </table>
+            </button>
+          </td>
+        </tr>
+        <tr id="row7" class="text-center">
+          <td class="ColumnHeader">7</td>
+          <td class="slim">
+            <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision7OptionA" name="A">
+              <table style="background-color: none; width:100%;">
+                <tr class="die0">
+                  <td style="text-align:left;">die is 1-7: </td>
+                  <td style="text-align:right;">$5</td>
+                </tr>
+                <tr class="die1">
+                  <td style="text-align:left;">die is 8-10: </td>
+                  <td style="text-align:right;">$4</td>
+                </tr>
+              </table>
+            </button>
+          </td>
+          <td class="slim">
+            <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision7OptionB" name="B">
+              <table style="background-color: none; width:100%;">
+                <tr class="die0">
+                  <td style="text-align:left;">die is 1-7: </td>
+                  <td style="text-align:right;">$10</td>
+                </tr>
+                <tr class="die1">
+                  <td style="text-align:left;">die is 8-10: </td>
+                  <td style="text-align:right;">$1</td>
+                </tr>
+              </table>
+            </button>
+          </td>
+        </tr>
+        <tr id="row8" class="text-center">
+          <td class="ColumnHeader">8</td>
+          <td class="slim">
+            <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision8OptionA" name="A">
+              <table style="background-color: none; width:100%;">
+                <tr class="die0">
+                  <td style="text-align:left;">die is 1-8: </td>
+                  <td style="text-align:right;">$5</td>
+                </tr>
+                <tr class="die1">
+                  <td style="text-align:left;">die is 9-10: </td>
+                  <td style="text-align:right;">$4</td>
+                </tr>
+              </table>
+            </button>
+          </td>
+          <td class="slim">
+            <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision8OptionB" name="B">
+              <table style="background-color: none; width:100%;">
+                <tr class="die0">
+                  <td style="text-align:left;">die is 1-8: </td>
+                  <td style="text-align:right;">$10</td>
+                </tr>
+                <tr class="die1">
+                  <td style="text-align:left;">die is 9-10: </td>
+                  <td style="text-align:right;">$1</td>
+                </tr>
+              </table>
+            </button>
+          </td>
+        </tr>
+        <tr id="row9" class="text-center">
+          <td class="ColumnHeader">9</td>
+          <td class="slim">
+            <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision9OptionA" name="A">
+              <table style="background-color: none; width:100%;">
+                <tr class="die0">
+                  <td style="text-align:left;">die is 1-9: </td>
+                  <td style="text-align:right;">$5</td>
+                </tr>
+                <tr class="die1">
+                  <td style="text-align:left;">die is 10: </td>
+                  <td style="text-align:right;">$4</td>
+                </tr>
+              </table>
+            </button>
+          </td>
+          <td class="slim">
+            <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision9OptionB" name="B">
+              <table style="background-color: none; width:100%;">
+                <tr class="die0">
+                  <td style="text-align:left;">die is 1-9: </td>
+                  <td style="text-align:right;">$10</td>
+                </tr>
+                <tr class="die1">
+                  <td style="text-align:left;">die is 10: </td>
+                  <td style="text-align:right;">$1</td>
+                </tr>
+              </table>
+            </button>
+          </td>
+        </tr>
+        <tr id="row10" class="text-center">
+          <td class="ColumnHeader">10</td>
+          <td class="slim">
+            <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision10OptionA" name="A">
+              <table style="background-color: none; width:100%;">
+                <tr class="die0">
+                  <td style="text-align:left;">die is 1-10: </td>
+                  <td style="text-align:right;">$5</td>
+                </tr>
+              </table>
+            </button>
+          </td>
+          <td class="slim">
+            <button type="button" class="btn btn-lg btn-info btn-game btn-block" id="Decision10OptionB" name="B">
+              <table style="background-color: none; width:100%;">
+                <tr class="die0">
+                  <td style="text-align:left;">die is 1-10: </td>
+                  <td style="text-align:right;">$10</td>
+                </tr>
+              </table>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3"><!-- <h4 id="SubmitSection">If you select an option for every row, the submit button will appear.&nbsp;&nbsp;&nbsp;</h4> -->
+            <input type="submit" class="btn btn-lg btn-default pull-right disabled" id="SubmitBtn" value="Submit">
+            <h4 id="errorMessage" style="color: red; display:none;">Please select an option for evey row.</h4>
+            <h4 class="text-success" id="ResultNode"></h4>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 {% endblock %}
 
 {% block scontent %}

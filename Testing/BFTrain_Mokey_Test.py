@@ -225,6 +225,16 @@ def find_and_extract(parentObj, objName, xpath):
 
     return objText
 
+def find_by_ID_and_click(htmlObjID, browser):
+
+    htmlObj = exists_by_id(browser, htmlObjID, ignoreNone = True, waitToFind = False)
+    actionChains = ActionChains(browser)
+    while not htmlObj.is_displayed():
+        actionChains.send_keys(Keys.TAB).perform()
+        htmlObj = exists_by_id(browser, htmlObjID, ignoreNone = True, waitToFind = False)
+
+    click_and_wait(htmlObj, browser)
+
 def hover_and_click(htmlObj, browser):
 
     actionChains = ActionChains(browser)
@@ -279,8 +289,7 @@ def playLottery(browser):
             Decision1OptionBBtn = exists_by_id(browser, 'Decision' + str(index) + 'OptionB', ignoreNone = False, waitToFind = True)
             hover_and_click(Decision1OptionBBtn, browser)
 
-    SubmitBtnBtn = exists_by_id(browser, 'SubmitBtn', ignoreNone = False, waitToFind = True)
-    hover_and_click(SubmitBtnBtn, browser)
+    find_by_ID_and_click('SubmitBtn', browser)
 
     WillingnessAmount = exists_by_id(browser, 'WillingnessAmount', ignoreNone = False, waitToFind = True)
     willingnessRand = str(random.uniform(0.0, 4.0))
@@ -288,8 +297,7 @@ def playLottery(browser):
         WillingnessAmount.send_keys(willingnessRand)
     WillingnessAmount.send_keys(Keys.ENTER)
 
-    ContinueBtn = exists_by_id(browser, 'Continue', ignoreNone = False, waitToFind = True)
-    hover_and_click(ContinueBtn, browser)
+    find_by_ID_and_click('Continue', browser)
 
 def playTrust(browser, part):
 
@@ -305,8 +313,7 @@ def playTrust(browser, part):
         for intNum in range(moveRnd):
             sliderPin.send_keys(Keys.ARROW_LEFT)
 
-    SubmitBtnBtn = exists_by_id(browser, 'SliderSubmitBtn', ignoreNone = False, waitToFind = True)
-    hover_and_click(SubmitBtnBtn, browser)
+    find_by_ID_and_click('SliderSubmitBtn', browser)
 
 def playWholeTrust(browser):
 
@@ -326,12 +333,24 @@ def playWholeTrust(browser):
     isNotSubmitted = True
     while isNotSubmitted and errorNum < 25:
         try:
-            SubmitBtnBtn = exists_by_id(browser, 'SliderSubmitBtn', ignoreNone = True, waitToFind = False)
-            hover_and_click(SubmitBtnBtn, browser)
+            find_by_ID_and_click('SliderSubmitBtn', browser)
             isNotSubmitted = False
         except:
             print "I'm not able to continue yet."
             errorNum += 1
+
+def FindGame(browser):
+
+    Decision1OptionABtn = None
+    Gamble1 = None
+    Trust1 = None
+    while Decision1OptionABtn == None and Gamble1 == None and Trust1 == None:
+
+        Decision1OptionABtn = exists_by_id(browser, 'Decision1OptionA', ignoreNone = True, waitToFind = False)
+        Gamble1 = exists_by_id(browser, 'Gamble1', ignoreNone = True, waitToFind = False)
+        Trust1 = exists_by_id(browser, 'SliderSubmitBtn', ignoreNone = True, waitToFind = False)
+
+    return Decision1OptionABtn, Gamble1, Trust1
 
 def playGamble(browser):
 
@@ -361,7 +380,8 @@ while True:
     browser = webdriver.Firefox(firefox_profile)
 
     # Retrieve the content of the start page.
-    browser.get('https://bftrain.miserver.it.umich.edu')
+    # browser.get('https://bftrain.miserver.it.umich.edu')
+    browser.get('http://127.0.0.1:8000/')
     browser.maximize_window()
 
     html = exists_by_tag_name(browser, 'html', ignoreNone = False, waitToFind = True)
@@ -411,45 +431,108 @@ while True:
             YesBtn = exists_by_id(browser, "YesButton", ignoreNone = False, waitToFind = True)
             hover_and_click(YesBtn, browser)
 
-    GotoTrainingBtn = exists_by_id(browser, 'GotoTraining', ignoreNone = False, waitToFind = True)
-    hover_and_click(GotoTrainingBtn, browser)
+    # GotoTrainingBtn = exists_by_id(browser, 'GotoTraining', ignoreNone = False, waitToFind = True)
+    # hover_and_click(GotoTrainingBtn, browser)
 
-    fileNamesList = ['100015_1194_165.png', '119666_517_126.png', '119670_415_152.png', '119674_391_160.png', '119690_1416_152.png', '126234_1240_126.png', '185316_800_246.png', '185324_796_311.png', '185344_819_389.png', '19910_416_322.png', '199666_101_29.png', '199670_101_29.png', '201658_101_29.png', '201660_101_29.png', '201662_101_29.png', '201889_101_29.png', '201891_101_29.png', '201893_101_29.png', '202092_173_29.png', '202094_173_29.png', '202096_173_29.png', '202693_134_29.png', '202695_134_29.png', '202697_134_29.png', '202733_101_29.png', '202735_101_29.png', '202737_101_29.png', '202743_101_29.png', '202745_101_29.png', '202747_101_29.png', '220086.png', '220089_894_590.png', '220093.png', '220339.png', '220346.png', '220349.png', '220352_894_590.png', '220356.png', '220359.png', '220362.png', '220371.png', '220377.png', '220380_894_590.png', '220390.png', '220396.png', '262279.png', '262351.png', '262419.png', '262423_558_121.png', '262431_657_134.png', '262439_563_93.png', '264566_400_161.png', '264570.png', '264574.png', '264657_1240_126.png', '264665_894_590.png', '271141_720_470.png', '271145_327_218.png', '27253_465_189.png', '274445.png', '286051_101_29.png', '286053_101_29.png', '286055_101_29.png', '292881_534_55.png', '292887_772_454.png', '292891_580_441.png', '292895_600_238.png', '296019_519_76.png', '325682_556_81.png', '339488.png', '344120.png', '344123.png', '344126.png', '344129.png', '344534.png', '347674.png', '350077.png', '350301.png', '350310.png', '350318.png', '350327.png', '351290_558_408.png', '351296_738_371.png', '351308_578_190.png', '351814_812_328.png', '353884.png', '353893.png', '353902.png', '353905_753_422.png', '355876_786_307.png', '37551_894_60.png', '40168_457_186.png', '47330.png', '75591_306_213.png', 'Directions_Practice_Email.png', 'Directions_Practice_Email_488.png', 'Directions_Practice_Email_491.png', 'Directions_Practice_Email_494.png', 'Directions_Practice_Email_497.png', 'Directions_Practice_Email_500.png', 'loading.gif', 'Practice_Email.png', 'Practice_Email_490.png', 'Practice_Email_493.png', 'Practice_Email_496.png', 'Practice_Email_499.png', 'Practice_Email_502.png', 'Practice_Email_Question.png', 'Practice_Email_Question_489.png', 'Practice_Email_Question_492.png', 'Practice_Email_Question_495.png', 'Practice_Email_Question_498.png', 'Practice_Email_Question_501.png', 'Press_shift_to_simulate_tab_in_email_button_100.png', 'Press_shift_to_simulate_tab_in_email_button_101.png', 'Press_shift_to_simulate_tab_in_email_button_104.png', 'Press_shift_to_simulate_tab_in_email_button_105.png', 'Press_shift_to_simulate_tab_in_email_button_108.png', 'Press_shift_to_simulate_tab_in_email_button_111.png', 'Press_shift_to_simulate_tab_in_email_button_114.png', 'Press_shift_to_simulate_tab_in_email_button_115.png', 'Press_shift_to_simulate_tab_in_email_button_118.png', 'Press_shift_to_simulate_tab_in_email_button_119.png', 'Press_shift_to_simulate_tab_in_email_button_121.png', 'Press_shift_to_simulate_tab_in_email_button_123.png', 'Press_shift_to_simulate_tab_in_email_button_125.png', 'Press_shift_to_simulate_tab_in_email_button_127.png', 'Press_shift_to_simulate_tab_in_email_button_129.png', 'Press_shift_to_simulate_tab_in_email_button_131.png', 'Press_shift_to_simulate_tab_in_email_button_132.png', 'Press_shift_to_simulate_tab_in_email_button_134.png', 'Press_shift_to_simulate_tab_in_email_button_136.png', 'Press_shift_to_simulate_tab_in_email_button_138.png', 'Press_shift_to_simulate_tab_in_email_button_140.png', 'Press_shift_to_simulate_tab_in_email_button_142.png', 'Press_shift_to_simulate_tab_in_email_button_144.png', 'Press_shift_to_simulate_tab_in_email_button_147.png', 'Press_shift_to_simulate_tab_in_email_button_149.png', 'Press_shift_to_simulate_tab_in_email_button_151.png', 'Press_shift_to_simulate_tab_in_email_button_153.png', 'Press_shift_to_simulate_tab_in_email_button_87.png', 'Press_shift_to_simulate_tab_in_email_button_90.png', 'Press_shift_to_simulate_tab_in_email_button_93.png', 'Press_shift_to_simulate_tab_in_email_button_96.png', 'Press_Shift_T_to_simulate_tab_in_email_button.png', 'Press_shift_T_to_simulate_tab_in_email_button_84.png', 'Requirements_Text.png', 'Rollover.png', 'Rollover_103.png', 'Rollover_107.png', 'Rollover_91.png', 'Rollover_95.png', 'Rollover_99.png', 'Rollover_Caption_100.png', 'Rollover_Caption_101.png', 'Rollover_Caption_102.png', 'Rollover_Caption_104.png', 'Rollover_Caption_105.png', 'Rollover_Caption_106.png', 'Rollover_Caption_108.png', 'Rollover_Caption_109.png', 'Rollover_Caption_110.png', 'Rollover_Caption_111.png', 'Rollover_Caption_112.png', 'Rollover_Caption_113.png', 'Rollover_Caption_114.png', 'Rollover_Caption_115.png', 'Rollover_Caption_116.png', 'Rollover_Caption_117.png', 'Rollover_Caption_118.png', 'Rollover_Caption_119.png', 'Rollover_Caption_120.png', 'Rollover_Caption_121.png', 'Rollover_Caption_122.png', 'Rollover_Caption_123.png', 'Rollover_Caption_124.png', 'Rollover_Caption_125.png', 'Rollover_Caption_126.png', 'Rollover_Caption_127.png', 'Rollover_Caption_128.png', 'Rollover_Caption_129.png', 'Rollover_Caption_130.png', 'Rollover_Caption_131.png', 'Rollover_Caption_132.png', 'Rollover_Caption_133.png', 'Rollover_Caption_134.png', 'Rollover_Caption_135.png', 'Rollover_Caption_136.png', 'Rollover_Caption_137.png', 'Rollover_Caption_138.png', 'Rollover_Caption_139.png', 'Rollover_Caption_140.png', 'Rollover_Caption_141.png', 'Rollover_Caption_142.png', 'Rollover_Caption_143.png', 'Rollover_Caption_144.png', 'Rollover_Caption_145.png', 'Rollover_Caption_146.png', 'Rollover_Caption_147.png', 'Rollover_Caption_148.png', 'Rollover_Caption_149.png', 'Rollover_Caption_150.png', 'Rollover_Caption_151.png', 'Rollover_Caption_152.png', 'Rollover_Caption_153.png', 'Rollover_Caption_154.png', 'Rollover_Caption_155.png', 'Rollover_Caption_29.png', 'Rollover_Caption_31.png', 'Rollover_Caption_37.png', 'Rollover_Caption_38.png', 'Rollover_Caption_39.png', 'Rollover_Caption_46.png', 'Rollover_Caption_48.png', 'Rollover_Caption_50.png', 'Rollover_Caption_51.png', 'Rollover_Caption_52.png', 'Rollover_Caption_53.png', 'Rollover_Caption_54.png', 'Rollover_Caption_88.png', 'Rollover_Caption_89.png', 'Rollover_Caption_90.png', 'Rollover_Caption_92.png', 'Rollover_Caption_93.png', 'Rollover_Caption_94.png', 'Rollover_Caption_96.png', 'Rollover_Caption_97.png', 'Rollover_Caption_98.png', 'si321008.png', 'si321022.png', 'si335414.png', 'si335427.png', 'si335790.png', 'si335803.png', 'si336166.png', 'si336179.png', 'si336542.png', 'si336555.png', 'si336918.png', 'si336931.png', 'si339548.png', 'si339575.png', 'si339633.png', 'si339660.png', 'si341002.png', 'si341029.png', 'si341109.png', 'si341136.png', 'si343367.png', 'si343380.png', 'si343710.png', 'si343723.png', 'si344053.png', 'si344066.png', 'si344221.png', 'si344248.png', 'si344503.png', 'si344516.png', 'si345576.png', 'si345603.png', 'si345917.png', 'si345930.png', 'si346240.png', 'si346253.png', 'si346563.png', 'si346576.png', 'si346886.png', 'si346899.png', 'si347209.png', 'si347222.png', 'si347532.png', 'si347545.png', 'si347885.png', 'si347912.png', 'si348216.png', 'si348229.png', 'si348545.png', 'si348558.png', 'si348874.png', 'si348887.png', 'si349203.png', 'si349216.png', 'si349532.png', 'si349545.png', 'si349861.png', 'si349874.png', 'si352987.png', 'si353014.png', 'si353269.png', 'si353282.png', 'si353533.png', 'si353546.png', 'si353797.png', 'si353810.png', 'SmartShape_11.png', 'SmartShape_12.png', 'SmartShape_15.png', 'SmartShape_16.png', 'SmartShape_17.png', 'SmartShape_194.png', 'SmartShape_20.png', 'SmartShape_249.png', 'SmartShape_262.png', 'SmartShape_266.png', 'SmartShape_279.png', 'SmartShape_283.png', 'SmartShape_29.png', 'SmartShape_298.png', 'SmartShape_30.png', 'SmartShape_31.png', 'SmartShape_311.png', 'SmartShape_312.png', 'SmartShape_313.png', 'SmartShape_315.png', 'SmartShape_319.png', 'SmartShape_344.png', 'SmartShape_360.png', 'SmartShape_406.png', 'SmartShape_408.png', 'SmartShape_409.png', 'SmartShape_416.png', 'SmartShape_417.png', 'SmartShape_418.png', 'SmartShape_421.png', 'SmartShape_422.png', 'SmartShape_436.png', 'SmartShape_438.png', 'SmartShape_439.png', 'SmartShape_440.png', 'SmartShape_442.png', 'SmartShape_451.png', 'SmartShape_452.png', 'SmartShape_453.png', 'SmartShape_454.png', 'SmartShape_508.png', 'SmartShape_509.png', 'SmartShape_510.png', 'SmartShape_512.png', 'SmartShape_513.png', 'SmartShape_514.png', 'SmartShape_516.png', 'SmartShape_517.png', 'SmartShape_518.png', 'SmartShape_520.png', 'SmartShape_521.png', 'SmartShape_522.png', 'SmartShape_524.png', 'SmartShape_525.png', 'SmartShape_526.png', 'SmartShape_528.png', 'SmartShape_529.png', 'SmartShape_530.png', 'SmartShape_532.png', 'SmartShape_533.png', 'SmartShape_534.png', 'SmartShape_535.png', 'SmartShape_536.png', 'SmartShape_537.png', 'SmartShape_538.png', 'SmartShape_539.png', 'SmartShape_540.png', 'SmartShape_541.png', 'SmartShape_542.png', 'SmartShape_543.png', 'SmartShape_550.png', 'SmartShape_551.png', 'SmartShape_552.png', 'SmartShape_553.png', 'SmartShape_554.png', 'SmartShape_555.png', 'SmartShape_556.png', 'SmartShape_557.png', 'SmartShape_558.png', 'SmartShape_559.png', 'SmartShape_560.png', 'SmartShape_561.png', 'SmartShape_569.png', 'SmartShape_570.png', 'SmartShape_571.png', 'SmartShape_572.png', 'SmartShape_573.png', 'SmartShape_574.png', 'Text_Caption_10.png', 'Text_Caption_11.png', 'Text_Caption_12.png', 'Text_Caption_13.png', 'Text_Caption_14.png', 'Text_Caption_16.png', 'Text_Caption_17.png', 'Text_Caption_18.png', 'Text_Caption_19.png', 'Text_Caption_20.png', 'Text_Caption_21.png', 'Text_Caption_22.png', 'Text_Caption_23.png']
-    for fileName in fileNamesList:
-        browser.get("https://bftrain.miserver.it.umich.edu/static/games/Phishing_Game_Keyboard_Accessible/dr/" + fileName)
-        time.sleep(0.25)
+    find_by_ID_and_click('GotoTraining', browser)
 
-    browser.get("https://bftrain.miserver.it.umich.edu/gameselection")
+    startTrainingBtn = exists_by_id(browser, 'StartBtn', ignoreNone = False, waitToFind = True)
+    click_and_wait(startTrainingBtn, browser)
 
-    Decision1OptionABtn = None
-    Gamble1 = None
-    while Decision1OptionABtn == None and Gamble1 == None:
+    startTrainingBtn = exists_by_xpath(browser, '//*[@id="mCSB_1_container"]/div[2]/div[2]/a', ignoreNone = False, waitToFind = True)
+    click_and_wait(startTrainingBtn, browser)
 
-        Decision1OptionABtn = exists_by_id(browser, 'Decision1OptionA', ignoreNone = True, waitToFind = False)
-        Gamble1 = exists_by_id(browser, 'Gamble1', ignoreNone = True, waitToFind = False)
+    for index in range(4):
+        linkAnchor = exists_by_css_selector(browser, '.LinkAnchor', ignoreNone = False, waitToFind = True)
 
-    if Decision1OptionABtn != None:
-        playLottery(browser)
-        playWholeTrust(browser)
-        playGamble(browser)
-    if Gamble1 != None:
-        playGamble(browser)
-        playWholeTrust(browser)
-        playLottery(browser)
+        actionChains = ActionChains(browser)
+        if randint(0, 1) == 1:
+            actionChains.move_to_element(linkAnchor).perform()
 
-    randomString = base64.urlsafe_b64encode(os.urandom(13))
+        YesOrNo = randint(0, 1)
 
-    PretestComment = exists_by_id(browser, "PretestComment", ignoreNone = False, waitToFind = True)
-    PretestComment.send_keys(randomString)
+        if YesOrNo == 0:
+            find_by_ID_and_click("NoButton", browser)
+        else:
+            find_by_ID_and_click("YesButton", browser)
 
-    TrainingComment = exists_by_id(browser, "TrainingComment", ignoreNone = False, waitToFind = True)
-    TrainingComment.send_keys(randomString)
+        find_by_ID_and_click("Continue", browser)
 
-    GamesComment = exists_by_id(browser, "GamesComment", ignoreNone = False, waitToFind = True)
-    GamesComment.send_keys(randomString)
+        if index == 0:
+            find_by_ID_and_click("Continue", browser)
 
-    submitBtn = exists_by_tag_name(browser, "button", ignoreNone = False, waitToFind = True)
-    hover_and_click(submitBtn, browser)
+
+    find_by_ID_and_click("StartBtn", browser)
+
+    participationDecision = randint(0, 2)
+
+    if participationDecision == 0:
+        find_by_ID_and_click("ParticipateBtn", browser)
+
+        find_by_ID_and_click("ConsentSignature", browser)
+
+        find_by_ID_and_click("Continue", browser)
+
+        for gameIndex in range(3):
+            Decision1OptionABtn, Gamble1, Trust1 = FindGame(browser)
+
+            if Decision1OptionABtn != None:
+                playLottery(browser)
+            elif Gamble1 != None:
+                playGamble(browser)
+            elif Trust1 != None:
+                playWholeTrust(browser)
+
+        randomString = base64.urlsafe_b64encode(os.urandom(13))
+
+        PretestComment = exists_by_id(browser, "FullnameInput", ignoreNone = False, waitToFind = True)
+        PretestComment.send_keys(randomString)
+
+        PretestComment = exists_by_id(browser, "StreetInput", ignoreNone = False, waitToFind = True)
+        PretestComment.send_keys(randomString)
+
+        PretestComment = exists_by_id(browser, "CityInput", ignoreNone = False, waitToFind = True)
+        PretestComment.send_keys(randomString)
+
+        PretestComment = exists_by_id(browser, "StateInput", ignoreNone = False, waitToFind = True)
+        PretestComment.send_keys(randomString)
+
+        PretestComment = exists_by_id(browser, "ZipCodeInput", ignoreNone = False, waitToFind = True)
+        PretestComment.send_keys("12345")
+
+        find_by_ID_and_click("SubmitBtn")
+
+        SurveyComment = exists_by_name(browser, "Emailsperday", ignoreNone = False, waitToFind = True)
+        SurveyComment.send_keys(Keys.ENTER)
+
+        SurveyComment = exists_by_name(browser, "YearsOfInternet", ignoreNone = False, waitToFind = True)
+        SurveyComment.send_keys(Keys.ENTER)
+
+        find_by_ID_and_click("SubmitBtn")
+
+    elif participationDecision == 1:
+        find_by_ID_and_click("PostponeBtn", browser)
+
+        find_by_ID_and_click("StartBtn", browser)
+
+    elif participationDecision == 2:
+        find_by_ID_and_click("QuitBtn", browser)
+
+        find_by_ID_and_click("StartBtn", browser)
+
+
+
+    # PretestComment = exists_by_id(browser, "PretestComment", ignoreNone = False, waitToFind = True)
+    # PretestComment.send_keys(randomString)
+
+    # TrainingComment = exists_by_id(browser, "TrainingComment", ignoreNone = False, waitToFind = True)
+    # TrainingComment.send_keys(randomString)
+
+    # GamesComment = exists_by_id(browser, "GamesComment", ignoreNone = False, waitToFind = True)
+    # GamesComment.send_keys(randomString)
+
+    # submitBtn = exists_by_tag_name(browser, "button", ignoreNone = False, waitToFind = True)
+    # hover_and_click(submitBtn, browser)
 
     browser.quit();
     time.sleep(1)

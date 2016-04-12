@@ -34,11 +34,7 @@ def login(request):
     return welcome(request)
 
 def logout(request):
-    try:
-        del request.session['umid']
-    except KeyError:
-        pass
-    return render(request, 'games/Holt-Laury Lottery.html')
+    del request.session['umid']
 
 def welcome(request):
     if ('REMOTE_USER' in request.META or request.session.get('umid', False)):
@@ -57,267 +53,255 @@ def welcome(request):
 
 @ensure_csrf_cookie
 def pretest(request, question):
-    try:
-        if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
-            (request.session.get('umid', False) and request.session['umid'] != "")):
-            if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
-                umid = request.META['REMOTE_USER']
-            if (request.session.get('umid', False) and request.session['umid'] != ""):
-                umid = request.session['umid']
-            request.session['started'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
-            user = User.objects.get(username=umid)
-            if user.pretest_set.count() != 0:
-                if question == "":
-                    question = "1"
-                question = int(question)
-                pretest = user.pretest_set.all()[0]
-                for i in range(1, question + 1):
-                    if i == 1:
-                        answer = pretest.question1
-                        correct = pretest.correct1
-                    elif i == 2:
-                        answer = pretest.question2
-                        correct = pretest.correct2
-                    elif i == 3:
-                        answer = pretest.question3
-                        correct = pretest.correct3
-                    elif i == 4:
-                        answer = pretest.question4
-                        correct = pretest.correct4
-                    elif i == 5:
-                        answer = pretest.question5
-                        correct = pretest.correct5
-                    elif i == 6:
-                        answer = pretest.question6
-                        correct = pretest.correct6
-                    elif i == 7:
-                        answer = pretest.question7
-                        correct = pretest.correct7
-                    if answer == -1:
-                        question = i
-                        context = { 'umid': umid, 'answer':answer, 'question':question, 'welcomepage':1 }
-                        return render(request, 'games/Pretest.html', context)
-                context = { 'umid': umid, 'answer':answer, 'question':question, 'correct':correct, 'welcomepage':1 }
-                return render(request, 'games/Pretest.html', context)
-
-            context = { 'umid': umid, 'question':1, 'welcomepage':1 }
+    if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+        (request.session.get('umid', False) and request.session['umid'] != "")):
+        if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+            umid = request.META['REMOTE_USER']
+        if (request.session.get('umid', False) and request.session['umid'] != ""):
+            umid = request.session['umid']
+        request.session['started'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
+        user = User.objects.get(username=umid)
+        if user.pretest_set.count() != 0:
+            if question == "":
+                question = "1"
+            question = int(question)
+            pretest = user.pretest_set.all()[0]
+            for i in range(1, question + 1):
+                if i == 1:
+                    answer = pretest.question1
+                    correct = pretest.correct1
+                elif i == 2:
+                    answer = pretest.question2
+                    correct = pretest.correct2
+                elif i == 3:
+                    answer = pretest.question3
+                    correct = pretest.correct3
+                elif i == 4:
+                    answer = pretest.question4
+                    correct = pretest.correct4
+                elif i == 5:
+                    answer = pretest.question5
+                    correct = pretest.correct5
+                elif i == 6:
+                    answer = pretest.question6
+                    correct = pretest.correct6
+                elif i == 7:
+                    answer = pretest.question7
+                    correct = pretest.correct7
+                if answer == -1:
+                    question = i
+                    context = { 'umid': umid, 'answer':answer, 'question':question, 'welcomepage':1 }
+                    return render(request, 'games/Pretest.html', context)
+            context = { 'umid': umid, 'answer':answer, 'question':question, 'correct':correct, 'welcomepage':1 }
             return render(request, 'games/Pretest.html', context)
 
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-    except:
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
+        context = { 'umid': umid, 'question':1, 'welcomepage':1 }
+        return render(request, 'games/Pretest.html', context)
+
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
 
 def pretestsubmit(request):
-    try:
-        if request.method == 'POST':
-            if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
-                (request.session.get('umid', False) and request.session['umid'] != "")):
-                if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
-                    umid = request.META['REMOTE_USER']
-                if (request.session.get('umid', False) and request.session['umid'] != ""):
-                    umid = request.session['umid']
-                if ('answer' in request.POST and request.POST['answer'] != '' and
-                 'questionclicked' in request.POST and request.POST['questionclicked'] != '' and
-                 'questionrightclicked' in request.POST and request.POST['questionrightclicked'] != '' and
-                 'questionhovered' in request.POST and request.POST['questionhovered'] != '' and
-                 'questionhoveredseconds' in request.POST and request.POST['questionhoveredseconds'] != '' and
-                 'question' in request.POST and request.POST['question'] != ''):
-                    
-                    answer = int(request.POST['answer'])
-                    questionclicked = int(request.POST['questionclicked'])
-                    questionrightclicked = int(request.POST['questionrightclicked'])
-                    questionhovered = int(request.POST['questionhovered'])
-                    questionhoveredseconds = float(request.POST['questionhoveredseconds'])
-                    question = int(request.POST['question'])
-                    user = User.objects.get(username=umid)
-                    pretest = None
-                    if user.pretest_set.count() != 0:
-                        pretest = user.pretest_set.all()[0]
-                    if question == 1:
-                        if answer == 0:
-                            correct1 = 1
-                        else:
-                            correct1 = 2
-                        if pretest == None:
-                            user.pretest_set.create(
-                                question1=answer,
-                                correct1=correct1,
-                                questionclicked1=questionclicked,
-                                questionrightclicked1=questionrightclicked,
-                                questionhovered1=questionhovered,
-                                questionhoveredseconds1=questionhoveredseconds,
-                                startedquestion1=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
-                                finishedquestion1=datetime.datetime.now())
-                        return redirect('../pretest/2/')
-                    if question == 2:
-                        if answer == 1:
-                            correct2 = 1
-                        else:
-                            correct2 = 2
-                        if pretest.question2 == -1:
-                            user.pretest_set.update(
-                                question2=answer,
-                                correct2=correct2,
-                                questionclicked2=questionclicked,
-                                questionrightclicked2=questionrightclicked,
-                                questionhovered2=questionhovered,
-                                questionhoveredseconds2=questionhoveredseconds,
-                                startedquestion2=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
-                                finishedquestion2=datetime.datetime.now())
-                        return redirect('../pretest/3/')
-                    if question == 3:
-                        if answer == 0:
-                            correct3 = 1
-                        else:
-                            correct3 = 2
-                        if pretest.question3 == -1:
-                            user.pretest_set.update(
-                                question3=answer,
-                                correct3=correct3,
-                                questionclicked3=questionclicked,
-                                questionrightclicked3=questionrightclicked,
-                                questionhovered3=questionhovered,
-                                questionhoveredseconds3=questionhoveredseconds,
-                                startedquestion3=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
-                                finishedquestion3=datetime.datetime.now())
-                        return redirect('../pretest/4/')
-                    if question == 4:
-                        if answer == 0:
-                            correct4 = 1
-                        else:
-                            correct4 = 2
-                        if pretest.question4 == -1:
-                            user.pretest_set.update(
-                                question4=answer,
-                                correct4=correct4,
-                                questionclicked4=questionclicked,
-                                questionrightclicked4=questionrightclicked,
-                                questionhovered4=questionhovered,
-                                questionhoveredseconds4=questionhoveredseconds,
-                                startedquestion4=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
-                                finishedquestion4=datetime.datetime.now())
-                        return redirect('../pretest/5/')
-                    if question == 5:
-                        if answer == 0:
-                            correct5 = 1
-                        else:
-                            correct5 = 2
-                        if pretest.question5 == -1:
-                            user.pretest_set.update(
-                                question5=answer,
-                                correct5=correct5,
-                                questionclicked5=questionclicked,
-                                questionrightclicked5=questionrightclicked,
-                                questionhovered5=questionhovered,
-                                questionhoveredseconds5=questionhoveredseconds,
-                                startedquestion5=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
-                                finishedquestion5=datetime.datetime.now())
-                        return redirect('../pretest/6/')
-                    if question == 6:
-                        if answer == 0:
-                            correct6 = 1
-                        else:
-                            correct6 = 2
-                        if pretest.question6 == -1:
-                            user.pretest_set.update(
-                                question6=answer,
-                                correct6=correct6,
-                                questionclicked6=questionclicked,
-                                questionrightclicked6=questionrightclicked,
-                                questionhovered6=questionhovered,
-                                questionhoveredseconds6=questionhoveredseconds,
-                                startedquestion6=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
-                                finishedquestion6=datetime.datetime.now())
-                        return redirect('../pretest/7/')
-                    if question == 7:
-                        if answer == 1:
-                            correct7 = 1
-                        else:
-                            correct7 = 2
-                        if pretest.question7 == -1:
-                            user.pretest_set.update(
-                                question7=answer,
-                                correct7=correct7,
-                                questionclicked7=questionclicked,
-                                questionrightclicked7=questionrightclicked,
-                                questionhovered7=questionhovered,
-                                questionhoveredseconds7=questionhoveredseconds,
-                                startedquestion7=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
-                                finishedquestion7=datetime.datetime.now())
-                        return redirect('../pretest/results')
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-    except:
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-
-def pretestresults(request):
-    try:
+    if request.method == 'POST':
         if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
             (request.session.get('umid', False) and request.session['umid'] != "")):
             if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
                 umid = request.META['REMOTE_USER']
             if (request.session.get('umid', False) and request.session['umid'] != ""):
                 umid = request.session['umid']
-            user = User.objects.get(username=umid)
-            if user.pretest_set.count() != 0:
-                question = 7
-                answers = [-1]*8
-                pretest = user.pretest_set.all()[0]
-                correct = [-1]*8
-                for i in range(1, question + 1):
-                    if i == 1:
-                        answer = pretest.question1
-                        answers[1] = pretest.question1
-                        correct[1] = pretest.correct1
-                    elif i == 2:
-                        answer = pretest.question2
-                        answers[2] = pretest.question2
-                        correct[2] = pretest.correct2
-                    elif i == 3:
-                        answer = pretest.question3
-                        answers[3] = pretest.question3
-                        correct[3] = pretest.correct3
-                    elif i == 4:
-                        answer = pretest.question4
-                        answers[4] = pretest.question4
-                        correct[4] = pretest.correct4
-                    elif i == 5:
-                        answer = pretest.question5
-                        answers[5] = pretest.question5
-                        correct[5] = pretest.correct5
-                    elif i == 6:
-                        answer = pretest.question6
-                        answers[6] = pretest.question6
-                        correct[6] = pretest.correct6
-                    elif i == 7:
-                        answer = pretest.question7
-                        answers[7] = pretest.question7
-                        correct[7] = pretest.correct7
-                    if answer == -1:
-                        question = i
-                        context = { 'umid': umid, 'answer':answer, 'question':question, 'welcomepage':1 }
-                        return render(request, 'games/Pretest.html', context)
-                correctResult = 0
-                wrongResult = 0
-                for i in range(1, 8):
-                    if correct[i] == 1:
-                        correctResult = correctResult + 1
-                    elif correct[i] == 2:
-                        wrongResult = wrongResult + 1
-                context = { 'umid': umid, 'answers':answers, 'question':question,  'correct':correct, 
-                    'correctResult':correctResult, 'wrongResult':wrongResult, 'welcomepage':1 }
-                return render(request, 'games/Pretest Results.html', context)
+            if ('answer' in request.POST and request.POST['answer'] != '' and
+             'questionclicked' in request.POST and request.POST['questionclicked'] != '' and
+             'questionrightclicked' in request.POST and request.POST['questionrightclicked'] != '' and
+             'questionhovered' in request.POST and request.POST['questionhovered'] != '' and
+             'questionhoveredseconds' in request.POST and request.POST['questionhoveredseconds'] != '' and
+             'question' in request.POST and request.POST['question'] != ''):
+                
+                answer = int(request.POST['answer'])
+                questionclicked = int(request.POST['questionclicked'])
+                questionrightclicked = int(request.POST['questionrightclicked'])
+                questionhovered = int(request.POST['questionhovered'])
+                questionhoveredseconds = float(request.POST['questionhoveredseconds'])
+                question = int(request.POST['question'])
+                user = User.objects.get(username=umid)
+                pretest = None
+                if user.pretest_set.count() != 0:
+                    pretest = user.pretest_set.all()[0]
+                if question == 1:
+                    if answer == 0:
+                        correct1 = 1
+                    else:
+                        correct1 = 2
+                    if pretest == None:
+                        user.pretest_set.create(
+                            question1=answer,
+                            correct1=correct1,
+                            questionclicked1=questionclicked,
+                            questionrightclicked1=questionrightclicked,
+                            questionhovered1=questionhovered,
+                            questionhoveredseconds1=questionhoveredseconds,
+                            startedquestion1=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                            finishedquestion1=datetime.datetime.now())
+                    return redirect('../pretest/2/')
+                if question == 2:
+                    if answer == 1:
+                        correct2 = 1
+                    else:
+                        correct2 = 2
+                    if pretest.question2 == -1:
+                        user.pretest_set.update(
+                            question2=answer,
+                            correct2=correct2,
+                            questionclicked2=questionclicked,
+                            questionrightclicked2=questionrightclicked,
+                            questionhovered2=questionhovered,
+                            questionhoveredseconds2=questionhoveredseconds,
+                            startedquestion2=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                            finishedquestion2=datetime.datetime.now())
+                    return redirect('../pretest/3/')
+                if question == 3:
+                    if answer == 0:
+                        correct3 = 1
+                    else:
+                        correct3 = 2
+                    if pretest.question3 == -1:
+                        user.pretest_set.update(
+                            question3=answer,
+                            correct3=correct3,
+                            questionclicked3=questionclicked,
+                            questionrightclicked3=questionrightclicked,
+                            questionhovered3=questionhovered,
+                            questionhoveredseconds3=questionhoveredseconds,
+                            startedquestion3=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                            finishedquestion3=datetime.datetime.now())
+                    return redirect('../pretest/4/')
+                if question == 4:
+                    if answer == 0:
+                        correct4 = 1
+                    else:
+                        correct4 = 2
+                    if pretest.question4 == -1:
+                        user.pretest_set.update(
+                            question4=answer,
+                            correct4=correct4,
+                            questionclicked4=questionclicked,
+                            questionrightclicked4=questionrightclicked,
+                            questionhovered4=questionhovered,
+                            questionhoveredseconds4=questionhoveredseconds,
+                            startedquestion4=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                            finishedquestion4=datetime.datetime.now())
+                    return redirect('../pretest/5/')
+                if question == 5:
+                    if answer == 0:
+                        correct5 = 1
+                    else:
+                        correct5 = 2
+                    if pretest.question5 == -1:
+                        user.pretest_set.update(
+                            question5=answer,
+                            correct5=correct5,
+                            questionclicked5=questionclicked,
+                            questionrightclicked5=questionrightclicked,
+                            questionhovered5=questionhovered,
+                            questionhoveredseconds5=questionhoveredseconds,
+                            startedquestion5=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                            finishedquestion5=datetime.datetime.now())
+                    return redirect('../pretest/6/')
+                if question == 6:
+                    if answer == 0:
+                        correct6 = 1
+                    else:
+                        correct6 = 2
+                    if pretest.question6 == -1:
+                        user.pretest_set.update(
+                            question6=answer,
+                            correct6=correct6,
+                            questionclicked6=questionclicked,
+                            questionrightclicked6=questionrightclicked,
+                            questionhovered6=questionhovered,
+                            questionhoveredseconds6=questionhoveredseconds,
+                            startedquestion6=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                            finishedquestion6=datetime.datetime.now())
+                    return redirect('../pretest/7/')
+                if question == 7:
+                    if answer == 1:
+                        correct7 = 1
+                    else:
+                        correct7 = 2
+                    if pretest.question7 == -1:
+                        user.pretest_set.update(
+                            question7=answer,
+                            correct7=correct7,
+                            questionclicked7=questionclicked,
+                            questionrightclicked7=questionrightclicked,
+                            questionhovered7=questionhovered,
+                            questionhoveredseconds7=questionhoveredseconds,
+                            startedquestion7=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                            finishedquestion7=datetime.datetime.now())
+                    return redirect('../pretest/results')
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
 
-            return redirect('../1/')
+def pretestresults(request):
+    if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+        (request.session.get('umid', False) and request.session['umid'] != "")):
+        if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+            umid = request.META['REMOTE_USER']
+        if (request.session.get('umid', False) and request.session['umid'] != ""):
+            umid = request.session['umid']
+        user = User.objects.get(username=umid)
+        if user.pretest_set.count() != 0:
+            question = 7
+            answers = [-1]*8
+            pretest = user.pretest_set.all()[0]
+            correct = [-1]*8
+            for i in range(1, question + 1):
+                if i == 1:
+                    answer = pretest.question1
+                    answers[1] = pretest.question1
+                    correct[1] = pretest.correct1
+                elif i == 2:
+                    answer = pretest.question2
+                    answers[2] = pretest.question2
+                    correct[2] = pretest.correct2
+                elif i == 3:
+                    answer = pretest.question3
+                    answers[3] = pretest.question3
+                    correct[3] = pretest.correct3
+                elif i == 4:
+                    answer = pretest.question4
+                    answers[4] = pretest.question4
+                    correct[4] = pretest.correct4
+                elif i == 5:
+                    answer = pretest.question5
+                    answers[5] = pretest.question5
+                    correct[5] = pretest.correct5
+                elif i == 6:
+                    answer = pretest.question6
+                    answers[6] = pretest.question6
+                    correct[6] = pretest.correct6
+                elif i == 7:
+                    answer = pretest.question7
+                    answers[7] = pretest.question7
+                    correct[7] = pretest.correct7
+                if answer == -1:
+                    question = i
+                    context = { 'umid': umid, 'answer':answer, 'question':question, 'welcomepage':1 }
+                    return render(request, 'games/Pretest.html', context)
+            correctResult = 0
+            wrongResult = 0
+            for i in range(1, 8):
+                if correct[i] == 1:
+                    correctResult = correctResult + 1
+                elif correct[i] == 2:
+                    wrongResult = wrongResult + 1
+            context = { 'umid': umid, 'answers':answers, 'question':question,  'correct':correct, 
+                'correctResult':correctResult, 'wrongResult':wrongResult, 'welcomepage':1 }
+            return render(request, 'games/Pretest Results.html', context)
 
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-    except:
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
+        return redirect('../1/')
+
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
 
 def trainingwelcome(request):
     if ('REMOTE_USER' in request.META or request.session.get('umid', False)):
@@ -393,100 +377,96 @@ def training(request, question):
     return render(request, 'games/Welcome.html', context)
 
 def trainingsubmit(request):
-    try:
-        if request.method == 'POST':
-            if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
-                (request.session.get('umid', False) and request.session['umid'] != "")):
-                if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
-                    umid = request.META['REMOTE_USER']
-                if (request.session.get('umid', False) and request.session['umid'] != ""):
-                    umid = request.session['umid']
-                if ('answer' in request.POST and request.POST['answer'] != '' and
-                 'questionclicked' in request.POST and request.POST['questionclicked'] != '' and
-                 'questionrightclicked' in request.POST and request.POST['questionrightclicked'] != '' and
-                 'questionhovered' in request.POST and request.POST['questionhovered'] != '' and
-                 'questionhoveredseconds' in request.POST and request.POST['questionhoveredseconds'] != '' and
-                 'question' in request.POST and request.POST['question'] != ''):
-                    
-                    answer = int(request.POST['answer'])
-                    questionclicked = int(request.POST['questionclicked'])
-                    questionrightclicked = int(request.POST['questionrightclicked'])
-                    questionhovered = int(request.POST['questionhovered'])
-                    questionhoveredseconds = float(request.POST['questionhoveredseconds'])
-                    question = int(request.POST['question'])
-                    user = User.objects.get(username=umid)
-                    training = None
-                    if user.training_set.count() != 0:
-                        training = user.training_set.all()[0]
-                    if question == 1:
-                        if answer == 1:
-                            correct1 = 1
-                        else:
-                            correct1 = 2
-                        if training == None:
-                            user.training_set.create(
-                                question1=answer,
-                                correct1=correct1,
-                                questionclicked1=questionclicked,
-                                questionrightclicked1=questionrightclicked,
-                                questionhovered1=questionhovered,
-                                questionhoveredseconds1=questionhoveredseconds,
-                                startedquestion1=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
-                                finishedquestion1=datetime.datetime.now())
-                        return redirect('../training/1/')
-                    if question == 2:
-                        if answer == 1:
-                            correct2 = 1
-                        else:
-                            correct2 = 2
-                        if training.question2 == -1:
-                            user.training_set.update(
-                                question2=answer,
-                                correct2=correct2,
-                                questionclicked2=questionclicked,
-                                questionrightclicked2=questionrightclicked,
-                                questionhovered2=questionhovered,
-                                questionhoveredseconds2=questionhoveredseconds,
-                                startedquestion2=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
-                                finishedquestion2=datetime.datetime.now())
-                        return redirect('../training/2/')
-                    if question == 3:
-                        if answer == 0:
-                            correct3 = 1
-                        else:
-                            correct3 = 2
-                        if training.question3 == -1:
-                            user.training_set.update(
-                                question3=answer,
-                                correct3=correct3,
-                                questionclicked3=questionclicked,
-                                questionrightclicked3=questionrightclicked,
-                                questionhovered3=questionhovered,
-                                questionhoveredseconds3=questionhoveredseconds,
-                                startedquestion3=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
-                                finishedquestion3=datetime.datetime.now())
-                        return redirect('../training/3/')
-                    if question == 4:
-                        if answer == 1:
-                            correct4 = 1
-                        else:
-                            correct4 = 2
-                        if training.question4 == -1:
-                            user.training_set.update(
-                                question4=answer,
-                                correct4=correct4,
-                                questionclicked4=questionclicked,
-                                questionrightclicked4=questionrightclicked,
-                                questionhovered4=questionhovered,
-                                questionhoveredseconds4=questionhoveredseconds,
-                                startedquestion4=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
-                                finishedquestion4=datetime.datetime.now())
-                        return redirect('../training/4/')
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-    except:
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
+    if request.method == 'POST':
+        if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+            (request.session.get('umid', False) and request.session['umid'] != "")):
+            if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+                umid = request.META['REMOTE_USER']
+            if (request.session.get('umid', False) and request.session['umid'] != ""):
+                umid = request.session['umid']
+            if ('answer' in request.POST and request.POST['answer'] != '' and
+             'questionclicked' in request.POST and request.POST['questionclicked'] != '' and
+             'questionrightclicked' in request.POST and request.POST['questionrightclicked'] != '' and
+             'questionhovered' in request.POST and request.POST['questionhovered'] != '' and
+             'questionhoveredseconds' in request.POST and request.POST['questionhoveredseconds'] != '' and
+             'question' in request.POST and request.POST['question'] != ''):
+                
+                answer = int(request.POST['answer'])
+                questionclicked = int(request.POST['questionclicked'])
+                questionrightclicked = int(request.POST['questionrightclicked'])
+                questionhovered = int(request.POST['questionhovered'])
+                questionhoveredseconds = float(request.POST['questionhoveredseconds'])
+                question = int(request.POST['question'])
+                user = User.objects.get(username=umid)
+                training = None
+                if user.training_set.count() != 0:
+                    training = user.training_set.all()[0]
+                if question == 1:
+                    if answer == 1:
+                        correct1 = 1
+                    else:
+                        correct1 = 2
+                    if training == None:
+                        user.training_set.create(
+                            question1=answer,
+                            correct1=correct1,
+                            questionclicked1=questionclicked,
+                            questionrightclicked1=questionrightclicked,
+                            questionhovered1=questionhovered,
+                            questionhoveredseconds1=questionhoveredseconds,
+                            startedquestion1=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                            finishedquestion1=datetime.datetime.now())
+                    return redirect('../training/1/')
+                if question == 2:
+                    if answer == 1:
+                        correct2 = 1
+                    else:
+                        correct2 = 2
+                    if training.question2 == -1:
+                        user.training_set.update(
+                            question2=answer,
+                            correct2=correct2,
+                            questionclicked2=questionclicked,
+                            questionrightclicked2=questionrightclicked,
+                            questionhovered2=questionhovered,
+                            questionhoveredseconds2=questionhoveredseconds,
+                            startedquestion2=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                            finishedquestion2=datetime.datetime.now())
+                    return redirect('../training/2/')
+                if question == 3:
+                    if answer == 0:
+                        correct3 = 1
+                    else:
+                        correct3 = 2
+                    if training.question3 == -1:
+                        user.training_set.update(
+                            question3=answer,
+                            correct3=correct3,
+                            questionclicked3=questionclicked,
+                            questionrightclicked3=questionrightclicked,
+                            questionhovered3=questionhovered,
+                            questionhoveredseconds3=questionhoveredseconds,
+                            startedquestion3=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                            finishedquestion3=datetime.datetime.now())
+                    return redirect('../training/3/')
+                if question == 4:
+                    if answer == 1:
+                        correct4 = 1
+                    else:
+                        correct4 = 2
+                    if training.question4 == -1:
+                        user.training_set.update(
+                            question4=answer,
+                            correct4=correct4,
+                            questionclicked4=questionclicked,
+                            questionrightclicked4=questionrightclicked,
+                            questionhovered4=questionhovered,
+                            questionhoveredseconds4=questionhoveredseconds,
+                            startedquestion4=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                            finishedquestion4=datetime.datetime.now())
+                    return redirect('../training/4/')
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
 
 def trainingthankyou(request):
     if ('REMOTE_USER' in request.META or request.session.get('umid', False)):
@@ -496,7 +476,7 @@ def trainingthankyou(request):
             umid = request.session['umid']
     else:
         umid = ""
-    context = { 'umid': umid }
+    context = { 'umid': umid, 'welcomepage': 1, 'trainingThankYou': 1 }
     return render(request, 'games/Training Thankyou.html', context)
 
 def trainingfinal(request):
@@ -509,6 +489,17 @@ def trainingfinal(request):
         umid = ""
     context = { 'umid': umid, 'welcomepage': 1 }
     return render(request, 'games/Training Final.html', context)
+
+def consent(request):
+    if ('REMOTE_USER' in request.META or request.session.get('umid', False)):
+        if ('REMOTE_USER' in request.META):
+            umid = request.META['REMOTE_USER']
+        if (request.session.get('umid', False)):
+            umid = request.session['umid']
+    else:
+        umid = ""
+    context = { 'umid': umid, 'welcomepage': 1 }
+    return render(request, 'games/Consent.html', context)
 
 # def training(request):
 #     try:
@@ -528,117 +519,240 @@ def trainingfinal(request):
 #         return render(request, 'games/Welcome.html', context)
 
 def gameselection(request):
-    try:
-        if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
-            (request.session.get('umid', False) and request.session['umid'] != "")):
-            if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
-                umid = request.META['REMOTE_USER']
-            if (request.session.get('umid', False) and request.session['umid'] != ""):
-                umid = request.session['umid']
-            user = User.objects.get(username=umid)
-            if user.firstgame == "":
-                randNum = randint(1, 2)
-                if randNum == 1:
-                    user.firstgame = "lottery"
-                    user.thirdgame = "gamble"
-                elif randNum == 2:
-                    user.firstgame = "gamble"
-                    user.thirdgame = "lottery"
+    if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+        (request.session.get('umid', False) and request.session['umid'] != "")):
+        if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+            umid = request.META['REMOTE_USER']
+        if (request.session.get('umid', False) and request.session['umid'] != ""):
+            umid = request.session['umid']
+        user = User.objects.get(username=umid)
+        if user.firstgame == "":
+            randNum = randint(1, 6)
+            if randNum == 1:
+                user.firstgame = "lottery"
                 user.secondgame = "investment"
-                user.optout = False
-                user.postpone = False
-                user.save()
-            if user.firstgame == "lottery":
-                return redirect('../lottery')
-            return redirect('../gamble')
+                user.thirdgame = "gamble"
+            elif randNum == 2:
+                user.firstgame = "lottery"
+                user.secondgame = "gamble"
+                user.thirdgame = "investment"
+            elif randNum == 3:
+                user.firstgame = "gamble"
+                user.secondgame = "investment"
+                user.thirdgame = "lottery"
+            elif randNum == 4:
+                user.firstgame = "gamble"
+                user.secondgame = "lottery"
+                user.thirdgame = "investment"
+            elif randNum == 5:
+                user.firstgame = "investment"
+                user.secondgame = "lottery"
+                user.thirdgame = "gamble"
+            elif randNum == 6:
+                user.firstgame = "investment"
+                user.secondgame = "gamble"
+                user.thirdgame = "lottery"
+            user.optout = False
+            user.postpone = False
+            user.save()
+        if user.firstgame == "lottery":
+            return redirect('../lottery')
+        elif user.firstgame == "investment":
+            return redirect('../investment')
+        return redirect('../gamble')
 
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-    except:
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
 
 def nextgame(request, current):
-    try:
-        if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
-            (request.session.get('umid', False) and request.session['umid'] != "")):
-            if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
-                umid = request.META['REMOTE_USER']
-            if (request.session.get('umid', False) and request.session['umid'] != ""):
-                umid = request.session['umid']
-            user = User.objects.get(username=umid)
-            if user.firstgame != "":
-                if user.firstgame == "lottery" and user.secondgame == "gamble" and user.thirdgame == "investment":
-                    if current == "lottery":
-                        return redirect('../../gamble')
-                    if current == "gamble":
-                        return redirect('../../investment')
-                    if current == "investment":
-                        return redirect('../../thankyou')
-                if user.firstgame == "investment" and user.secondgame == "gamble" and user.thirdgame == "lottery":
-                    if current == "investment":
-                        return redirect('../../gamble')
-                    if current == "gamble":
-                        return redirect('../../lottery')
-                    if current == "lottery":
-                        return redirect('../../thankyou')
-                if user.firstgame == "gamble" and user.secondgame == "lottery" and user.thirdgame == "investment":
-                    if current == "gamble":
-                        return redirect('../../lottery')
-                    if current == "lottery":
-                        return redirect('../../investment')
-                    if current == "investment":
-                        return redirect('../../thankyou')
-                if user.firstgame == "gamble" and user.secondgame == "investment" and user.thirdgame == "lottery":
-                    if current == "gamble":
-                        return redirect('../../investment')
-                    if current == "investment":
-                        return redirect('../../lottery')
-                    if current == "lottery":
-                        return redirect('../../thankyou')
-                if user.firstgame == "lottery" and user.secondgame == "investment" and user.thirdgame == "gamble":
-                    if current == "lottery":
-                        return redirect('../../investment')
-                    if current == "investment":
-                        return redirect('../../gamble')
-                    if current == "gamble":
-                        return redirect('../../thankyou')
-                if user.firstgame == "investment" and user.secondgame == "lottery" and user.thirdgame == "gamble":
-                    if current == "investment":
-                        return redirect('../../lottery')
-                    if current == "lottery":
-                        return redirect('../../gamble')
-                    if current == "gamble":
-                        return redirect('../../thankyou')
-            else:
-                return redirect('../../gameselection')
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-    except:
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
+    if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+        (request.session.get('umid', False) and request.session['umid'] != "")):
+        if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+            umid = request.META['REMOTE_USER']
+        if (request.session.get('umid', False) and request.session['umid'] != ""):
+            umid = request.session['umid']
+        user = User.objects.get(username=umid)
+        if user.firstgame != "":
+            if user.firstgame == "lottery" and user.secondgame == "gamble" and user.thirdgame == "investment":
+                if current == "lottery":
+                    return redirect('../../gamble')
+                if current == "gamble":
+                    return redirect('../../investment')
+                if current == "investment":
+                    return redirect('../../thankyou')
+            if user.firstgame == "investment" and user.secondgame == "gamble" and user.thirdgame == "lottery":
+                if current == "investment":
+                    return redirect('../../gamble')
+                if current == "gamble":
+                    return redirect('../../lottery')
+                if current == "lottery":
+                    return redirect('../../thankyou')
+            if user.firstgame == "gamble" and user.secondgame == "lottery" and user.thirdgame == "investment":
+                if current == "gamble":
+                    return redirect('../../lottery')
+                if current == "lottery":
+                    return redirect('../../investment')
+                if current == "investment":
+                    return redirect('../../thankyou')
+            if user.firstgame == "gamble" and user.secondgame == "investment" and user.thirdgame == "lottery":
+                if current == "gamble":
+                    return redirect('../../investment')
+                if current == "investment":
+                    return redirect('../../lottery')
+                if current == "lottery":
+                    return redirect('../../thankyou')
+            if user.firstgame == "lottery" and user.secondgame == "investment" and user.thirdgame == "gamble":
+                if current == "lottery":
+                    return redirect('../../investment')
+                if current == "investment":
+                    return redirect('../../gamble')
+                if current == "gamble":
+                    return redirect('../../thankyou')
+            if user.firstgame == "investment" and user.secondgame == "lottery" and user.thirdgame == "gamble":
+                if current == "investment":
+                    return redirect('../../lottery')
+                if current == "lottery":
+                    return redirect('../../gamble')
+                if current == "gamble":
+                    return redirect('../../thankyou')
+        else:
+            return redirect('../../gameselection')
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
 
 @ensure_csrf_cookie
 def lottery(request):
-    try:
+    if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+        (request.session.get('umid', False) and request.session['umid'] != "")):
+        if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+            umid = request.META['REMOTE_USER']
+        if (request.session.get('umid', False) and request.session['umid'] != ""):
+            umid = request.session['umid']
+        request.session['started'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
+        user = User.objects.get(username=umid)
+        gameNum = 1
+        if user.firstgame == "lottery":
+            gameNum = 1
+        elif user.secondgame == "lottery":
+            gameNum = 2
+        elif user.thirdgame == "lottery":
+            gameNum = 3
+        if user.holtlaury_set.count() != 0:
+            holtLaury = user.holtlaury_set.all()[0]
+            decision = holtLaury.decision
+            die = [None]*11
+            die[1] = holtLaury.die1
+            die[2] = holtLaury.die2
+            die[3] = holtLaury.die3
+            die[4] = holtLaury.die4
+            die[5] = holtLaury.die5
+            die[6] = holtLaury.die6
+            die[7] = holtLaury.die7
+            die[8] = holtLaury.die8
+            die[9] = holtLaury.die9
+            die[10] = holtLaury.die10
+            option = [None]*11
+            option[1] = holtLaury.option1
+            option[2] = holtLaury.option2
+            option[3] = holtLaury.option3
+            option[4] = holtLaury.option4
+            option[5] = holtLaury.option5
+            option[6] = holtLaury.option6
+            option[7] = holtLaury.option7
+            option[8] = holtLaury.option8
+            option[9] = holtLaury.option9
+            option[10] = holtLaury.option10
+            result = holtLaury.points
+            originalPoints = holtLaury.originalPoints
+            willingnessNum = holtLaury.willingness
+            willingnessRand = holtLaury.willingnessRand
+            context = { 'umid': umid, 'decision':decision, 'die':die,
+                'option':option, 'result':result,
+                'originalPoints':originalPoints, 'willingnessNum':willingnessNum,
+                'willingnessRand':willingnessRand, 'gameNum':gameNum }
+            return render(request, 'games/Holt-Laury Lottery.html', context)
+    
+        context = { 'umid': umid, 'gameNum':gameNum }
+        return render(request, 'games/Holt-Laury Lottery.html', context)
+
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
+
+def lotterySubmit(request):
+    if request.method == 'POST':
+        requestPost = json.loads(request.body.decode('utf-8'))
         if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
             (request.session.get('umid', False) and request.session['umid'] != "")):
             if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
                 umid = request.META['REMOTE_USER']
             if (request.session.get('umid', False) and request.session['umid'] != ""):
                 umid = request.session['umid']
-            request.session['started'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
-            user = User.objects.get(username=umid)
-            gameNum = 1
-            if user.firstgame == "lottery":
-                gameNum = 1
-            elif user.secondgame == "lottery":
-                gameNum = 2
-            elif user.thirdgame == "lottery":
-                gameNum = 3
-            if user.holtlaury_set.count() != 0:
+            if ('DecisionsOption' in requestPost and requestPost['DecisionsOption'] != ''):
+                DecisionsOption = requestPost['DecisionsOption']
+                user = User.objects.get(username=umid)
+
+                decision = randint(1, 10)
+                die = [None]*11
+                result = 0
+
+                for index in range(1, 11): 
+                    die[index] = randint(1, 10)
+                    if decision == index:
+                        if DecisionsOption[decision] == 0:
+                            if die[index] <= decision:
+                                result = 5
+                            else:
+                                result = 4
+                        else:
+                            if die[index] <= decision:
+                                result = 10
+                            else:
+                                result = 1
+                
+                result = round(result, 2)
+                if user.holtlaury_set.count() == 0:
+                    user.holtlaury_set.create(decision=decision,
+                        option1=DecisionsOption[1], option2=DecisionsOption[2],
+                        option3=DecisionsOption[3], option4=DecisionsOption[4],
+                        option5=DecisionsOption[5], option6=DecisionsOption[6],
+                        option7=DecisionsOption[7], option8=DecisionsOption[8],
+                        option9=DecisionsOption[9], option10=DecisionsOption[10],
+                        die1=die[1], die2=die[2],
+                        die3=die[3], die4=die[4],
+                        die5=die[5], die6=die[6],
+                        die7=die[7], die8=die[8],
+                        die9=die[9], die10=die[10],
+                        points=result, originalPoints=result,
+                        started=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                        finished=datetime.datetime.now())
+
+                return JsonResponse({ 'decision':decision, 
+                    'die':die[decision], 'result':result })
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
+
+def lotteryWillingness(request):
+    if request.method == 'POST':
+        requestPost = json.loads(request.body.decode('utf-8'))
+        if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+            (request.session.get('umid', False) and request.session['umid'] != "")):
+            if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+                umid = request.META['REMOTE_USER']
+            if (request.session.get('umid', False) and request.session['umid'] != ""):
+                umid = request.session['umid']
+            if ('willingnessNum' in requestPost and requestPost['willingnessNum'] != ''):
+                willingnessNum = round(requestPost['willingnessNum'], 2)
+                user = User.objects.get(username=umid)
+
+                willingnessRand = round(randint(0, int((4 - 0) / 0.01)) * 0.01 + 0, 2)
+
                 holtLaury = user.holtlaury_set.all()[0]
+                result = round(holtLaury.points, 2)
+                originalPoints = round(holtLaury.originalPoints, 2)
+                if willingnessRand <= willingnessNum:
+                    result = round(holtLaury.points, 2) - willingnessRand
                 decision = holtLaury.decision
+
                 die = [None]*11
                 die[1] = holtLaury.die1
                 die[2] = holtLaury.die2
@@ -661,160 +775,121 @@ def lottery(request):
                 option[8] = holtLaury.option8
                 option[9] = holtLaury.option9
                 option[10] = holtLaury.option10
-                result = holtLaury.points
-                originalPoints = holtLaury.originalPoints
-                willingnessNum = holtLaury.willingness
-                willingnessRand = holtLaury.willingnessRand
-                context = { 'umid': umid, 'decision':decision, 'die':die,
-                    'option':option, 'result':result,
-                    'originalPoints':originalPoints, 'willingnessNum':willingnessNum,
-                    'willingnessRand':willingnessRand, 'gameNum':gameNum }
-                return render(request, 'games/Holt-Laury Lottery.html', context)
-        
-            context = { 'umid': umid, 'gameNum':gameNum }
-            return render(request, 'games/Holt-Laury Lottery.html', context)
 
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-    except:
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
+                user.holtlaury_set.update(willingness=willingnessNum, willingnessRand=willingnessRand,
+                    points=result)
 
-def lotterySubmit(request):
-    try:
-        if request.method == 'POST':
-            requestPost = json.loads(request.body.decode('utf-8'))
-            if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
-                (request.session.get('umid', False) and request.session['umid'] != "")):
-                if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
-                    umid = request.META['REMOTE_USER']
-                if (request.session.get('umid', False) and request.session['umid'] != ""):
-                    umid = request.session['umid']
-                if ('DecisionsOption' in requestPost and requestPost['DecisionsOption'] != ''):
-                    DecisionsOption = requestPost['DecisionsOption']
-                    user = User.objects.get(username=umid)
-
-                    decision = randint(1, 10)
-                    die = [None]*11
-                    result = 0
-
-                    for index in range(1, 11): 
-                        die[index] = randint(1, 10)
-                        if decision == index:
-                            if DecisionsOption[decision] == 0:
-                                if die[index] <= decision:
-                                    result = 5
-                                else:
-                                    result = 4
-                            else:
-                                if die[index] <= decision:
-                                    result = 10
-                                else:
-                                    result = 1
-                    
-                    result = round(result, 2)
-                    if user.holtlaury_set.count() == 0:
-                        user.holtlaury_set.create(decision=decision,
-                            option1=DecisionsOption[1], option2=DecisionsOption[2],
-                            option3=DecisionsOption[3], option4=DecisionsOption[4],
-                            option5=DecisionsOption[5], option6=DecisionsOption[6],
-                            option7=DecisionsOption[7], option8=DecisionsOption[8],
-                            option9=DecisionsOption[9], option10=DecisionsOption[10],
-                            die1=die[1], die2=die[2],
-                            die3=die[3], die4=die[4],
-                            die5=die[5], die6=die[6],
-                            die7=die[7], die8=die[8],
-                            die9=die[9], die10=die[10],
-                            points=result, originalPoints=result,
-                            started=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
-                            finished=datetime.datetime.now())
-
-                    return JsonResponse({ 'decision':decision, 
-                        'die':die[decision], 'result':result })
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-    except:
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-
-def lotteryWillingness(request):
-    try:
-        if request.method == 'POST':
-            requestPost = json.loads(request.body.decode('utf-8'))
-            if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
-                (request.session.get('umid', False) and request.session['umid'] != "")):
-                if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
-                    umid = request.META['REMOTE_USER']
-                if (request.session.get('umid', False) and request.session['umid'] != ""):
-                    umid = request.session['umid']
-                if ('willingnessNum' in requestPost and requestPost['willingnessNum'] != ''):
-                    willingnessNum = round(requestPost['willingnessNum'], 2)
-                    user = User.objects.get(username=umid)
-
-                    willingnessRand = round(randint(0, int((4 - 0) / 0.01)) * 0.01 + 0, 2)
-
-                    holtLaury = user.holtlaury_set.all()[0]
-                    result = round(holtLaury.points, 2)
-                    originalPoints = round(holtLaury.originalPoints, 2)
-                    if willingnessRand <= willingnessNum:
-                        result = round(holtLaury.points, 2) - willingnessRand
-                    decision = holtLaury.decision
-
-                    die = [None]*11
-                    die[1] = holtLaury.die1
-                    die[2] = holtLaury.die2
-                    die[3] = holtLaury.die3
-                    die[4] = holtLaury.die4
-                    die[5] = holtLaury.die5
-                    die[6] = holtLaury.die6
-                    die[7] = holtLaury.die7
-                    die[8] = holtLaury.die8
-                    die[9] = holtLaury.die9
-                    die[10] = holtLaury.die10
-                    option = [None]*11
-                    option[1] = holtLaury.option1
-                    option[2] = holtLaury.option2
-                    option[3] = holtLaury.option3
-                    option[4] = holtLaury.option4
-                    option[5] = holtLaury.option5
-                    option[6] = holtLaury.option6
-                    option[7] = holtLaury.option7
-                    option[8] = holtLaury.option8
-                    option[9] = holtLaury.option9
-                    option[10] = holtLaury.option10
-
-                    user.holtlaury_set.update(willingness=willingnessNum, willingnessRand=willingnessRand,
-                        points=result)
-
-                    return JsonResponse({ 'decision':decision, 'willingnessRand':willingnessRand,
-                        'option':option, 'die':die, 'result':result, 'originalPoints':originalPoints })
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-    except:
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
+                return JsonResponse({ 'decision':decision, 'willingnessRand':willingnessRand,
+                    'option':option, 'die':die, 'result':result, 'originalPoints':originalPoints })
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
 
 @ensure_csrf_cookie
 def gamble(request):
-    try:
+    if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+        (request.session.get('umid', False) and request.session['umid'] != "")):
+        if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+            umid = request.META['REMOTE_USER']
+        if (request.session.get('umid', False) and request.session['umid'] != ""):
+            umid = request.session['umid']
+        request.session['started'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
+        user = User.objects.get(username=umid)
+        gameNum = 1
+        if user.firstgame == "gamble":
+            gameNum = 1
+        elif user.secondgame == "gamble":
+            gameNum = 2
+        elif user.thirdgame == "gamble":
+            gameNum = 3
+        if user.gamble_set.count() != 0:
+            gamble = user.gamble_set.all()[0]
+            chosen = gamble.chosen
+            coin = [None]*10
+            coin[1] = gamble.coin1
+            coin[2] = gamble.coin2
+            coin[3] = gamble.coin3
+            coin[4] = gamble.coin4
+            coin[5] = gamble.coin5
+            coin[6] = gamble.coin6
+            coin[7] = gamble.coin7
+            coin[8] = gamble.coin8
+            coin[9] = gamble.coin9
+            result = round(gamble.points, 2)
+            originalPoints = round(gamble.originalPoints, 2)
+            willingnessNum = gamble.willingness
+            willingnessRand = gamble.willingnessRand
+            context = { 'umid': umid, 'chosen':chosen, 'coin':coin, 'result':result,
+                'originalPoints':originalPoints, 'willingnessNum':willingnessNum,
+                'willingnessRand':willingnessRand, 'gameNum':gameNum }
+            return render(request, 'games/Eckel-Grossman Gamble.html', context)
+    
+        context = { 'umid': umid, 'gameNum':gameNum }
+        return render(request, 'games/Eckel-Grossman Gamble.html', context)
+
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
+
+def gambleSubmit(request):
+    if request.method == 'POST':
+        requestPost = json.loads(request.body.decode('utf-8'))
         if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
             (request.session.get('umid', False) and request.session['umid'] != "")):
             if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
                 umid = request.META['REMOTE_USER']
             if (request.session.get('umid', False) and request.session['umid'] != ""):
                 umid = request.session['umid']
-            request.session['started'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
-            user = User.objects.get(username=umid)
-            gameNum = 1
-            if user.firstgame == "gamble":
-                gameNum = 1
-            elif user.secondgame == "gamble":
-                gameNum = 2
-            elif user.thirdgame == "gamble":
-                gameNum = 3
-            if user.gamble_set.count() != 0:
+            if ('chosen' in requestPost and requestPost['chosen'] != ''):
+                chosen = requestPost['chosen']
+                user = User.objects.get(username=umid)
+
+                coin = [None]*11
+                result = 0
+
+                for index in range(1, 10): 
+                    coin[index] = random.getrandbits(1)
+                    if chosen == index:
+                        if coin[index]:
+                            result = 4 + 1 * (index - 1)
+                        else:
+                            result = 4 - 0.5 * (index - 1)
+                
+                result = round(result, 2)
+                if user.gamble_set.count() == 0:
+                    user.gamble_set.create(chosen=chosen,
+                        coin1=coin[1], coin2=coin[2],
+                        coin3=coin[3], coin4=coin[4],
+                        coin5=coin[5], coin6=coin[6],
+                        coin7=coin[7], coin8=coin[8],
+                        coin9=coin[9], points=result, originalPoints=result,
+                        started=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                        finished=datetime.datetime.now())
+
+                return JsonResponse({ 'chosen':chosen, 
+                    'coin':coin[chosen], 'result':result })
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
+
+def gambleWillingness(request):
+    if request.method == 'POST':
+        requestPost = json.loads(request.body.decode('utf-8'))
+        if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+            (request.session.get('umid', False) and request.session['umid'] != "")):
+            if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+                umid = request.META['REMOTE_USER']
+            if (request.session.get('umid', False) and request.session['umid'] != ""):
+                umid = request.session['umid']
+            if ('willingnessNum' in requestPost and requestPost['willingnessNum'] != ''):
+                willingnessNum = round(requestPost['willingnessNum'], 2)
+                user = User.objects.get(username=umid)
+
+                willingnessRand = round(randint(0, int((1 - 0) / 0.01)) * 0.01 + 0, 2)
+
                 gamble = user.gamble_set.all()[0]
+                result = round(gamble.points, 2)
+                if willingnessRand <= willingnessNum:
+                    result = round(gamble.points, 2) - willingnessRand
                 chosen = gamble.chosen
+
                 coin = [None]*10
                 coin[1] = gamble.coin1
                 coin[2] = gamble.coin2
@@ -825,509 +900,463 @@ def gamble(request):
                 coin[7] = gamble.coin7
                 coin[8] = gamble.coin8
                 coin[9] = gamble.coin9
-                result = round(gamble.points, 2)
-                originalPoints = round(gamble.originalPoints, 2)
-                willingnessNum = gamble.willingness
-                willingnessRand = gamble.willingnessRand
-                context = { 'umid': umid, 'chosen':chosen, 'coin':coin, 'result':result,
-                    'originalPoints':originalPoints, 'willingnessNum':willingnessNum,
-                    'willingnessRand':willingnessRand, 'gameNum':gameNum }
-                return render(request, 'games/Eckel-Grossman Gamble.html', context)
-        
-            context = { 'umid': umid, 'gameNum':gameNum }
-            return render(request, 'games/Eckel-Grossman Gamble.html', context)
 
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-    except:
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
+                user.gamble_set.update(willingness=willingnessNum, willingnessRand=willingnessRand,
+                    points=result)
 
-def gambleSubmit(request):
-    try:
-        if request.method == 'POST':
-            requestPost = json.loads(request.body.decode('utf-8'))
-            if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
-                (request.session.get('umid', False) and request.session['umid'] != "")):
-                if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
-                    umid = request.META['REMOTE_USER']
-                if (request.session.get('umid', False) and request.session['umid'] != ""):
-                    umid = request.session['umid']
-                if ('chosen' in requestPost and requestPost['chosen'] != ''):
-                    chosen = requestPost['chosen']
-                    user = User.objects.get(username=umid)
-
-                    coin = [None]*11
-                    result = 0
-
-                    for index in range(1, 10): 
-                        coin[index] = random.getrandbits(1)
-                        if chosen == index:
-                            if coin[index]:
-                                result = 4 + 1 * (index - 1)
-                            else:
-                                result = 4 - 0.5 * (index - 1)
-                    
-                    result = round(result, 2)
-                    if user.gamble_set.count() == 0:
-                        user.gamble_set.create(chosen=chosen,
-                            coin1=coin[1], coin2=coin[2],
-                            coin3=coin[3], coin4=coin[4],
-                            coin5=coin[5], coin6=coin[6],
-                            coin7=coin[7], coin8=coin[8],
-                            coin9=coin[9], points=result, originalPoints=result,
-                            started=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
-                            finished=datetime.datetime.now())
-
-                    return JsonResponse({ 'chosen':chosen, 
-                        'coin':coin[chosen], 'result':result })
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-    except:
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-
-def gambleWillingness(request):
-    try:
-        if request.method == 'POST':
-            requestPost = json.loads(request.body.decode('utf-8'))
-            if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
-                (request.session.get('umid', False) and request.session['umid'] != "")):
-                if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
-                    umid = request.META['REMOTE_USER']
-                if (request.session.get('umid', False) and request.session['umid'] != ""):
-                    umid = request.session['umid']
-                if ('willingnessNum' in requestPost and requestPost['willingnessNum'] != ''):
-                    willingnessNum = round(requestPost['willingnessNum'], 2)
-                    user = User.objects.get(username=umid)
-
-                    willingnessRand = round(randint(0, int((1 - 0) / 0.01)) * 0.01 + 0, 2)
-
-                    gamble = user.gamble_set.all()[0]
-                    result = round(gamble.points, 2)
-                    if willingnessRand <= willingnessNum:
-                        result = round(gamble.points, 2) - willingnessRand
-                    chosen = gamble.chosen
-
-                    coin = [None]*10
-                    coin[1] = gamble.coin1
-                    coin[2] = gamble.coin2
-                    coin[3] = gamble.coin3
-                    coin[4] = gamble.coin4
-                    coin[5] = gamble.coin5
-                    coin[6] = gamble.coin6
-                    coin[7] = gamble.coin7
-                    coin[8] = gamble.coin8
-                    coin[9] = gamble.coin9
-
-                    user.gamble_set.update(willingness=willingnessNum, willingnessRand=willingnessRand,
-                        points=result)
-
-                    return JsonResponse({ 'chosen':chosen, 'willingnessRand':willingnessRand,
-                        'coin':coin, 'result':result })
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-    except:
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
+                return JsonResponse({ 'chosen':chosen, 'willingnessRand':willingnessRand,
+                    'coin':coin, 'result':result })
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
 
 @ensure_csrf_cookie
 def investment(request):
-    try:
+    if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+        (request.session.get('umid', False) and request.session['umid'] != "")):
+        if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+            umid = request.META['REMOTE_USER']
+        if (request.session.get('umid', False) and request.session['umid'] != ""):
+            umid = request.session['umid']
+        request.session['started'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
+        user = User.objects.get(username=umid)
+        gameNum = 1
+        if user.firstgame == "investment":
+            gameNum = 1
+        elif user.secondgame == "investment":
+            gameNum = 2
+        elif user.thirdgame == "investment":
+            gameNum = 3
+        if user.investment_set.count() != 0:
+            investment = user.investment_set.all()[0]
+            invested = investment.invested
+
+            if investment.otherreturned != -1 or investment.otherinvested != -1:
+                context = { 'umid': umid, 'invested':invested, 'gameNum':gameNum, 'finished':1 }
+                return render(request, 'games/Trust Game.html', context)
+
+            context = { 'umid': umid, 'invested':invested, 'gameNum':gameNum }
+            return render(request, 'games/Trust Game.html', context)
+    
+        context = { 'umid': umid, 'gameNum':gameNum }
+        return render(request, 'games/Trust Game.html', context)
+
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
+
+def investmentSubmit(request):
+    if request.method == 'POST':
         if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
             (request.session.get('umid', False) and request.session['umid'] != "")):
             if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
                 umid = request.META['REMOTE_USER']
             if (request.session.get('umid', False) and request.session['umid'] != ""):
                 umid = request.session['umid']
-            request.session['started'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
-            user = User.objects.get(username=umid)
-            gameNum = 1
-            if user.firstgame == "investment":
-                gameNum = 1
-            elif user.secondgame == "investment":
-                gameNum = 2
-            elif user.thirdgame == "investment":
-                gameNum = 3
-            if user.investment_set.count() != 0:
-                investment = user.investment_set.all()[0]
-                invested = investment.invested
+            if ('invested' in request.POST and request.POST['invested'] != ''):
+                invested = request.POST['invested']
+                user = User.objects.get(username=umid)
 
-                if investment.otherreturned != -1 or investment.otherinvested != -1:
-                    context = { 'umid': umid, 'invested':invested, 'gameNum':gameNum, 'finished':1 }
-                    return render(request, 'games/Trust Game.html', context)
+                if user.investment_set.count() == 0:
+                    user.investment_set.create(invested=invested,
+                        startedinvested=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                        finishedinvested=datetime.datetime.now())
+                else:
+                    user.investment_set.update(invested=invested,
+                        startedinvested=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                        finishedinvested=datetime.datetime.now())
 
-                context = { 'umid': umid, 'invested':invested, 'gameNum':gameNum }
-                return render(request, 'games/Trust Game.html', context)
-        
-            context = { 'umid': umid, 'gameNum':gameNum }
-            return render(request, 'games/Trust Game.html', context)
-
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-    except:
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-
-def investmentSubmit(request):
-    try:
-        if request.method == 'POST':
-            if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
-                (request.session.get('umid', False) and request.session['umid'] != "")):
-                if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
-                    umid = request.META['REMOTE_USER']
-                if (request.session.get('umid', False) and request.session['umid'] != ""):
-                    umid = request.session['umid']
-                if ('invested' in request.POST and request.POST['invested'] != ''):
-                    invested = request.POST['invested']
-                    user = User.objects.get(username=umid)
-
-                    if user.investment_set.count() == 0:
-                        user.investment_set.create(invested=invested,
-                            startedinvested=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
-                            finishedinvested=datetime.datetime.now())
-                    else:
-                        user.investment_set.update(invested=invested,
-                            startedinvested=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
-                            finishedinvested=datetime.datetime.now())
-
-                    return redirect('../returning/2/')
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-    except:
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
+                return redirect('../returning/2/')
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
 
 @ensure_csrf_cookie
 def returned(request, part):
-    try:
+    if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+        (request.session.get('umid', False) and request.session['umid'] != "")):
+        if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+            umid = request.META['REMOTE_USER']
+        if (request.session.get('umid', False) and request.session['umid'] != ""):
+            umid = request.session['umid']
+        request.session['started'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
+        user = User.objects.get(username=umid)
+        gameNum = 1
+        if user.firstgame == "investment":
+            gameNum = 1
+        elif user.secondgame == "investment":
+            gameNum = 2
+        elif user.thirdgame == "investment":
+            gameNum = 3
+        if user.investment_set.count() != 0:
+            if part == "":
+                return redirect('../investment')
+            part = int(part)
+            if part >= 2 and part <= 7:
+                investment = user.investment_set.all()[0]
+                for i in range(2, part + 1):
+                    if i == 2:
+                        returned = investment.returned0
+                    elif i == 3:
+                        returned = investment.returned1
+                    elif i == 4:
+                        returned = investment.returned2
+                    elif i == 5:
+                        returned = investment.returned3
+                    elif i == 6:
+                        returned = investment.returned4
+                    elif i == 7:
+                        returned = investment.returned5
+                    if returned == -1:
+                        part = i
+                        context = { 'umid': umid, 'returned':0, 'part':part, 'gameNum':gameNum }
+                        return render(request, 'games/Trust Game.html', context)
+                if investment.otherreturned != -1 or investment.otherinvested != -1:
+                    context = { 'umid': umid, 'returned':returned, 'part':part, 'gameNum':gameNum, 'finished':1 }
+                    return render(request, 'games/Trust Game.html', context)
+                context = { 'umid': umid, 'returned':returned, 'part':part, 'gameNum':gameNum }
+                return render(request, 'games/Trust Game.html', context)
+            else:
+                return redirect('../investment')
+
+        context = { 'umid': umid, 'gameNum':gameNum }
+        return render(request, 'games/Trust Game.html', context)
+
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
+
+def returnedSubmit(request):
+    if request.method == 'POST':
         if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
             (request.session.get('umid', False) and request.session['umid'] != "")):
             if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
                 umid = request.META['REMOTE_USER']
             if (request.session.get('umid', False) and request.session['umid'] != ""):
                 umid = request.session['umid']
-            request.session['started'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
-            user = User.objects.get(username=umid)
-            gameNum = 1
-            if user.firstgame == "investment":
-                gameNum = 1
-            elif user.secondgame == "investment":
-                gameNum = 2
-            elif user.thirdgame == "investment":
-                gameNum = 3
-            if user.investment_set.count() != 0:
-                if part == "":
-                    return redirect('../investment')
-                part = int(part)
-                if part >= 2 and part <= 7:
-                    investment = user.investment_set.all()[0]
-                    for i in range(2, part + 1):
-                        if i == 2:
-                            returned = investment.returned0
-                        elif i == 3:
-                            returned = investment.returned1
-                        elif i == 4:
-                            returned = investment.returned2
-                        elif i == 5:
-                            returned = investment.returned3
-                        elif i == 6:
-                            returned = investment.returned4
-                        elif i == 7:
-                            returned = investment.returned5
-                        if returned == -1:
-                            part = i
-                            context = { 'umid': umid, 'returned':0, 'part':part, 'gameNum':gameNum }
-                            return render(request, 'games/Trust Game.html', context)
-                    if investment.otherreturned != -1 or investment.otherinvested != -1:
-                        context = { 'umid': umid, 'returned':returned, 'part':part, 'gameNum':gameNum, 'finished':1 }
-                        return render(request, 'games/Trust Game.html', context)
-                    context = { 'umid': umid, 'returned':returned, 'part':part, 'gameNum':gameNum }
-                    return render(request, 'games/Trust Game.html', context)
-                else:
-                    return redirect('../investment')
-
-            context = { 'umid': umid, 'gameNum':gameNum }
-            return render(request, 'games/Trust Game.html', context)
-
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-    except:
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-
-def returnedSubmit(request):
-    try:
-        if request.method == 'POST':
-            if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
-                (request.session.get('umid', False) and request.session['umid'] != "")):
-                if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
-                    umid = request.META['REMOTE_USER']
-                if (request.session.get('umid', False) and request.session['umid'] != ""):
-                    umid = request.session['umid']
-                if ('returned' in request.POST and request.POST['returned'] != '' and
-                 'part' in request.POST and request.POST['part'] != ''):
-                    returned = int(request.POST['returned'])
-                    part = int(request.POST['part'])
-                    user = User.objects.get(username=umid)
-                    if part == 2:
-                        user.investment_set.update(
-                            returned0=returned,
-                            startedreturned0=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
-                            finishedreturned0=datetime.datetime.now())
-                        return redirect('../returning/3/')
-                    if part == 3:
-                        user.investment_set.update(
-                            returned1=returned,
-                            startedreturned1=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
-                            finishedreturned1=datetime.datetime.now())
-                        return redirect('../returning/4/')
-                    if part == 4:
-                        user.investment_set.update(
-                            returned2=returned,
-                            startedreturned2=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
-                            finishedreturned2=datetime.datetime.now())
-                        return redirect('../returning/5/')
-                    if part == 5:
-                        user.investment_set.update(
-                            returned3=returned,
-                            startedreturned3=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
-                            finishedreturned3=datetime.datetime.now())
-                        return redirect('../returning/6/')
-                    if part == 6:
-                        user.investment_set.update(
-                            returned4=returned,
-                            startedreturned4=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
-                            finishedreturned4=datetime.datetime.now())
-                        return redirect('../returning/7/')
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-    except:
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
+            if ('returned' in request.POST and request.POST['returned'] != '' and
+             'part' in request.POST and request.POST['part'] != ''):
+                returned = int(request.POST['returned'])
+                part = int(request.POST['part'])
+                user = User.objects.get(username=umid)
+                if part == 2:
+                    user.investment_set.update(
+                        returned0=returned,
+                        startedreturned0=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                        finishedreturned0=datetime.datetime.now())
+                    return redirect('../returning/3/')
+                if part == 3:
+                    user.investment_set.update(
+                        returned1=returned,
+                        startedreturned1=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                        finishedreturned1=datetime.datetime.now())
+                    return redirect('../returning/4/')
+                if part == 4:
+                    user.investment_set.update(
+                        returned2=returned,
+                        startedreturned2=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                        finishedreturned2=datetime.datetime.now())
+                    return redirect('../returning/5/')
+                if part == 5:
+                    user.investment_set.update(
+                        returned3=returned,
+                        startedreturned3=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                        finishedreturned3=datetime.datetime.now())
+                    return redirect('../returning/6/')
+                if part == 6:
+                    user.investment_set.update(
+                        returned4=returned,
+                        startedreturned4=datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p'),
+                        finishedreturned4=datetime.datetime.now())
+                    return redirect('../returning/7/')
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
 
 @ensure_csrf_cookie
 def final(request):
-    try:
-        if request.method == 'POST':
-            requestPost = json.loads(request.body.decode('utf-8'))
-            if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
-                (request.session.get('umid', False) and request.session['umid'] != "")):
-                if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
-                    umid = request.META['REMOTE_USER']
-                if (request.session.get('umid', False) and request.session['umid'] != ""):
-                    umid = request.session['umid']
-                if ('returned' in requestPost and requestPost['returned'] != ''):
-                    returned = int(requestPost['returned'])
-                    part = 7
-                    user = User.objects.get(username=umid)
+    if request.method == 'POST':
+        requestPost = json.loads(request.body.decode('utf-8'))
+        if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+            (request.session.get('umid', False) and request.session['umid'] != "")):
+            if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+                umid = request.META['REMOTE_USER']
+            if (request.session.get('umid', False) and request.session['umid'] != ""):
+                umid = request.session['umid']
+            if ('returned' in requestPost and requestPost['returned'] != ''):
+                returned = int(requestPost['returned'])
+                part = 7
+                user = User.objects.get(username=umid)
+                gameNum = 1
+                if user.firstgame == "investment":
                     gameNum = 1
-                    if user.firstgame == "investment":
-                        gameNum = 1
-                    elif user.secondgame == "investment":
-                        gameNum = 2
-                    elif user.thirdgame == "investment":
-                        gameNum = 3
-                    if user.investment_set.count() != 0:
-                        investment = user.investment_set.all()[0]
-                        if investment.otherreturned == -1 and investment.otherinvested == -1:
-                            for i in range(2, part + 1):
-                                if i == 2:
-                                    returned = investment.returned0
-                                elif i == 3:
-                                    returned = investment.returned1
-                                elif i == 4:
-                                    returned = investment.returned2
-                                elif i == 5:
-                                    returned = investment.returned3
-                                elif i == 6:
-                                    returned = investment.returned4
-                                elif i == 7:
-                                    returned = int(requestPost['returned'])
-                                    investment.returned5 = returned
-                                    investment.startedreturned5 = datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p')
-                                    investment.finishedreturned5 = datetime.datetime.now()
-                                    investment.save()
-                                if returned == -1:
-                                    part = i
-                                    context = { 'umid': umid, 'returned':returned, 'part':part, 'gameNum':gameNum }
-                                    return render(request, 'games/Trust Game.html', context)
-                            
-                            otherPlayer = None
-                            otherPlayers = Investment.objects.filter(otherreturned=-1).filter(otherinvested=-1).exclude(user=user)
-                            for other in otherPlayers:
-                                if other.invested != -1 and other.returned5 != -1:
-                                    otherPlayer = other
-                                    break
-                            if otherPlayer == None:
-                                return JsonResponse({ 'found':0 })
-                            InvestOrReturn = random.getrandbits(1)
-                            if InvestOrReturn:
-                                investAmount = investment.invested
-                                if investAmount == 0:
-                                    returnAmount = otherPlayer.returned0
-                                elif investAmount == 1:
-                                    returnAmount = otherPlayer.returned1
-                                elif investAmount == 2:
-                                    returnAmount = otherPlayer.returned2
-                                elif investAmount == 3:
-                                    returnAmount = otherPlayer.returned3
-                                elif investAmount == 4:
-                                    returnAmount = otherPlayer.returned4
-                                elif investAmount == 5:
-                                    returnAmount = otherPlayer.returned5
-                                investment.otherreturned = returnAmount
-                                otherPlayer.otherinvested = investAmount
+                elif user.secondgame == "investment":
+                    gameNum = 2
+                elif user.thirdgame == "investment":
+                    gameNum = 3
+                if user.investment_set.count() != 0:
+                    investment = user.investment_set.all()[0]
+                    if investment.otherreturned == -1 and investment.otherinvested == -1:
+                        for i in range(2, part + 1):
+                            if i == 2:
+                                returned = investment.returned0
+                            elif i == 3:
+                                returned = investment.returned1
+                            elif i == 4:
+                                returned = investment.returned2
+                            elif i == 5:
+                                returned = investment.returned3
+                            elif i == 6:
+                                returned = investment.returned4
+                            elif i == 7:
+                                returned = int(requestPost['returned'])
+                                investment.returned5 = returned
+                                investment.startedreturned5 = datetime.datetime.strptime(request.session['started'], '%b %d %Y %I:%M:%S %p')
+                                investment.finishedreturned5 = datetime.datetime.now()
+                                investment.save()
+                            if returned == -1:
+                                part = i
+                                context = { 'umid': umid, 'returned':returned, 'part':part, 'gameNum':gameNum }
+                                return render(request, 'games/Trust Game.html', context)
+                        
+                        otherPlayer = None
+                        otherPlayersComparison = Investment.objects.filter(otherreturned=-1).filter(otherinvested=-1)
+                        otherPlayers = Investment.objects.filter(user__version='Pilot').exclude(user=user).order_by('?')
+                        for other in otherPlayers:
+                            if other.invested != -1 and other.returned5 != -1 and not other in otherPlayersComparison:
+                                otherPlayer = other
+                                break
+                        if otherPlayer == None:
+                            return JsonResponse({ 'found':0 })
+                        InvestOrReturn = random.getrandbits(1)
+                        if InvestOrReturn:
+                            investAmount = investment.invested
+                            if investAmount == 0:
+                                returnAmount = otherPlayer.returned0
+                            elif investAmount == 1:
+                                returnAmount = otherPlayer.returned1
+                            elif investAmount == 2:
+                                returnAmount = otherPlayer.returned2
+                            elif investAmount == 3:
+                                returnAmount = otherPlayer.returned3
+                            elif investAmount == 4:
+                                returnAmount = otherPlayer.returned4
+                            elif investAmount == 5:
+                                returnAmount = otherPlayer.returned5
+                            investment.otherreturned = returnAmount
+                            # otherPlayer.otherinvested = investAmount
 
-                                investment.points = 5 - investAmount + returnAmount
-                                otherPlayer.points = 5 + (3 * investAmount) - returnAmount
+                            investment.points = 5 - investAmount + returnAmount
+                            # otherPlayer.points = 5 + (3 * investAmount) - returnAmount
 
-                            else:
-                                investAmount = otherPlayer.invested
-                                if investAmount == 0:
-                                    returnAmount = investment.returned0
-                                elif investAmount == 1:
-                                    returnAmount = investment.returned1
-                                elif investAmount == 2:
-                                    returnAmount = investment.returned2
-                                elif investAmount == 3:
-                                    returnAmount = investment.returned3
-                                elif investAmount == 4:
-                                    returnAmount = investment.returned4
-                                elif investAmount == 5:
-                                    returnAmount = investment.returned5
-                                otherPlayer.otherreturned = returnAmount
-                                investment.otherinvested = investAmount
-
-                                otherPlayer.points = 5 - investAmount + returnAmount
-                                investment.points = 5 + (3 * investAmount) - returnAmount
-
-                            investment.otheruser = otherPlayer.user
-                            otherPlayer.otheruser = user
-                            investment.save()
-                            otherPlayer.save()
-
-                            return JsonResponse({ 'InvestOrReturn':InvestOrReturn, 
-                                'found': 1, 'returnAmount':returnAmount, 
-                                'investAmount':investAmount, 'points':investment.points })
                         else:
-                            if investment.otherreturned != -1:
-                                return JsonResponse({ 'InvestOrReturn':True, 
-                                    'found': 1, 'returnAmount':investment.otherreturned, 
-                                    'investAmount':investment.invested, 'points':investment.points })
-                            elif investment.otherinvested != -1:
-                                return JsonResponse({ 'InvestOrReturn':False, 'found': 1, 
-                                    'returnAmount':investment.otheruser.investment_set.all()[0].otherreturned, 
-                                    'investAmount':investment.otherinvested, 'points':investment.points })
-                    context = { 'umid': umid, 'gameNum':gameNum }
-                    return render(request, 'games/Trust Game.html', context)
+                            investAmount = otherPlayer.invested
+                            if investAmount == 0:
+                                returnAmount = investment.returned0
+                            elif investAmount == 1:
+                                returnAmount = investment.returned1
+                            elif investAmount == 2:
+                                returnAmount = investment.returned2
+                            elif investAmount == 3:
+                                returnAmount = investment.returned3
+                            elif investAmount == 4:
+                                returnAmount = investment.returned4
+                            elif investAmount == 5:
+                                returnAmount = investment.returned5
+                            # otherPlayer.otherreturned = returnAmount
+                            investment.otherinvested = investAmount
 
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-    except:
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
+                            # otherPlayer.points = 5 - investAmount + returnAmount
+                            investment.points = 5 + (3 * investAmount) - returnAmount
+
+                        investment.otheruser = otherPlayer.user
+                        # otherPlayer.otheruser = user
+                        investment.save()
+                        # otherPlayer.save()
+
+                        return JsonResponse({ 'InvestOrReturn':InvestOrReturn, 
+                            'found': 1, 'returnAmount':returnAmount, 
+                            'investAmount':investAmount, 'points':investment.points })
+                    else:
+                        if investment.otherreturned != -1:
+                            return JsonResponse({ 'InvestOrReturn':True, 
+                                'found': 1, 'returnAmount':investment.otherreturned, 
+                                'investAmount':investment.invested, 'points':investment.points })
+                        elif investment.otherinvested != -1:
+                            investAmount = investment.otherinvested
+                            if investAmount == 0:
+                                returnAmount = investment.returned0
+                            elif investAmount == 1:
+                                returnAmount = investment.returned1
+                            elif investAmount == 2:
+                                returnAmount = investment.returned2
+                            elif investAmount == 3:
+                                returnAmount = investment.returned3
+                            elif investAmount == 4:
+                                returnAmount = investment.returned4
+                            elif investAmount == 5:
+                                returnAmount = investment.returned5
+                            return JsonResponse({ 'InvestOrReturn':False, 'found': 1, 
+                                'returnAmount':returnAmount, 
+                                'investAmount':investAmount, 'points':investment.points })
+                context = { 'umid': umid, 'gameNum':gameNum }
+                return render(request, 'games/Trust Game.html', context)
+
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
 
 @ensure_csrf_cookie
 def thankyou(request):
-    try:
-        if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
-            (request.session.get('umid', False) and request.session['umid'] != "")):
-            if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
-                umid = request.META['REMOTE_USER']
-            if (request.session.get('umid', False) and request.session['umid'] != ""):
-                umid = request.session['umid']
-            user = User.objects.get(username=umid)
-            holtLauryEarning = round(user.holtlaury_set.all()[0].points,2)
-            gambleEarning = round(user.gamble_set.all()[0].points,2)
-            investmentEarning = round(user.investment_set.all()[0].points,2)
-            experimentEarning = round(holtLauryEarning + gambleEarning + investmentEarning,2)
-            totalEarning = round(holtLauryEarning + gambleEarning + investmentEarning + 5,2)
-            user.totalearning = round(totalEarning,2)
-            user.experimentearning = round(experimentEarning,2)
-            user.startedstudy = datetime.datetime.strptime(request.session['startedStudy'], '%b %d %Y %I:%M:%S %p')
-            user.finishedstudy = datetime.datetime.now()
-            user.optout = False
-            user.postpone = False
-            user.save()
-            context = { 'umid': umid, 'holtLauryEarning': "%.2f" % holtLauryEarning, 'gambleEarning': gambleEarning, 
-                'investmentEarning': "%.2f" % investmentEarning, 'experimentEarning': "%.2f" % experimentEarning, 
-                'totalEarning': "%.2f" % totalEarning }
-            return render(request, 'games/Thankyou.html', context)
+    if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+        (request.session.get('umid', False) and request.session['umid'] != "")):
+        if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+            umid = request.META['REMOTE_USER']
+        if (request.session.get('umid', False) and request.session['umid'] != ""):
+            umid = request.session['umid']
+        user = User.objects.get(username=umid)
+        holtLauryEarning = round(user.holtlaury_set.all()[0].points,2)
+        gambleEarning = round(user.gamble_set.all()[0].points,2)
+        investmentEarning = round(user.investment_set.all()[0].points,2)
+        experimentEarning = round(holtLauryEarning + gambleEarning + investmentEarning,2)
+        totalEarning = round(holtLauryEarning + gambleEarning + investmentEarning + 5,2)
+        user.totalearning = round(totalEarning,2)
+        user.experimentearning = round(experimentEarning,2)
+        user.startedstudy = datetime.datetime.strptime(request.session['startedStudy'], '%b %d %Y %I:%M:%S %p')
+        user.finishedstudy = datetime.datetime.now()
+        user.optout = False
+        user.postpone = False
+        user.save()
+        context = { 'umid': umid, 'holtLauryEarning': "%.2f" % holtLauryEarning, 'gambleEarning': gambleEarning, 
+            'investmentEarning': "%.2f" % investmentEarning, 'experimentEarning': "%.2f" % experimentEarning, 
+            'totalEarning': "%.2f" % totalEarning }
+        return render(request, 'games/Thankyou.html', context)
 
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-    except:
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
 
 def thankyousubmit(request):
-    try:
-        if request.method == 'POST':
-            if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
-                (request.session.get('umid', False) and request.session['umid'] != "")):
-                if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
-                    umid = request.META['REMOTE_USER']
-                if (request.session.get('umid', False) and request.session['umid'] != ""):
-                    umid = request.session['umid']
-                if ('pretestComment' in request.POST and 'trainingComment' in request.POST and 'gamesComment' in request.POST):
-                    pretestComment = request.POST['pretestComment']
-                    trainingComment = request.POST['trainingComment']
-                    gamesComment = request.POST['gamesComment']
+    if request.method == 'POST':
+        if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+            (request.session.get('umid', False) and request.session['umid'] != "")):
+            if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+                umid = request.META['REMOTE_USER']
+            if (request.session.get('umid', False) and request.session['umid'] != ""):
+                umid = request.session['umid']
+            if ('fullnameInput' in request.POST and 
+                'streetInput' in request.POST and 'cityInput' in request.POST and 
+                'stateInput' in request.POST and 'zipcodeInput' in request.POST):
+                fullnameInput = request.POST['fullnameInput']
+                streetInput = request.POST['streetInput']
+                cityInput = request.POST['cityInput']
+                stateInput = request.POST['stateInput']
+                zipcodeInput = request.POST['zipcodeInput']
 
-                    user = User.objects.get(username=umid)
-                    if user.thankyou_set.count() == 0:
-                        user.thankyou_set.create(trainingComment=trainingComment,
-                            gamesComment=gamesComment, pretestComment=pretestComment)
-                    else:
-                        user.thankyou_set.update(trainingComment=trainingComment,
-                            gamesComment=gamesComment, pretestComment=pretestComment)
+                user = User.objects.get(username=umid)
+                user.fullname = fullnameInput
+                user.street = streetInput
+                user.city = cityInput
+                user.state = stateInput
+                user.zipcode = zipcodeInput
+                user.save()
 
-                    return JsonResponse({  })
+                return JsonResponse({  })
 
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-    except:
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
+
+@ensure_csrf_cookie
+def survey(request):
+    if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+        (request.session.get('umid', False) and request.session['umid'] != "")):
+        if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+            umid = request.META['REMOTE_USER']
+        if (request.session.get('umid', False) and request.session['umid'] != ""):
+            umid = request.session['umid']
+        context = { 'umid': umid }
+        return render(request, 'games/Survey.html', context)
+
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
+
+def convertNum2Bool(numObj):
+    if numObj == 1 or numObj == "1" or numObj == "true" or numObj == "True":
+        return True
+    elif numObj == 0 or numObj == "0" or numObj == "false" or numObj == "False":
+        return False
+
+def surveysubmit(request):
+    if request.method == 'POST':
+        if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+            (request.session.get('umid', False) and request.session['umid'] != "")):
+            if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+                umid = request.META['REMOTE_USER']
+            if (request.session.get('umid', False) and request.session['umid'] != ""):
+                umid = request.session['umid']
+            if ('age' in request.POST and 'yearsOfEducation' in request.POST and 
+                'gender' in request.POST and 'emailsperday' in request.POST and 
+                'PCLaptop' in request.POST and 'smartphone' in request.POST and 
+                'PAD' in request.POST and 'otherDevices' in request.POST and 
+                'yearsOfInternet' in request.POST and 'otherDeviceText' in request.POST and 
+                'ethnicity' in request.POST and 'maritalstatus' in request.POST):
+                age = request.POST['age']
+                gender = request.POST['gender']
+                emailsperday = request.POST['emailsperday']
+                PCLaptop = request.POST['PCLaptop']
+                smartphone = request.POST['smartphone']
+                PAD = request.POST['PAD']
+                otherDevices = request.POST['otherDevices']
+                otherDeviceText = request.POST['otherDeviceText']
+                yearsOfInternet = request.POST['yearsOfInternet']
+                yearsOfEducation = request.POST['yearsOfEducation']
+                ethnicity = request.POST['ethnicity']
+                maritalstatus = request.POST['maritalstatus']
+
+                user = User.objects.get(username=umid)
+                user.age = age
+                user.gender = gender
+                user.emailsperday = emailsperday
+                user.ownpc = convertNum2Bool(PCLaptop)
+                user.ownsmartphone = convertNum2Bool(smartphone)
+                user.ownpda = convertNum2Bool(PAD)
+                user.ownotherdevice = convertNum2Bool(otherDevices)
+                user.otherdevice = otherDeviceText
+                user.internetuse = yearsOfInternet
+                user.yearsofeduction = yearsOfEducation
+                user.ethnicity = ethnicity
+                user.maritalstatus = maritalstatus
+                user.save()
+
+                return JsonResponse({  })
+
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
 
 def postpone(request):
-    try:
-        if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
-            (request.session.get('umid', False) and request.session['umid'] != "")):
-            if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
-                umid = request.META['REMOTE_USER']
-            if (request.session.get('umid', False) and request.session['umid'] != ""):
-                umid = request.session['umid']
-            user = User.objects.get(username=umid)
-            user.optout = False
-            user.postpone = True
-            user.save()
-            return redirect('https://www.umich.edu/')
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-    except:
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
+    if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+        (request.session.get('umid', False) and request.session['umid'] != "")):
+        if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+            umid = request.META['REMOTE_USER']
+        if (request.session.get('umid', False) and request.session['umid'] != ""):
+            umid = request.session['umid']
+        user = User.objects.get(username=umid)
+        user.optout = False
+        user.postpone = True
+        user.save()
+        context = { 'umid': umid, 'welcomepage': 1 }
+        return render(request, 'games/Postpone.html', context)
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
 
 def optout(request):
-    try:
-        if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
-            (request.session.get('umid', False) and request.session['umid'] != "")):
-            if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
-                umid = request.META['REMOTE_USER']
-            if (request.session.get('umid', False) and request.session['umid'] != ""):
-                umid = request.session['umid']
-            user = User.objects.get(username=umid)
-            user.optout = True
-            user.postpone = False
-            user.save()
-            return redirect('https://www.umich.edu/')
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
-    except:
-        context = { 'umid': '', 'welcomepage': 1 }
-        return render(request, 'games/Welcome.html', context)
+    if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
+        (request.session.get('umid', False) and request.session['umid'] != "")):
+        if ('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != ""):
+            umid = request.META['REMOTE_USER']
+        if (request.session.get('umid', False) and request.session['umid'] != ""):
+            umid = request.session['umid']
+        user = User.objects.get(username=umid)
+        user.optout = True
+        user.postpone = False
+        user.save()
+        context = { 'umid': umid, 'welcomepage': 1 }
+        return render(request, 'games/NotInterested.html', context)
+    context = { 'umid': '', 'welcomepage': 1 }
+    return render(request, 'games/Welcome.html', context)
 
 def mean(data):
     """Return the sample arithmetic mean of data."""
@@ -2040,9 +2069,12 @@ def downloadCSV(request):
 
 def generateCSVDataset():
     rows = []
-    rows.append(['Username', 'version', 'Total Earning', 'Experiment Earning', 
-        'First Game', 'Second Game', 'Third Game', 'Opted Out', 
-        'Postponed', 'Started Study', 'finishedstudy', 
+    rows.append(['Username', 'version', 'Experiment Earning', 
+        'First Game', 'Second Game', 'Third Game', 'Opted Out', 'Postponed', 
+        'age', 'gender', 'emailsperday', 'ownpc', 'ownsmartphone', 'owntablet', 
+        'ownotherdevice', 'otherdevice', 'internetuse', 
+        'fullname', 'street', 'city', 'state', 'zipcode', 'yearsofeduction', 'ethnicity', 
+        'maritalstatus', 'Started Study', 'finishedstudy', 
         'Pretest Question 1', 'Pretest Question 2', 
         'Pretest Question 3', 'Pretest Question 4', 
         'Pretest Question 5', 'Pretest Question 6', 
@@ -2105,13 +2137,29 @@ def generateCSVDataset():
         row = []
         row.append(user.username)
         row.append(user.version)
-        row.append(user.totalearning)
         row.append(user.experimentearning)
         row.append(user.firstgame)
         row.append(user.secondgame)
         row.append(user.thirdgame)
         row.append(user.optout)
         row.append(user.postpone)
+        row.append(user.age)
+        row.append(user.gender)
+        row.append(user.emailsperday)
+        row.append(user.ownpc)
+        row.append(user.ownsmartphone)
+        row.append(user.ownpda)
+        row.append(user.ownotherdevice)
+        row.append(user.otherdevice)
+        row.append(user.internetuse)
+        row.append(user.fullname)
+        row.append(user.street)
+        row.append(user.city)
+        row.append(user.state)
+        row.append(user.zipcode)
+        row.append(user.yearsofeduction)
+        row.append(user.ethnicity)
+        row.append(user.maritalstatus)
         row.append(user.startedstudy)
         row.append(user.finishedstudy)
 
