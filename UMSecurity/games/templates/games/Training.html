@@ -95,7 +95,7 @@ span.tip{
             
         {% if question == 1 %}
           <div style="margin-bottom:19px">
-            <p>Move your mouse over the message to see clues that can help you tell if it is phishing email.</p>
+            <p>Move your mouse over the message to see clues that can help you tell if it is a phishing email.</p>
             <div class="center-block" style="position:relative;background:#fff;padding:1em;">      
             
                 <!--<img src="{% static 'games/media/220339.png' %}" alt="Upgrade to secure your account." class="img-responsive center-block">-->
@@ -107,7 +107,7 @@ span.tip{
 <br /><span id="subject" tabindex="0" aria-describedby="tip2" class="LinkAnchor DoNotOpen"><strong>Subject:</strong>  Update To Your Secure Account</span><span id="tip2" class="tip"><strong>Clue:</strong> U-M will never ask you to update or validate your account to secure it.<br>You keep your U-M account as long as you are affiliated with the university.</span></p>
 
 <p style="color: #cd232c;margin-bottom:0px;" id="gbs" tabindex="0" aria-describedby="tip3" class="LinkAnchor DoNotOpen">Your mailbox is almost full and out dated.</p>
-<span id="tip3" class="tip" style="margin-top:10px;"><strong>Clue:</strong> M+Google mailboxes have unlimited storage, so people's mailboxes cannot become full.</span>
+<span id="tip3" class="tip" style="margin-top:10px;"><strong>Clue:</strong> M+Google mailboxes have unlimited storage, so your mailbox cannot become full.</span>
 <table border="0" cellspacing="0" cellpadding="0" >
 <tbody>
 <tr>
@@ -159,7 +159,7 @@ span.tip{
 <br /><strong>Subject:</strong>  University of Michigan Notice</p>
                 
 <p>Dear Web User,</p>
-<p><span id="grammar" aria-describedby="tip2" tabindex="0" class="LinkAnchor DoNotOpen">On Our recent check on The University of Michigan database records, its indicate that your account has not been updated as a part of our regular account maintenance.</span> <span id="tip2" class="tip"><strong>Clue:</strong> Notice the capitalization mistakes and the grammatical errors.</span> <span id="verification" aria-describedby="tip3" tabindex="0" class="LinkAnchor DoNotOpen">Our new SSL servers check each account for activity and your information has been randomly chosen for verification</span><span id="tip3" class="tip"><strong>Clue:</strong> U-M will not ask you to verify or update your account.<br>You keep your account as long as you have an affiliation with U-M.</span>. <span id="emc" aria-describedby="tip9" tabindex="0" class="LinkAnchor DoNotOpen">Email Management Center</span> <span id="tip9" class="tip"><strong>Clue:</strong> There is no such center at U-M. Search the U-M website to check the names of departments, colleges, centers, and so on.</span>strives to serve their email user with better and secure email service.<br /> <a href="http://webmaster.ic.cz" id="link4" aria-describedby="tip4" class="LinkAnchor DoNotOpen">Please Click Here For Verification</a><span id="tip4" class="tip"><strong>Clue:</strong> Notice that the link goes to this URL: webmaster.ic.cz. That is not a U-M URL. The .cz at the end indicates it is the Czech Republic.</span></p>
+<p><span id="grammar" aria-describedby="tip2" tabindex="0" class="LinkAnchor DoNotOpen">On Our recent check on The University of Michigan database records, its indicate that your account has not been updated as a part of our regular account maintenance.</span> <span id="tip2" class="tip"><strong>Clue:</strong> Notice the capitalization mistakes and the grammatical errors.</span> <span id="verification" aria-describedby="tip3" tabindex="0" class="LinkAnchor DoNotOpen">Our new SSL servers check each account for activity and your information has been randomly chosen for verification</span><span id="tip3" class="tip"><strong>Clue:</strong> U-M will not ask you to verify or update your account.<br>You keep your account as long as you have an affiliation with U-M.</span>. <span id="emc" aria-describedby="tip9" tabindex="0" class="LinkAnchor DoNotOpen">Email Management Center</span> <span id="tip9" class="tip"><strong>Clue:</strong> There is no such center at <span style="white-space: nowrap">U-M.</span> Search the <span style="white-space: nowrap">U-M</span> website to check the names of departments, colleges, centers, and so on.</span>strives to serve their email user with better and secure email service.<br /> <a href="http://webmaster.ic.cz" id="link4" aria-describedby="tip4" class="LinkAnchor DoNotOpen">Please Click Here For Verification</a><span id="tip4" class="tip"><strong>Clue:</strong> Notice that the link goes to this URL: webmaster.ic.cz. That is not a <span style="white-space: nowrap">U-M</span> URL. The .cz at the end indicates it is the Czech Republic.</span></p>
 
 <p>Notification: Failure to update your account information may result in account limitation.Thank you very much for your cooperation!</p>
 <p id="fakedept" aria-describedby="tip5" tabindex="0" class="LinkAnchor DoNotOpen">Thank you. <br />Webmail System, <br />University of Michigan. <span id="tip5" class="tip"><strong>Clue:</strong> There are no services offered at the University of Michigan with this name.<br>Search the U-M website to check for service names.</span></p>            
@@ -174,9 +174,9 @@ span.tip{
                   <img src="{% static 'games/media/185324_796_311.png' %}" alt='Hover your mouse on links to see the url they are linking to.' class="img-responsive center-block">
                 </div>-->
                 {% else %}
-                <div id="PhishingEmailLink2Hint">
+                <!--div id="PhishingEmailLink2Hint">
                   <img src="{% static 'games/media/262423_558_121.png' %}" alt='Hover your mouse on links to see the url they are linking to.' class="img-responsive center-block">
-                </div>
+                </div>-->
                 {% endif %}
                 <div id="PhishingEmailLink2" class="LinkAnchor DoNotOpen"></div>
             </div>          
@@ -206,7 +206,7 @@ span.tip{
 
 <p>Hello staff on the Ann Arbor campus,</p>
 
-<p>You may have heard about the <a href="http://safecomputing.umich.edu/heartbleed/" id="link1" aria-describedby="tip1" class="LinkAnchor DoNotOpen">Heartbleed bug,</a><span id="tip1" class="tip"><strong>Clue:</strong> This is a real U-M URL. Safecomputing.umich.edu is U-M's IT security website.</span> a serious security flaw in the software used to secure Internet traffic. The university responded quickly to this threat, and U-M’s critical and core services are protected.</p>
+<p>You may have heard about the <a href="http://safecomputing.umich.edu/heartbleed/" id="link1" aria-describedby="tip1" class="LinkAnchor DoNotOpen">Heartbleed bug,</a><span id="tip1" class="tip"><strong>Clue:</strong> This is a real U-M URL. safecomputing.umich.edu is U-M's IT security website.</span> a serious security flaw in the software used to secure Internet traffic. The university responded quickly to this threat, and U-M’s critical and core services are protected.</p>
 
 <p>As a further safeguard, Information and Technology Services (ITS) is now advising those on the Ann Arbor campus to change their UMICH passwords. The U-M Health System, Flint, and Dearborn are asking the same of their campus communities.</p>
 
@@ -359,11 +359,11 @@ span.tip{
         <p>You took the bait.</p>-->
         <p>If you click the link in the email, you would be taken to the web page shown here:</p>
         <img src="{% static 'games/media/2015-08-10-2.jpg' %}" alt="University of Michigan - Dearborn: Increase Your Storage Limit" class="img-responsive center-block">
-        <p>Any information you entered would be stolen and could be used to compromise your U-M account, access your emails, change your personal information in Wolverine Access, and more.</p>
+        <p>Any information you entered would be stolen and could be used to compromise your <span style="white-space: nowrap">U-M</span> account, access your emails, change your personal information in Wolverine Access, and more.</p>
       {% elif correct == 2 and question == 2 %}
         <p>If you click the link in the email, you would be taken to the web page shown here:</p>
         <img src="{% static 'games/media/2015-08-21.jpg' %}" alt="Enter your U-M personal information." class="img-responsive center-block">
-        <p>Any information you entered would be stolen and could be used to compromise your U-M account, access your emails, change your personal information in Wolverine Access, and more.</p>
+        <p>Any information you entered would be stolen and could be used to compromise your <span style="white-space: nowrap">U-M</span> account, access your emails, change your personal information in Wolverine Access, and more.</p>
       {% elif correct == 2 and question == 3 %}
         <p>This message was sent in 2014 to urge members of the U-M community to change their passwords as a precaution because of the Heartbleed bug. Note that it told people to change their passwords themselves. It did not ask for passwords or personal information.</p>
       {% elif correct == 2 and question == 4 %}

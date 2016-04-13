@@ -91,7 +91,7 @@
       </div>
     </nav>
 
-  {% if correct and not correctResult %}
+  {% if correct and not correctResult and not wrongResult %}
     <div id="GoldenFish">
       <img src="{% static 'games/media/Animal-biggoldfishanimated.gif' %}" alt="Smiley Fish Swiming" height="100" width="130">
     </div>
@@ -182,7 +182,7 @@
 
     <script src="{% static 'games/js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
 
-  {% if correct and not correctResult %}
+  {% if correct and not correctResult and not wrongResult %}
     <script type="text/javascript">
       var windowWidth = $( window ).width() + 160;
       var windowHeight = $( window ).height() + 160;
