@@ -18,6 +18,3 @@
 !.elasticbeanstalk/*.global.yml
 
 **/DataDump.json
-**/settings.py
-*/polls/*
-*/polls/
