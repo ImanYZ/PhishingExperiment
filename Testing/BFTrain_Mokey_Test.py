@@ -381,7 +381,7 @@ while True:
 
     # Retrieve the content of the start page.
     # browser.get('https://bftrain.miserver.it.umich.edu')
-    browser.get('http://127.0.0.1:8000/')
+    browser.get('https://bftrain.miserver.it.umich.edu/')
     browser.maximize_window()
 
     html = exists_by_tag_name(browser, 'html', ignoreNone = False, waitToFind = True)
@@ -500,7 +500,7 @@ while True:
         PretestComment = exists_by_id(browser, "ZipCodeInput", ignoreNone = False, waitToFind = True)
         PretestComment.send_keys("12345")
 
-        find_by_ID_and_click("SubmitBtn")
+        find_by_ID_and_click("SubmitBtn", browser)
 
         SurveyComment = exists_by_name(browser, "Emailsperday", ignoreNone = False, waitToFind = True)
         SurveyComment.send_keys(Keys.ENTER)
@@ -508,7 +508,7 @@ while True:
         SurveyComment = exists_by_name(browser, "YearsOfInternet", ignoreNone = False, waitToFind = True)
         SurveyComment.send_keys(Keys.ENTER)
 
-        find_by_ID_and_click("SubmitBtn")
+        find_by_ID_and_click("SubmitBtn", browser)
 
     elif participationDecision == 1:
         find_by_ID_and_click("PostponeBtn", browser)

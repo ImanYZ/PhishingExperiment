@@ -43,7 +43,7 @@ def welcome(request):
         if (request.session.get('umid', False)):
             umid = request.session['umid']
         user, created = User.objects.get_or_create(username=umid)
-        user.version = "Test"
+        user.version = "BandFStaff"
         user.save()
         request.session['startedStudy'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
     else:
