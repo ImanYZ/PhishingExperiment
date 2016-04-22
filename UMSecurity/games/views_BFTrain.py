@@ -1412,7 +1412,7 @@ def results(request):
                     umid = request.META['REMOTE_USER']
                 if (request.session.get('umid', False) and request.session['umid'] != ""):
                     umid = request.session['umid']
-                if (True):
+                if (umid in adminsUniquenames):
 
                     version = "Pilot"
                     page = "Overview"

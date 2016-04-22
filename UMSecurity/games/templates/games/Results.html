@@ -88,45 +88,6 @@
           </div>
         </div>
       </div>
-      <h1>Study Data Summary</h1>
-      <div class="table-responsive">
-        <table class="table table-striped report">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Username</th>
-              <th>First Game</th>
-              <th>Second Game</th>
-              <th>Third Game</th>
-              <th>Opted Out</th>
-              <th>Postponed</th>
-              <th>Total Earning</th>
-              <th>Experiment Earning</th>
-              <th>Started Study</th>
-              <th>Finished Study</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for user in allUsers %}
-              <tr>
-                <th>{{ forloop.counter }}</th>
-                <td>{{ user.username }}</td>
-                <td>{{ user.firstgame }}</td>
-                <td>{{ user.secondgame }}</td>
-                <td>{{ user.thirdgame }}</td>
-                <td>{{ user.optout }}</td>
-                <td>{{ user.postpone }}</td>
-                <td>${{ user.totalearning }}</td>
-                <td>${{ user.experimentearning }}</td>
-                <td>{{ user.startedstudy|date:"M d, Y" }}<br>{{ user.startedstudy|date:"f A" }}</td>
-                <td>{{ user.finishedstudy|date:"M d, Y" }}<br>{{ user.finishedstudy|date:"f A" }}</td>
-              </tr>
-            {% empty %}
-              <tr><td>There is no user in this phase.</td></tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
     </div>
     {% elif page == 'Pretest' %}
     <div id="accordion">
