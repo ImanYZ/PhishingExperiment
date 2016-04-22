@@ -1216,7 +1216,20 @@ def thankyou(request):
         totalEarning = round(holtLauryEarning + gambleEarning + investmentEarning + 5,2)
         user.totalearning = round(totalEarning,2)
         user.experimentearning = round(experimentEarning,2)
-        user.startedstudy = datetime.datetime.strptime(request.session['startedStudy'], '%b %d %Y %I:%M:%S %p')
+        try:
+            user.startedstudy = datetime.datetime.strptime(request.session['startedStudy'], '%b %d %Y %I:%M:%S %p')
+        except:
+            try:
+                if user.pretest_set.count() != 0:
+                    pretest = user.pretest_set.all()[0]
+                    user.startedstudy = pretest.startedquestion1
+                    print("\n\n\nTook started from the pretest.")
+                else:
+                    user.startedstudy = datetime.datetime.now()
+                    print("\n\n\nTook started from now.")
+            except:
+                user.startedstudy = datetime.datetime.now()
+                print("\n\n\nTook started from now in the except.")
         user.finishedstudy = datetime.datetime.now()
         user.optout = False
         user.postpone = False
@@ -1287,14 +1300,10 @@ def surveysubmit(request):
                 umid = request.META['REMOTE_USER']
             if (request.session.get('umid', False) and request.session['umid'] != ""):
                 umid = request.session['umid']
-            if ('age' in request.POST and 'yearsOfEducation' in request.POST and 
-                'gender' in request.POST and 'emailsperday' in request.POST and 
+            if ('emailsperday' in request.POST and 
                 'PCLaptop' in request.POST and 'smartphone' in request.POST and 
                 'PAD' in request.POST and 'otherDevices' in request.POST and 
-                'yearsOfInternet' in request.POST and 'otherDeviceText' in request.POST and 
-                'ethnicity' in request.POST and 'maritalstatus' in request.POST):
-                age = request.POST['age']
-                gender = request.POST['gender']
+                'yearsOfInternet' in request.POST and 'otherDeviceText' in request.POST):
                 emailsperday = request.POST['emailsperday']
                 PCLaptop = request.POST['PCLaptop']
                 smartphone = request.POST['smartphone']
@@ -1302,13 +1311,8 @@ def surveysubmit(request):
                 otherDevices = request.POST['otherDevices']
                 otherDeviceText = request.POST['otherDeviceText']
                 yearsOfInternet = request.POST['yearsOfInternet']
-                yearsOfEducation = request.POST['yearsOfEducation']
-                ethnicity = request.POST['ethnicity']
-                maritalstatus = request.POST['maritalstatus']
 
                 user = User.objects.get(username=umid)
-                user.age = age
-                user.gender = gender
                 user.emailsperday = emailsperday
                 user.ownpc = convertNum2Bool(PCLaptop)
                 user.ownsmartphone = convertNum2Bool(smartphone)
@@ -1316,9 +1320,6 @@ def surveysubmit(request):
                 user.ownotherdevice = convertNum2Bool(otherDevices)
                 user.otherdevice = otherDeviceText
                 user.internetuse = yearsOfInternet
-                user.yearsofeduction = yearsOfEducation
-                user.ethnicity = ethnicity
-                user.maritalstatus = maritalstatus
                 user.save()
 
                 return JsonResponse({  })

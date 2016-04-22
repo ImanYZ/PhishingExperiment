@@ -700,20 +700,29 @@
           }
         });
 
+        function checkWillingnessValue(value) {
+          if (value != "" && $.isNumeric(value) && parseFloat(value) >= 0 && parseFloat(value) <= 4) {
+              $("#WillingnessBtn").show();
+              $("#WillingnessError").hide();
+              return true;
+          }
+          else {
+              $("#WillingnessError").show();
+              $("#WillingnessBtn").hide();
+              return false;
+          }
+        }
+
         $("#WillingnessAmount").on("input", function(){
             var value = $(this).val();
-            if (value != "" && $.isNumeric(value) && parseFloat(value) >= 0 && parseFloat(value) <= 4) {
-                $("#WillingnessBtn").show();
-                $("#WillingnessError").hide();
-            }
-            else {
-                $("#WillingnessError").show();
-                $("#WillingnessBtn").hide();
-            }
+            checkWillingnessValue(value);
         });
 
         $("#WillingnessBtn").click(function(){
-            var willingnessNum = parseFloat($("#WillingnessAmount").val());
+          var value = $("#WillingnessAmount").val();
+          if (checkWillingnessValue(value)) {
+          
+            var willingnessNum = parseFloat(value);
 
             $.ajax({
                 type: 'Post',
@@ -785,13 +794,16 @@
                     alert( "An error occurred. Please try again." );
                 }
             });
-
+          }
         });
 
         $('#WillingnessAmount').keypress(function (e) {
-          if (e.which == 13) {
-            $('#WillingnessBtn').click();
-            return false;    //<---- Add this line
+          var value = $("#WillingnessAmount").val();
+          if (checkWillingnessValue(value)) {
+            if (e.which == 13) {
+              $('#WillingnessBtn').click();
+              return false;    //<---- Add this line
+            }
           }
         });
 
