@@ -1030,12 +1030,23 @@
       });
     }
 
-    function drawRegression(xAxisData, yAxisData, diagramID, diagramTitle, diagramTitleX, slope, intercept, r_value, p_value, std_err, xAxisTitle, yAxisTitle, categoriesNum) {
+    function drawRegression(xAxisData, yAxisData, diagramID, diagramTitle, diagramTitleX, slope, intercept, r_value, p_value, std_err, xAxisTitle, yAxisTitle, categoriesNum, totalCorrectsPerOption = false, numOfCorrectsPerOption = false ) {
       
       var dataDictArray = [];
+      var averageCorrectsPerOption = [];
       var catNum = -1;
-      var colors = ["#FF634D", "#9295CA", "#F47D43", "#FFEC94", "#FFAEAE", "#B0E57C", "#56BAEC"];
+      var colors = ["#FF634D", "#90ed7d", "#9295CA", "#F47D43", "#FFEC94", "#FFAEAE", "#B0E57C", "#56BAEC"];
 
+      if (totalCorrectsPerOption != false && numOfCorrectsPerOption != false) {
+        for (i = 0; i < 11; i++) {
+          averageCorrectsPerOption.push({
+            x: i,
+            y: ( numOfCorrectsPerOption[i] != 0 ? totalCorrectsPerOption[i] / (numOfCorrectsPerOption[i] + 0.0) : 0),
+            name: "Avg" + (i).toString(),
+            color: colors[1]
+          });
+        }
+      }
 
       for (i = 0; i < xAxisData.length; i++) {
         if (categoriesNum == 1) {
@@ -1063,6 +1074,39 @@
 
       var minYAxisDataArray = minFinder(yAxisData);
 
+      var series = [{
+              type: 'line',
+              name: 'Regression Line',
+              data: [[minXAxisDataArray, minYLineValue], [maxXAxisDataArray, maxYLineValue]],
+              marker: {
+                  enabled: false
+              },
+              states: {
+                  hover: {
+                      lineWidth: 0
+                  }
+              },
+              enableMouseTracking: false
+          }, {
+              type: 'scatter',
+              name: 'Observations',
+              marker: {
+                  radius: 4
+              },
+              data: dataDictArray
+          }];
+
+      if (totalCorrectsPerOption != false && numOfCorrectsPerOption != false) {
+          series.push({
+              type: 'scatter',
+              name: 'Averages',
+              marker: {
+                  radius: 7
+              },
+              data: averageCorrectsPerOption
+          });
+      }
+
       $(diagramID).highcharts({
           title: {
               text: diagramTitle,
@@ -1085,27 +1129,7 @@
               },
               min: minYAxisDataArray
           },
-          series: [{
-              type: 'line',
-              name: 'Regression Line',
-              data: [[minXAxisDataArray, minYLineValue], [maxXAxisDataArray, maxYLineValue]],
-              marker: {
-                  enabled: false
-              },
-              states: {
-                  hover: {
-                      lineWidth: 0
-                  }
-              },
-              enableMouseTracking: false
-          }, {
-              type: 'scatter',
-              name: 'Observations',
-              marker: {
-                  radius: 4
-              },
-              data: dataDictArray
-          }]
+          series: series
       });
     }
 
@@ -1166,7 +1190,17 @@
         xAxisData[{{ forloop.counter|add:"-1" }}] = {{ xAxisPoint }};
       {% endfor %}
 
-      drawRegression(xAxisData, yAxisData, "#LotteryRiskAversionDiagram", "Risk Aversion Effect on # of Correct Answers", -25, {{ usersRiskAversionSlope }}, {{ usersRiskAversionIntercept }}, {{ usersRiskAversionR_value }}, {{ usersRiskAversionP_value }}, {{ usersRiskAversionStd_err }}, "Risk Aversion (Option #)", "Total # Correct Answers", 1);
+      var totalCorrectsPerOption = [];
+      {% for totalCorrect in totalCorrectsPerOption %}
+        totalCorrectsPerOption[{{ forloop.counter|add:"-1" }}] = {{ totalCorrect }};
+      {% endfor %}
+
+      var numOfCorrectsPerOption = [];
+      {% for numOfCorrect in numOfCorrectsPerOption %}
+        numOfCorrectsPerOption[{{ forloop.counter|add:"-1" }}] = {{ numOfCorrect }};
+      {% endfor %}
+
+      drawRegression(xAxisData, yAxisData, "#LotteryRiskAversionDiagram", "Risk Aversion Effect on # of Correct Answers", -25, {{ usersRiskAversionSlope }}, {{ usersRiskAversionIntercept }}, {{ usersRiskAversionR_value }}, {{ usersRiskAversionP_value }}, {{ usersRiskAversionStd_err }}, "Risk Aversion (Option #)", "Total # Correct Answers", 1, totalCorrectsPerOption, numOfCorrectsPerOption);
 
       xAxisData = [];
       {% for xAxisPoint in usersWillingness %}
@@ -1228,7 +1262,17 @@
         xAxisData[{{ forloop.counter|add:"-1" }}] = {{ xAxisPoint }};
       {% endfor %}
 
-      drawRegression(xAxisData, yAxisData, "#GambleRiskSeekingDiagram", "Risk Loving Effect on # of Correct Answers", -25, {{ usersRiskSeekingSlope }}, {{ usersRiskSeekingIntercept }}, {{ usersRiskSeekingR_value }}, {{ usersRiskSeekingP_value }}, {{ usersRiskSeekingStd_err }}, "Risk Loving (Option #)", "Total # Correct Answers", 1);
+      var totalCorrectsPerOption = [];
+      {% for totalCorrect in totalCorrectsPerOption %}
+        totalCorrectsPerOption[{{ forloop.counter|add:"-1" }}] = {{ totalCorrect }};
+      {% endfor %}
+
+      var numOfCorrectsPerOption = [];
+      {% for numOfCorrect in numOfCorrectsPerOption %}
+        numOfCorrectsPerOption[{{ forloop.counter|add:"-1" }}] = {{ numOfCorrect }};
+      {% endfor %}
+
+      drawRegression(xAxisData, yAxisData, "#GambleRiskSeekingDiagram", "Risk Loving Effect on # of Correct Answers", -25, {{ usersRiskSeekingSlope }}, {{ usersRiskSeekingIntercept }}, {{ usersRiskSeekingR_value }}, {{ usersRiskSeekingP_value }}, {{ usersRiskSeekingStd_err }}, "Risk Loving (Option #)", "Total # Correct Answers", 1, totalCorrectsPerOption, numOfCorrectsPerOption);
 
       yAxisData = [];
       {% for yAxisPoint in usersRiskAversion %}

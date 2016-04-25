@@ -5,6 +5,7 @@ import datetime
 import time
 import csv
 
+import numpy
 from numpy import arange, array, ones
 from scipy import stats
 
@@ -1422,6 +1423,7 @@ def results(request):
                         page = request.GET['page']
 
                     allUsers = User.objects.filter(version=version)
+                    allUsers = list(allUsers)
 
                     questionCorrects = [[] for i in range(8)]
                     questionHovers = [[] for i in range(8)]
@@ -1437,12 +1439,13 @@ def results(request):
                     hoveredsseconds = [[] for i in range(8)]
                     secondsDurations = [[] for i in range(8)]
 
-                    userIndex = -1
-                    for user in allUsers:
+                    userIndex = 0
+                    allUsersLen = len(allUsers)
+                    while userIndex < allUsersLen:
+                        user = allUsers[userIndex]
                         pretest = user.pretest_set.all()
                         if len(pretest) > 0:
                             pretest = pretest[0]
-                            userIndex += 1
                             usersCorrects.append(0)
                             usersHovers.append(0)
                             usersDurations.append(0)
@@ -1535,6 +1538,11 @@ def results(request):
                                 secondsDuration[index] = secondsDuration[index].total_seconds()
                                 secondsDurations[index].append(secondsDuration[index])
                                 usersDurations[userIndex] += secondsDuration[index]
+
+                            userIndex += 1
+                        else:
+                            del allUsers[userIndex]
+                            allUsersLen -= 1
 
                     usersCorrects = array(usersCorrects)
                     usersHovers = array(usersHovers)
@@ -1634,6 +1642,8 @@ def results(request):
 
                     elif page == "Lottery":
                         options = [0]*11
+                        totalCorrectsPerOption = [0]*11
+                        numOfCorrectsPerOption = [0]*11
                         totalPoints = 0
                         totalOriginalPoints = 0
                         totalWillingness = 0
@@ -1645,7 +1655,6 @@ def results(request):
                         usersWillingness = []
                         usersLotteryDurations = []
 
-                        allUsers = list(allUsers)
                         userIndex = 0
                         allUsersLen = len(allUsers)
                         while userIndex < allUsersLen:
@@ -1669,17 +1678,20 @@ def results(request):
                                 option[10] = int(holtlaury.option10)
                                 rationalUser = True
                                 if option[10] == 0:
-                                    rationalUser = False
                                     del allUsers[userIndex]
+                                    usersCorrects = numpy.delete(usersCorrects, [userIndex])
+                                    del usersRiskAversion[userIndex]
+                                    del usersWillingness[userIndex]
+                                    del usersLotteryDurations[userIndex]
+                                    rationalUser = False
                                     allUsersLen -= 1
                                     continue
-                                for index in range(1, 11):
-                                    options[index] += option[index]
                                 for index in range(1, 11):
                                     if option[index] == 1 and usersRiskAversion[userIndex] == 0:
                                         usersRiskAversion[userIndex] = index
                                     elif option[index] == 0 and usersRiskAversion[userIndex] != 0:
                                         del allUsers[userIndex]
+                                        usersCorrects = numpy.delete(usersCorrects, [userIndex])
                                         del usersRiskAversion[userIndex]
                                         del usersWillingness[userIndex]
                                         del usersLotteryDurations[userIndex]
@@ -1687,6 +1699,11 @@ def results(request):
                                         allUsersLen -= 1
                                         break
                                 if rationalUser:
+                                    for index in range(1, 11):
+                                        options[index] += option[index]
+                                        if option[index] != 0:
+                                            totalCorrectsPerOption[index] += usersCorrects[userIndex]
+                                            numOfCorrectsPerOption[index] += 1
                                     points.append(holtlaury.points)
                                     totalPoints += holtlaury.points
                                     originalPoints.append(holtlaury.originalPoints)
@@ -1703,6 +1720,7 @@ def results(request):
                                     userIndex += 1
                             else:
                                 del allUsers[userIndex]
+                                usersCorrects = numpy.delete(usersCorrects, [userIndex])
                                 allUsersLen -= 1
 
                         (pointsMean, pointsMin, pointsMax, 
@@ -1719,7 +1737,7 @@ def results(request):
                             secondsDurationsStdev, secondsDurationsMedian, 
                             secondsDurationsMode) = findStatistics(secondsDurations)
 
-                        usersRiskAversionSlope, usersRiskAversionIntercept, usersRiskAversionR_value, usersRiskAversionP_value, usersRiskAversionStd_err = stats.linregress(usersRiskAversion,usersCorrects[0:len(usersRiskAversion)])
+                        usersRiskAversionSlope, usersRiskAversionIntercept, usersRiskAversionR_value, usersRiskAversionP_value, usersRiskAversionStd_err = stats.linregress(usersRiskAversion,usersCorrects)
 
                         usersRiskAversionSlope = round(usersRiskAversionSlope,3)
                         usersRiskAversionIntercept = round(usersRiskAversionIntercept,3)
@@ -1727,7 +1745,7 @@ def results(request):
                         usersRiskAversionP_value = round(usersRiskAversionP_value,3)
                         usersRiskAversionStd_err = round(usersRiskAversionStd_err,3)
 
-                        usersWillingnessSlope, usersWillingnessIntercept, usersWillingnessR_value, usersWillingnessP_value, usersWillingnessStd_err = stats.linregress(usersWillingness,usersCorrects[0:len(usersWillingness)])
+                        usersWillingnessSlope, usersWillingnessIntercept, usersWillingnessR_value, usersWillingnessP_value, usersWillingnessStd_err = stats.linregress(usersWillingness,usersCorrects)
 
                         usersWillingnessSlope = round(usersWillingnessSlope,3)
                         usersWillingnessIntercept = round(usersWillingnessIntercept,3)
@@ -1735,7 +1753,7 @@ def results(request):
                         usersWillingnessP_value = round(usersWillingnessP_value,3)
                         usersWillingnessStd_err = round(usersWillingnessStd_err,3)
 
-                        usersLotteryDurationsSlope, usersLotteryDurationsIntercept, usersLotteryDurationsR_value, usersLotteryDurationsP_value, usersLotteryDurationsStd_err = stats.linregress(usersLotteryDurations,usersCorrects[0:len(usersLotteryDurations)])
+                        usersLotteryDurationsSlope, usersLotteryDurationsIntercept, usersLotteryDurationsR_value, usersLotteryDurationsP_value, usersLotteryDurationsStd_err = stats.linregress(usersLotteryDurations,usersCorrects)
 
                         usersLotteryDurationsSlope = round(usersLotteryDurationsSlope,3)
                         usersLotteryDurationsIntercept = round(usersLotteryDurationsIntercept,3)
@@ -1743,7 +1761,7 @@ def results(request):
                         usersLotteryDurationsP_value = round(usersLotteryDurationsP_value,3)
                         usersLotteryDurationsStd_err = round(usersLotteryDurationsStd_err,3)
 
-                        usersLotteryDurationsRiskAversionSlope, usersLotteryDurationsRiskAversionIntercept, usersLotteryDurationsRiskAversionR_value, usersLotteryDurationsRiskAversionP_value, usersLotteryDurationsRiskAversionStd_err = stats.linregress(usersLotteryDurations,usersRiskAversion[0:len(usersLotteryDurations)])
+                        usersLotteryDurationsRiskAversionSlope, usersLotteryDurationsRiskAversionIntercept, usersLotteryDurationsRiskAversionR_value, usersLotteryDurationsRiskAversionP_value, usersLotteryDurationsRiskAversionStd_err = stats.linregress(usersLotteryDurations,usersRiskAversion)
 
                         usersLotteryDurationsRiskAversionSlope = round(usersLotteryDurationsRiskAversionSlope,3)
                         usersLotteryDurationsRiskAversionIntercept = round(usersLotteryDurationsRiskAversionIntercept,3)
@@ -1753,7 +1771,7 @@ def results(request):
 
                         context = { 'umid': umid, 'allUsers': allUsers, 'welcomepage': 1, 'page': page, 'version': version, 
                             'options': options, 'totalPoints': round(totalPoints,3), 'points': points, 'usersCorrects': usersCorrects, 
-                            'pointsMean': pointsMean, 
+                            'totalCorrectsPerOption': totalCorrectsPerOption, 'numOfCorrectsPerOption': numOfCorrectsPerOption, 'pointsMean': pointsMean, 
                             'pointsMin': pointsMin, 'pointsMax': pointsMax, 
                             'pointsStdev': pointsStdev, 'pointsMedian': pointsMedian, 
                             'pointsMode': pointsMode, 
@@ -1784,14 +1802,17 @@ def results(request):
                             }
 
                     elif page == "Gamble":
+                        print ("\n\n\nlen(usersCorrects): " + str(len(usersCorrects)))
+                        print ("\n\n\nlen(allUsers): " + str(len(allUsers)))
                         usersRiskAversion = []
+                        totalCorrectsPerOption = [0]*11
+                        numOfCorrectsPerOption = [0]*11
 
                         chosens = []
                         points = []
                         secondsDurations = []
                         totalPoints = 0
 
-                        allUsers = list(allUsers)
                         userIndex = 0
                         allUsersLen = len(allUsers)
                         while userIndex < allUsersLen:
@@ -1813,8 +1834,10 @@ def results(request):
                                 option[10] = int(holtlaury.option10)
                                 rationalUser = True
                                 if option[10] == 0:
-                                    rationalUser = False
                                     del allUsers[userIndex]
+                                    usersCorrects = numpy.delete(usersCorrects, [userIndex])
+                                    del usersRiskAversion[userIndex]
+                                    rationalUser = False
                                     allUsersLen -= 1
                                     continue
                                 for index in range(1, 11):
@@ -1822,6 +1845,7 @@ def results(request):
                                         usersRiskAversion[userIndex] = index
                                     elif option[index] == 0 and usersRiskAversion[userIndex] != 0:
                                         del allUsers[userIndex]
+                                        usersCorrects = numpy.delete(usersCorrects, [userIndex])
                                         del usersRiskAversion[userIndex]
                                         rationalUser = False
                                         allUsersLen -= 1
@@ -1831,6 +1855,8 @@ def results(request):
                                     if len(gamble) > 0:
                                         gamble = gamble[0]
                                         chosens.append(gamble.chosen)
+                                        totalCorrectsPerOption[gamble.chosen] += usersCorrects[userIndex]
+                                        numOfCorrectsPerOption[gamble.chosen] += 1
                                         points.append(gamble.points)
                                         totalPoints += gamble.points
 
@@ -1841,8 +1867,11 @@ def results(request):
                                     userIndex += 1
                             else:
                                 del allUsers[userIndex]
+                                usersCorrects = numpy.delete(usersCorrects, [userIndex])
                                 allUsersLen -= 1
 
+                        print ("\n\n\nlen(usersCorrects): " + str(len(usersCorrects)))
+                        print ("\n\n\nlen(allUsers): " + str(len(allUsers)))
                         (pointsMean, pointsMin, pointsMax, 
                             pointsStdev, pointsMedian, 
                             pointsMode) = findStatistics(points)
@@ -1889,7 +1918,7 @@ def results(request):
 
                         context = { 'umid': umid, 'allUsers': allUsers, 'welcomepage': 1, 'page': page, 'version': version, 
                             'totalPoints': round(totalPoints,3), 'points': points, 'usersCorrects': usersCorrects, 
-                            'pointsMean': pointsMean, 
+                            'totalCorrectsPerOption': totalCorrectsPerOption, 'numOfCorrectsPerOption': numOfCorrectsPerOption, 'pointsMean': pointsMean, 
                             'pointsMin': pointsMin, 'pointsMax': pointsMax, 
                             'pointsStdev': pointsStdev, 'pointsMedian': pointsMedian, 
                             'pointsMode': pointsMode, 

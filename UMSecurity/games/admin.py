@@ -29,7 +29,7 @@ class HoltLauryAdmin(admin.ModelAdmin):
         'willingness', 'willingnessRand', 'started',
         'finished', 'created', 'updated']
 
-    search_fields = ['username']
+    search_fields = ['user']
 
 admin.site.register(HoltLaury, HoltLauryAdmin)
 
