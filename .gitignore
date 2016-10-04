@@ -17,4 +17,3 @@
 
 !.elasticbeanstalk/*.global.yml
 
-**/DataDump.json
