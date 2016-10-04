@@ -29,7 +29,7 @@ class HoltLauryAdmin(admin.ModelAdmin):
         'willingness', 'willingnessRand', 'started',
         'finished', 'created', 'updated']
 
-    search_fields = ['user']
+    search_fields = ['user__username']
 
 admin.site.register(HoltLaury, HoltLauryAdmin)
 
@@ -40,7 +40,7 @@ class GambleAdmin(admin.ModelAdmin):
         'willingness', 'willingnessRand', 'started',
         'finished', 'created', 'updated']
 
-    search_fields = ['user']
+    search_fields = ['user__username']
 
 admin.site.register(Gamble, GambleAdmin)
 
@@ -55,7 +55,7 @@ class InvestmentAdmin(admin.ModelAdmin):
         'startedreturned4', 'finishedreturned4', 
         'startedreturned5', 'finishedreturned5', 'created', 'updated']
 
-    search_fields = ['user']
+    search_fields = ['user__username']
 
 admin.site.register(Investment, InvestmentAdmin)
 
@@ -94,7 +94,7 @@ class PretestAdmin(admin.ModelAdmin):
         'startedquestion7', 'finishedquestion7', 
         'created', 'updated']
 
-    search_fields = ['user']
+    search_fields = ['user__username']
 
 admin.site.register(Pretest, PretestAdmin)
 
@@ -118,7 +118,7 @@ class TrainingAdmin(admin.ModelAdmin):
         'startedquestion3', 'startedquestion4', 
         'created', 'updated']
 
-    search_fields = ['user']
+    search_fields = ['user__username']
 
 admin.site.register(Training, TrainingAdmin)
 
@@ -126,7 +126,7 @@ class ThankyouAdmin(admin.ModelAdmin):
     list_display = ['user', 'trainingComment', 'gamesComment',
         'pretestComment', 'created', 'updated']
 
-    search_fields = ['user']
+    search_fields = ['user__username']
 
 admin.site.register(Thankyou, ThankyouAdmin)
 

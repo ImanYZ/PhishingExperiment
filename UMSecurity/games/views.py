@@ -44,7 +44,7 @@ def welcome(request):
         if (request.session.get('umid', False)):
             umid = request.session['umid']
         user, created = User.objects.get_or_create(username=umid)
-        user.version = "BandFStaff"
+        user.version = "AfterExperiment"
         user.save()
         request.session['startedStudy'] = datetime.datetime.now().strftime("%b %d %Y %I:%M:%S %p")
     else:
@@ -2174,6 +2174,21 @@ def generateCSVDataset():
         'Pretest Started Question 5', 'Pretest Finished Question 5', 
         'Pretest Started Question 6', 'Pretest Finished Question 6', 
         'Pretest Started Question 7', 'Pretest Finished Question 7', 
+        'Training Question 1', 'Training Question 2', 
+        'Training Question 3', 
+        'Training 1 Answer was Correct (1) / Wrong (2)', 'Training 2 Answer was Correct (1) / Wrong (2)', 
+        'Training 3 Answer was Correct (1) / Wrong (2)', 
+        'Training Question Clicked 1', 'Training Question Clicked 2', 
+        'Training Question Clicked 3', 
+        'Training Question Right Clicked 1', 'Training Question Right Clicked 2', 
+        'Training Question Right Clicked 3', 
+        'Training Question Hovered 1', 'Training Question Hovered 2', 
+        'Training Question Hovered 3', 
+        'Training Question Hovered Duration in Seconds 1', 'Training Question Hovered Duration in Seconds 2', 
+        'Training Question Hovered Duration in Seconds 3', 
+        'Training Started Question 1', 'Training Finished Question 1', 
+        'Training Started Question 2', 'Training Finished Question 2', 
+        'Training Started Question 3', 'Training Finished Question 3', 
         'Lottery Decision', 'Lottery Option1', 'Lottery Option2',
         'Lottery Option3', 'Lottery Option4', 'Lottery Option5', 'Lottery Option6', 'Lottery Option7',
         'Lottery Option8', 'Lottery Option9', 'Lottery Option10', 'Lottery Die1', 'Lottery Die2',
@@ -2289,6 +2304,39 @@ def generateCSVDataset():
             row.append(pretest.finishedquestion6)
             row.append(pretest.startedquestion7)
             row.append(pretest.finishedquestion7)
+        else:
+            for index in range(56):
+                row.append("")
+
+        if user.training_set.count() != 0:
+            training = user.training_set.all()[0]
+            row.append(training.question1)
+            row.append(training.question2)
+            row.append(training.question3)
+            row.append(training.correct1)
+            row.append(training.correct2)
+            row.append(training.correct3)
+            row.append(training.questionclicked1)
+            row.append(training.questionclicked2)
+            row.append(training.questionclicked3)
+            row.append(training.questionrightclicked1)
+            row.append(training.questionrightclicked2)
+            row.append(training.questionrightclicked3)
+            row.append(training.questionhovered1)
+            row.append(training.questionhovered2)
+            row.append(training.questionhovered3)
+            row.append(training.questionhoveredseconds1)
+            row.append(training.questionhoveredseconds2)
+            row.append(training.questionhoveredseconds3)
+            row.append(training.startedquestion1)
+            row.append(training.finishedquestion1)
+            row.append(training.startedquestion2)
+            row.append(training.finishedquestion2)
+            row.append(training.startedquestion3)
+            row.append(training.finishedquestion3)
+        else:
+            for index in range(24):
+                row.append("")
 
         if user.holtlaury_set.count() != 0:
             holtLaury = user.holtlaury_set.all()[0]
@@ -2319,6 +2367,9 @@ def generateCSVDataset():
             row.append(holtLaury.willingnessRand)
             row.append(holtLaury.started)
             row.append(holtLaury.finished)
+        else:
+            for index in range(27):
+                row.append("")
 
         if user.gamble_set.count() != 0:
             gamble = user.gamble_set.all()[0]
@@ -2337,6 +2388,9 @@ def generateCSVDataset():
             row.append(gamble.willingnessRand)
             row.append(gamble.started)
             row.append(gamble.finished)
+        else:
+            for index in range(15):
+                row.append("")
 
         if user.investment_set.count() != 0:
             investment = user.investment_set.all()[0]
@@ -2365,12 +2419,18 @@ def generateCSVDataset():
             row.append(investment.finishedreturned4)
             row.append(investment.startedreturned5)
             row.append(investment.finishedreturned5)
+        else:
+            for index in range(25):
+                row.append("")
 
         if user.thankyou_set.count() != 0:
             thankyou = user.thankyou_set.all()[0]
             row.append(thankyou.trainingComment)
             row.append(thankyou.gamesComment)
             row.append(thankyou.pretestComment)
+        else:
+            for index in range(3):
+                row.append("")
 
         rows.append(row)
 

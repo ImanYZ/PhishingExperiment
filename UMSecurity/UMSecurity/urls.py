@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^', include('games.urls', namespace="games")),
     url(r'^games/', include('games.urls', namespace="games")),
     url(r'^admin/', admin.site.urls),
+    url(r'^polls/', include('polls.urls'))
 ]
