@@ -2,4 +2,4 @@ Django
 wheel
 pip
 numpy
-scipy
+scipy==0.17.0
