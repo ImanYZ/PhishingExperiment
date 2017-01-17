@@ -2,5 +2,3 @@ Django
 wheel
 mysqlclient
 pip
-numpy
-scipy==0.17.0
