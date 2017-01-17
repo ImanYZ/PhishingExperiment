@@ -1,3 +1,5 @@
 Django
 wheel
 pip
+numpy
+scipy
