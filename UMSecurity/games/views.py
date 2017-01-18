@@ -5,10 +5,6 @@ import datetime
 import time
 import csv
 
-import numpy
-from numpy import arange, array, ones
-from scipy import stats
-
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import JsonResponse
 from django.http import HttpResponse
