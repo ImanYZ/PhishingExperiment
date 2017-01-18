@@ -2,3 +2,5 @@ Django
 wheel
 mysqlclient
 pip
+numpy
+scipy
