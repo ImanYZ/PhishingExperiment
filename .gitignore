@@ -17,3 +17,7 @@
 
 !.elasticbeanstalk/*.global.yml
 
+**/DataDump.json
+**/settings_secret.py
+*/polls/*
+*/polls/
