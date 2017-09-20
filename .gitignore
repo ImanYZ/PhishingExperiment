@@ -21,3 +21,6 @@
 **/settings_secret.py
 */polls/*
 */polls/
+
+bfg.jar
+.git.bfg-report/*
