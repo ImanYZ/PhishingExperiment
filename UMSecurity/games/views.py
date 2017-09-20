@@ -36,6 +36,7 @@ def login(request):
 
 def logout(request):
     del request.session['umid']
+    return welcome(request)
 
 def welcome(request):
     if ('REMOTE_USER' in request.META or request.session.get('umid', False)):
