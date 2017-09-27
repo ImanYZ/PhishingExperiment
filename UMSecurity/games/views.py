@@ -2110,7 +2110,7 @@ class Echo(object):
         """Write the value by returning it, instead of storing in a buffer."""
         return value
 
-def downloadCSV(request):
+def downloadCSV(request, experiment = "", part = ""):
     if (('REMOTE_USER' in request.META and request.META['REMOTE_USER'] != "") or 
         (request.session.get('umid', False) and request.session['umid'] != "")):
         """A view that streams a large CSV file."""
@@ -2126,7 +2126,9 @@ def downloadCSV(request):
             pseudo_buffer = Echo()
             writer = csv.writer(pseudo_buffer)
 
-            rows = generateCSVDataset()
+            print ("Experiment = " + experiment)
+
+            rows = generateCSVDataset(experiment, part)
 
             response = StreamingHttpResponse((writer.writerow(row) for row in rows),
                                              content_type="text/csv")
@@ -2136,303 +2138,357 @@ def downloadCSV(request):
         context = { 'umid': '', 'welcomepage': 1 }
         return render(request, 'games/Welcome.html', context)
 
-def generateCSVDataset():
+def generateCSVDataset(experiment, part):
     rows = []
-    rows.append(['Username', 'version', 'Experiment Earning', 
-        'First Game', 'Second Game', 'Third Game', 'Opted Out', 'Postponed', 
-        'age', 'gender', 'emailsperday', 'ownpc', 'ownsmartphone', 'owntablet', 
-        'ownotherdevice', 'otherdevice', 'internetuse', 
-        'fullname', 'street', 'city', 'state', 'zipcode', 'yearsofeduction', 'ethnicity', 
-        'maritalstatus', 'Started Study', 'finishedstudy', 
-        'Pretest Question 1', 'Pretest Question 2', 
-        'Pretest Question 3', 'Pretest Question 4', 
-        'Pretest Question 5', 'Pretest Question 6', 
-        'Pretest Question 7', 
-        'Pretest 1 Answer was Correct (1) / Wrong (2)', 'Pretest 2 Answer was Correct (1) / Wrong (2)', 
-        'Pretest 3 Answer was Correct (1) / Wrong (2)', 'Pretest 4 Answer was Correct (1) / Wrong (2)', 
-        'Pretest 5 Answer was Correct (1) / Wrong (2)', 'Pretest 6 Answer was Correct (1) / Wrong (2)', 
-        'Pretest 7 Answer was Correct (1) / Wrong (2)', 
-        'Pretest Question Clicked 1', 'Pretest Question Clicked 2', 
-        'Pretest Question Clicked 3', 'Pretest Question Clicked 4', 
-        'Pretest Question Clicked 5', 'Pretest Question Clicked 6', 
-        'Pretest Question Clicked 7', 
-        'Pretest Question Right Clicked 1', 'Pretest Question Right Clicked 2', 
-        'Pretest Question Right Clicked 3', 'Pretest Question Right Clicked 4', 
-        'Pretest Question Right Clicked 5', 'Pretest Question Right Clicked 6', 
-        'Pretest Question Right Clicked 7', 
-        'Pretest Question Hovered 1', 'Pretest Question Hovered 2', 
-        'Pretest Question Hovered 3', 'Pretest Question Hovered 4', 
-        'Pretest Question Hovered 5', 'Pretest Question Hovered 6', 
-        'Pretest Question Hovered 7', 
-        'Pretest Question Hovered Duration in Seconds 1', 'Pretest Question Hovered Duration in Seconds 2', 
-        'Pretest Question Hovered Duration in Seconds 3', 'Pretest Question Hovered Duration in Seconds 4', 
-        'Pretest Question Hovered Duration in Seconds 5', 'Pretest Question Hovered Duration in Seconds 6', 
-        'Pretest Question Hovered Duration in Seconds 7', 
-        'Pretest Started Question 1', 'Pretest Finished Question 1', 
-        'Pretest Started Question 2', 'Pretest Finished Question 2', 
-        'Pretest Started Question 3', 'Pretest Finished Question 3', 
-        'Pretest Started Question 4', 'Pretest Finished Question 4', 
-        'Pretest Started Question 5', 'Pretest Finished Question 5', 
-        'Pretest Started Question 6', 'Pretest Finished Question 6', 
-        'Pretest Started Question 7', 'Pretest Finished Question 7', 
-        'Training Question 1', 'Training Question 2', 
-        'Training Question 3', 
-        'Training 1 Answer was Correct (1) / Wrong (2)', 'Training 2 Answer was Correct (1) / Wrong (2)', 
-        'Training 3 Answer was Correct (1) / Wrong (2)', 
-        'Training Question Clicked 1', 'Training Question Clicked 2', 
-        'Training Question Clicked 3', 
-        'Training Question Right Clicked 1', 'Training Question Right Clicked 2', 
-        'Training Question Right Clicked 3', 
-        'Training Question Hovered 1', 'Training Question Hovered 2', 
-        'Training Question Hovered 3', 
-        'Training Question Hovered Duration in Seconds 1', 'Training Question Hovered Duration in Seconds 2', 
-        'Training Question Hovered Duration in Seconds 3', 
-        'Training Started Question 1', 'Training Finished Question 1', 
-        'Training Started Question 2', 'Training Finished Question 2', 
-        'Training Started Question 3', 'Training Finished Question 3', 
-        'Lottery Decision', 'Lottery Option1', 'Lottery Option2',
-        'Lottery Option3', 'Lottery Option4', 'Lottery Option5', 'Lottery Option6', 'Lottery Option7',
-        'Lottery Option8', 'Lottery Option9', 'Lottery Option10', 'Lottery Die1', 'Lottery Die2',
-        'Lottery Die3', 'Lottery Die4', 'Lottery Die5', 'Lottery Die6', 'Lottery Die7', 'Lottery Die8',
-        'Lottery Die9', 'Lottery Die10', 'Lottery Original Points', 'Lottery Points',
-        "Lottery Subject's Willingness", 'Lottery Random Willingness', 'Lottery Started',
-        'Lottery Finished', 
-        'Gamble Chosen', 'Gamble Coin 1', 'Gamble Coin 2',
-        'Gamble Coin 3', 'Gamble Coin 4', 'Gamble Coin 5', 'Gamble Coin 6', 'Gamble Coin 7',
-        'Gamble Coin 8', 'Gamble Coin 9', 'Gamble Points Earned',
-        "Gamble Subject's Willingness", 'Gamble Random Willingness', 'Gamble Started',
-        'Gamble Finished', 
-        'Trust Game Invested', 'Trust Game Returned 0', 'Trust Game Returned 1', 'Trust Game Returned 2',
-        'Trust Game Returned 3', 'Trust Game Returned 4', 'Trust Game Returned 5', 'Trust Game Played With',
-        'Trust Game Other Player Returned', 'Trust Game Other Player Invested', 'Trust Game Points Earned', 
-        'Trust Game Started Investment', 'Trust Game Finished Investment', 
-        'Trust Game Started Return 0', 'Trust Game Finished Return 0', 
-        'Trust Game Started Return 1', 'Trust Game Finished Return 1', 
-        'Trust Game Started Return 2', 'Trust Game Finished Return 2', 
-        'Trust Game Started Return 3', 'Trust Game Finished Return 3', 
-        'Trust Game Started Return 4', 'Trust Game Finished Return 4', 
-        'Trust Game Started Return 5', 'Trust Game Finished Return 5', 
-        'Survey Pretest Comment', 'Survey Training Comment', 'Survey Games Comment',
-        ])
+    if experiment == "":
+        rows.append(['Username', 'version', 'Experiment Earning', 
+            'First Game', 'Second Game', 'Third Game', 'Opted Out', 'Postponed', 
+            'age', 'gender', 'emailsperday', 'ownpc', 'ownsmartphone', 'owntablet', 
+            'ownotherdevice', 'otherdevice', 'internetuse', 
+            'fullname', 'street', 'city', 'state', 'zipcode', 'yearsofeduction', 'ethnicity', 
+            'maritalstatus', 'Started Study', 'finishedstudy', 
+            'Pretest Question 1', 'Pretest Question 2', 
+            'Pretest Question 3', 'Pretest Question 4', 
+            'Pretest Question 5', 'Pretest Question 6', 
+            'Pretest Question 7', 
+            'Pretest 1 Answer was Correct (1) / Wrong (2)', 'Pretest 2 Answer was Correct (1) / Wrong (2)', 
+            'Pretest 3 Answer was Correct (1) / Wrong (2)', 'Pretest 4 Answer was Correct (1) / Wrong (2)', 
+            'Pretest 5 Answer was Correct (1) / Wrong (2)', 'Pretest 6 Answer was Correct (1) / Wrong (2)', 
+            'Pretest 7 Answer was Correct (1) / Wrong (2)', 
+            'Pretest Question Clicked 1', 'Pretest Question Clicked 2', 
+            'Pretest Question Clicked 3', 'Pretest Question Clicked 4', 
+            'Pretest Question Clicked 5', 'Pretest Question Clicked 6', 
+            'Pretest Question Clicked 7', 
+            'Pretest Question Right Clicked 1', 'Pretest Question Right Clicked 2', 
+            'Pretest Question Right Clicked 3', 'Pretest Question Right Clicked 4', 
+            'Pretest Question Right Clicked 5', 'Pretest Question Right Clicked 6', 
+            'Pretest Question Right Clicked 7', 
+            'Pretest Question Hovered 1', 'Pretest Question Hovered 2', 
+            'Pretest Question Hovered 3', 'Pretest Question Hovered 4', 
+            'Pretest Question Hovered 5', 'Pretest Question Hovered 6', 
+            'Pretest Question Hovered 7', 
+            'Pretest Question Hovered Duration in Seconds 1', 'Pretest Question Hovered Duration in Seconds 2', 
+            'Pretest Question Hovered Duration in Seconds 3', 'Pretest Question Hovered Duration in Seconds 4', 
+            'Pretest Question Hovered Duration in Seconds 5', 'Pretest Question Hovered Duration in Seconds 6', 
+            'Pretest Question Hovered Duration in Seconds 7', 
+            'Pretest Started Question 1', 'Pretest Finished Question 1', 
+            'Pretest Started Question 2', 'Pretest Finished Question 2', 
+            'Pretest Started Question 3', 'Pretest Finished Question 3', 
+            'Pretest Started Question 4', 'Pretest Finished Question 4', 
+            'Pretest Started Question 5', 'Pretest Finished Question 5', 
+            'Pretest Started Question 6', 'Pretest Finished Question 6', 
+            'Pretest Started Question 7', 'Pretest Finished Question 7', 
+            'Training Question 1', 'Training Question 2', 
+            'Training Question 3', 
+            'Training 1 Answer was Correct (1) / Wrong (2)', 'Training 2 Answer was Correct (1) / Wrong (2)', 
+            'Training 3 Answer was Correct (1) / Wrong (2)', 
+            'Training Question Clicked 1', 'Training Question Clicked 2', 
+            'Training Question Clicked 3', 
+            'Training Question Right Clicked 1', 'Training Question Right Clicked 2', 
+            'Training Question Right Clicked 3', 
+            'Training Question Hovered 1', 'Training Question Hovered 2', 
+            'Training Question Hovered 3', 
+            'Training Question Hovered Duration in Seconds 1', 'Training Question Hovered Duration in Seconds 2', 
+            'Training Question Hovered Duration in Seconds 3', 
+            'Training Started Question 1', 'Training Finished Question 1', 
+            'Training Started Question 2', 'Training Finished Question 2', 
+            'Training Started Question 3', 'Training Finished Question 3', 
+            'Lottery Decision', 'Lottery Option1', 'Lottery Option2',
+            'Lottery Option3', 'Lottery Option4', 'Lottery Option5', 'Lottery Option6', 'Lottery Option7',
+            'Lottery Option8', 'Lottery Option9', 'Lottery Option10', 'Lottery Die1', 'Lottery Die2',
+            'Lottery Die3', 'Lottery Die4', 'Lottery Die5', 'Lottery Die6', 'Lottery Die7', 'Lottery Die8',
+            'Lottery Die9', 'Lottery Die10', 'Lottery Original Points', 'Lottery Points',
+            "Lottery Subject's Willingness", 'Lottery Random Willingness', 'Lottery Started',
+            'Lottery Finished', 
+            'Gamble Chosen', 'Gamble Coin 1', 'Gamble Coin 2',
+            'Gamble Coin 3', 'Gamble Coin 4', 'Gamble Coin 5', 'Gamble Coin 6', 'Gamble Coin 7',
+            'Gamble Coin 8', 'Gamble Coin 9', 'Gamble Points Earned',
+            "Gamble Subject's Willingness", 'Gamble Random Willingness', 'Gamble Started',
+            'Gamble Finished', 
+            'Trust Game Invested', 'Trust Game Returned 0', 'Trust Game Returned 1', 'Trust Game Returned 2',
+            'Trust Game Returned 3', 'Trust Game Returned 4', 'Trust Game Returned 5', 'Trust Game Played With',
+            'Trust Game Other Player Returned', 'Trust Game Other Player Invested', 'Trust Game Points Earned', 
+            'Trust Game Started Investment', 'Trust Game Finished Investment', 
+            'Trust Game Started Return 0', 'Trust Game Finished Return 0', 
+            'Trust Game Started Return 1', 'Trust Game Finished Return 1', 
+            'Trust Game Started Return 2', 'Trust Game Finished Return 2', 
+            'Trust Game Started Return 3', 'Trust Game Finished Return 3', 
+            'Trust Game Started Return 4', 'Trust Game Finished Return 4', 
+            'Trust Game Started Return 5', 'Trust Game Finished Return 5', 
+            'Survey Pretest Comment', 'Survey Training Comment', 'Survey Games Comment',
+            ])
 
-    allUsers = User.objects.all()
+        allUsers = User.objects.all()
 
-    for user in allUsers:
-        row = []
-        row.append(user.username)
-        row.append(user.version)
-        row.append(user.experimentearning)
-        row.append(user.firstgame)
-        row.append(user.secondgame)
-        row.append(user.thirdgame)
-        row.append(user.optout)
-        row.append(user.postpone)
-        row.append(user.age)
-        row.append(user.gender)
-        row.append(user.emailsperday)
-        row.append(user.ownpc)
-        row.append(user.ownsmartphone)
-        row.append(user.ownpda)
-        row.append(user.ownotherdevice)
-        row.append(user.otherdevice)
-        row.append(user.internetuse)
-        row.append(user.fullname)
-        row.append(user.street)
-        row.append(user.city)
-        row.append(user.state)
-        row.append(user.zipcode)
-        row.append(user.yearsofeduction)
-        row.append(user.ethnicity)
-        row.append(user.maritalstatus)
-        row.append(user.startedstudy)
-        row.append(user.finishedstudy)
+        for user in allUsers:
+            row = []
+            row.append(user.username)
+            row.append(user.version)
+            row.append(user.experimentearning)
+            row.append(user.firstgame)
+            row.append(user.secondgame)
+            row.append(user.thirdgame)
+            row.append(user.optout)
+            row.append(user.postpone)
+            row.append(user.age)
+            row.append(user.gender)
+            row.append(user.emailsperday)
+            row.append(user.ownpc)
+            row.append(user.ownsmartphone)
+            row.append(user.ownpda)
+            row.append(user.ownotherdevice)
+            row.append(user.otherdevice)
+            row.append(user.internetuse)
+            row.append(user.fullname)
+            row.append(user.street)
+            row.append(user.city)
+            row.append(user.state)
+            row.append(user.zipcode)
+            row.append(user.yearsofeduction)
+            row.append(user.ethnicity)
+            row.append(user.maritalstatus)
+            row.append(user.startedstudy)
+            row.append(user.finishedstudy)
 
-        if user.pretest_set.count() != 0:
-            pretest = user.pretest_set.all()[0]
-            row.append(pretest.question1)
-            row.append(pretest.question2)
-            row.append(pretest.question3)
-            row.append(pretest.question4)
-            row.append(pretest.question5)
-            row.append(pretest.question6)
-            row.append(pretest.question7)
-            row.append(pretest.correct1)
-            row.append(pretest.correct2)
-            row.append(pretest.correct3)
-            row.append(pretest.correct4)
-            row.append(pretest.correct5)
-            row.append(pretest.correct6)
-            row.append(pretest.correct7)
-            row.append(pretest.questionclicked1)
-            row.append(pretest.questionclicked2)
-            row.append(pretest.questionclicked3)
-            row.append(pretest.questionclicked4)
-            row.append(pretest.questionclicked5)
-            row.append(pretest.questionclicked6)
-            row.append(pretest.questionclicked7)
-            row.append(pretest.questionrightclicked1)
-            row.append(pretest.questionrightclicked2)
-            row.append(pretest.questionrightclicked3)
-            row.append(pretest.questionrightclicked4)
-            row.append(pretest.questionrightclicked5)
-            row.append(pretest.questionrightclicked6)
-            row.append(pretest.questionrightclicked7)
-            row.append(pretest.questionhovered1)
-            row.append(pretest.questionhovered2)
-            row.append(pretest.questionhovered3)
-            row.append(pretest.questionhovered4)
-            row.append(pretest.questionhovered5)
-            row.append(pretest.questionhovered6)
-            row.append(pretest.questionhovered7)
-            row.append(pretest.questionhoveredseconds1)
-            row.append(pretest.questionhoveredseconds2)
-            row.append(pretest.questionhoveredseconds3)
-            row.append(pretest.questionhoveredseconds4)
-            row.append(pretest.questionhoveredseconds5)
-            row.append(pretest.questionhoveredseconds6)
-            row.append(pretest.questionhoveredseconds7)
-            row.append(pretest.startedquestion1)
-            row.append(pretest.finishedquestion1)
-            row.append(pretest.startedquestion2)
-            row.append(pretest.finishedquestion2)
-            row.append(pretest.startedquestion3)
-            row.append(pretest.finishedquestion3)
-            row.append(pretest.startedquestion4)
-            row.append(pretest.finishedquestion4)
-            row.append(pretest.startedquestion5)
-            row.append(pretest.finishedquestion5)
-            row.append(pretest.startedquestion6)
-            row.append(pretest.finishedquestion6)
-            row.append(pretest.startedquestion7)
-            row.append(pretest.finishedquestion7)
-        else:
-            for index in range(56):
-                row.append("")
+            if user.pretest_set.count() != 0:
+                pretest = user.pretest_set.all()[0]
+                row.append(pretest.question1)
+                row.append(pretest.question2)
+                row.append(pretest.question3)
+                row.append(pretest.question4)
+                row.append(pretest.question5)
+                row.append(pretest.question6)
+                row.append(pretest.question7)
+                row.append(pretest.correct1)
+                row.append(pretest.correct2)
+                row.append(pretest.correct3)
+                row.append(pretest.correct4)
+                row.append(pretest.correct5)
+                row.append(pretest.correct6)
+                row.append(pretest.correct7)
+                row.append(pretest.questionclicked1)
+                row.append(pretest.questionclicked2)
+                row.append(pretest.questionclicked3)
+                row.append(pretest.questionclicked4)
+                row.append(pretest.questionclicked5)
+                row.append(pretest.questionclicked6)
+                row.append(pretest.questionclicked7)
+                row.append(pretest.questionrightclicked1)
+                row.append(pretest.questionrightclicked2)
+                row.append(pretest.questionrightclicked3)
+                row.append(pretest.questionrightclicked4)
+                row.append(pretest.questionrightclicked5)
+                row.append(pretest.questionrightclicked6)
+                row.append(pretest.questionrightclicked7)
+                row.append(pretest.questionhovered1)
+                row.append(pretest.questionhovered2)
+                row.append(pretest.questionhovered3)
+                row.append(pretest.questionhovered4)
+                row.append(pretest.questionhovered5)
+                row.append(pretest.questionhovered6)
+                row.append(pretest.questionhovered7)
+                row.append(pretest.questionhoveredseconds1)
+                row.append(pretest.questionhoveredseconds2)
+                row.append(pretest.questionhoveredseconds3)
+                row.append(pretest.questionhoveredseconds4)
+                row.append(pretest.questionhoveredseconds5)
+                row.append(pretest.questionhoveredseconds6)
+                row.append(pretest.questionhoveredseconds7)
+                row.append(pretest.startedquestion1)
+                row.append(pretest.finishedquestion1)
+                row.append(pretest.startedquestion2)
+                row.append(pretest.finishedquestion2)
+                row.append(pretest.startedquestion3)
+                row.append(pretest.finishedquestion3)
+                row.append(pretest.startedquestion4)
+                row.append(pretest.finishedquestion4)
+                row.append(pretest.startedquestion5)
+                row.append(pretest.finishedquestion5)
+                row.append(pretest.startedquestion6)
+                row.append(pretest.finishedquestion6)
+                row.append(pretest.startedquestion7)
+                row.append(pretest.finishedquestion7)
+            else:
+                for index in range(56):
+                    row.append("")
 
-        if user.training_set.count() != 0:
-            training = user.training_set.all()[0]
-            row.append(training.question1)
-            row.append(training.question2)
-            row.append(training.question3)
-            row.append(training.correct1)
-            row.append(training.correct2)
-            row.append(training.correct3)
-            row.append(training.questionclicked1)
-            row.append(training.questionclicked2)
-            row.append(training.questionclicked3)
-            row.append(training.questionrightclicked1)
-            row.append(training.questionrightclicked2)
-            row.append(training.questionrightclicked3)
-            row.append(training.questionhovered1)
-            row.append(training.questionhovered2)
-            row.append(training.questionhovered3)
-            row.append(training.questionhoveredseconds1)
-            row.append(training.questionhoveredseconds2)
-            row.append(training.questionhoveredseconds3)
-            row.append(training.startedquestion1)
-            row.append(training.finishedquestion1)
-            row.append(training.startedquestion2)
-            row.append(training.finishedquestion2)
-            row.append(training.startedquestion3)
-            row.append(training.finishedquestion3)
-        else:
-            for index in range(24):
-                row.append("")
+            if user.training_set.count() != 0:
+                training = user.training_set.all()[0]
+                row.append(training.question1)
+                row.append(training.question2)
+                row.append(training.question3)
+                row.append(training.correct1)
+                row.append(training.correct2)
+                row.append(training.correct3)
+                row.append(training.questionclicked1)
+                row.append(training.questionclicked2)
+                row.append(training.questionclicked3)
+                row.append(training.questionrightclicked1)
+                row.append(training.questionrightclicked2)
+                row.append(training.questionrightclicked3)
+                row.append(training.questionhovered1)
+                row.append(training.questionhovered2)
+                row.append(training.questionhovered3)
+                row.append(training.questionhoveredseconds1)
+                row.append(training.questionhoveredseconds2)
+                row.append(training.questionhoveredseconds3)
+                row.append(training.startedquestion1)
+                row.append(training.finishedquestion1)
+                row.append(training.startedquestion2)
+                row.append(training.finishedquestion2)
+                row.append(training.startedquestion3)
+                row.append(training.finishedquestion3)
+            else:
+                for index in range(24):
+                    row.append("")
 
-        if user.holtlaury_set.count() != 0:
-            holtLaury = user.holtlaury_set.all()[0]
-            row.append(holtLaury.decision)
-            row.append(holtLaury.option1)
-            row.append(holtLaury.option2)
-            row.append(holtLaury.option3)
-            row.append(holtLaury.option4)
-            row.append(holtLaury.option5)
-            row.append(holtLaury.option6)
-            row.append(holtLaury.option7)
-            row.append(holtLaury.option8)
-            row.append(holtLaury.option9)
-            row.append(holtLaury.option10)
-            row.append(holtLaury.die1)
-            row.append(holtLaury.die2)
-            row.append(holtLaury.die3)
-            row.append(holtLaury.die4)
-            row.append(holtLaury.die5)
-            row.append(holtLaury.die6)
-            row.append(holtLaury.die7)
-            row.append(holtLaury.die8)
-            row.append(holtLaury.die9)
-            row.append(holtLaury.die10)
-            row.append(holtLaury.originalPoints)
-            row.append(holtLaury.points)
-            row.append(holtLaury.willingness)
-            row.append(holtLaury.willingnessRand)
-            row.append(holtLaury.started)
-            row.append(holtLaury.finished)
-        else:
-            for index in range(27):
-                row.append("")
+            if user.holtlaury_set.count() != 0:
+                holtLaury = user.holtlaury_set.all()[0]
+                row.append(holtLaury.decision)
+                row.append(holtLaury.option1)
+                row.append(holtLaury.option2)
+                row.append(holtLaury.option3)
+                row.append(holtLaury.option4)
+                row.append(holtLaury.option5)
+                row.append(holtLaury.option6)
+                row.append(holtLaury.option7)
+                row.append(holtLaury.option8)
+                row.append(holtLaury.option9)
+                row.append(holtLaury.option10)
+                row.append(holtLaury.die1)
+                row.append(holtLaury.die2)
+                row.append(holtLaury.die3)
+                row.append(holtLaury.die4)
+                row.append(holtLaury.die5)
+                row.append(holtLaury.die6)
+                row.append(holtLaury.die7)
+                row.append(holtLaury.die8)
+                row.append(holtLaury.die9)
+                row.append(holtLaury.die10)
+                row.append(holtLaury.originalPoints)
+                row.append(holtLaury.points)
+                row.append(holtLaury.willingness)
+                row.append(holtLaury.willingnessRand)
+                row.append(holtLaury.started)
+                row.append(holtLaury.finished)
+            else:
+                for index in range(27):
+                    row.append("")
 
-        if user.gamble_set.count() != 0:
-            gamble = user.gamble_set.all()[0]
-            row.append(gamble.chosen)
-            row.append(gamble.coin1)
-            row.append(gamble.coin2)
-            row.append(gamble.coin3)
-            row.append(gamble.coin4)
-            row.append(gamble.coin5)
-            row.append(gamble.coin6)
-            row.append(gamble.coin7)
-            row.append(gamble.coin8)
-            row.append(gamble.coin9)
-            row.append(gamble.points)
-            row.append(gamble.willingness)
-            row.append(gamble.willingnessRand)
-            row.append(gamble.started)
-            row.append(gamble.finished)
-        else:
-            for index in range(15):
-                row.append("")
+            if user.gamble_set.count() != 0:
+                gamble = user.gamble_set.all()[0]
+                row.append(gamble.chosen)
+                row.append(gamble.coin1)
+                row.append(gamble.coin2)
+                row.append(gamble.coin3)
+                row.append(gamble.coin4)
+                row.append(gamble.coin5)
+                row.append(gamble.coin6)
+                row.append(gamble.coin7)
+                row.append(gamble.coin8)
+                row.append(gamble.coin9)
+                row.append(gamble.points)
+                row.append(gamble.willingness)
+                row.append(gamble.willingnessRand)
+                row.append(gamble.started)
+                row.append(gamble.finished)
+            else:
+                for index in range(15):
+                    row.append("")
 
-        if user.investment_set.count() != 0:
-            investment = user.investment_set.all()[0]
-            row.append(investment.invested)
-            row.append(investment.returned0)
-            row.append(investment.returned1)
-            row.append(investment.returned2)
-            row.append(investment.returned3)
-            row.append(investment.returned4)
-            row.append(investment.returned5)
-            row.append(investment.otheruser)
-            row.append(investment.otherreturned)
-            row.append(investment.otherinvested)
-            row.append(investment.points)
-            row.append(investment.startedinvested)
-            row.append(investment.finishedinvested)
-            row.append(investment.startedreturned0)
-            row.append(investment.finishedreturned0)
-            row.append(investment.startedreturned1)
-            row.append(investment.finishedreturned1)
-            row.append(investment.startedreturned2)
-            row.append(investment.finishedreturned2)
-            row.append(investment.startedreturned3)
-            row.append(investment.finishedreturned3)
-            row.append(investment.startedreturned4)
-            row.append(investment.finishedreturned4)
-            row.append(investment.startedreturned5)
-            row.append(investment.finishedreturned5)
-        else:
-            for index in range(25):
-                row.append("")
+            if user.investment_set.count() != 0:
+                investment = user.investment_set.all()[0]
+                row.append(investment.invested)
+                row.append(investment.returned0)
+                row.append(investment.returned1)
+                row.append(investment.returned2)
+                row.append(investment.returned3)
+                row.append(investment.returned4)
+                row.append(investment.returned5)
+                row.append(investment.otheruser)
+                row.append(investment.otherreturned)
+                row.append(investment.otherinvested)
+                row.append(investment.points)
+                row.append(investment.startedinvested)
+                row.append(investment.finishedinvested)
+                row.append(investment.startedreturned0)
+                row.append(investment.finishedreturned0)
+                row.append(investment.startedreturned1)
+                row.append(investment.finishedreturned1)
+                row.append(investment.startedreturned2)
+                row.append(investment.finishedreturned2)
+                row.append(investment.startedreturned3)
+                row.append(investment.finishedreturned3)
+                row.append(investment.startedreturned4)
+                row.append(investment.finishedreturned4)
+                row.append(investment.startedreturned5)
+                row.append(investment.finishedreturned5)
+            else:
+                for index in range(25):
+                    row.append("")
 
-        if user.thankyou_set.count() != 0:
-            thankyou = user.thankyou_set.all()[0]
-            row.append(thankyou.trainingComment)
-            row.append(thankyou.gamesComment)
-            row.append(thankyou.pretestComment)
-        else:
-            for index in range(3):
-                row.append("")
+            if user.thankyou_set.count() != 0:
+                thankyou = user.thankyou_set.all()[0]
+                row.append(thankyou.trainingComment)
+                row.append(thankyou.gamesComment)
+                row.append(thankyou.pretestComment)
+            else:
+                for index in range(3):
+                    row.append("")
 
-        rows.append(row)
+            rows.append(row)
+
+    elif experiment == "Pilot":
+        rows.append(['Username', 
+            'Trust Game Invested', 'Trust Game Returned 0', 'Trust Game Returned 1', 'Trust Game Returned 2',
+            'Trust Game Returned 3', 'Trust Game Returned 4', 'Trust Game Returned 5', 'Trust Game Played With',
+            'Trust Game Other Player Returned', 'Trust Game Other Player Invested', 'Trust Game Points Earned', 
+            'Trust Game Started Investment', 'Trust Game Finished Investment', 
+            'Trust Game Started Return 0', 'Trust Game Finished Return 0', 
+            'Trust Game Started Return 1', 'Trust Game Finished Return 1', 
+            'Trust Game Started Return 2', 'Trust Game Finished Return 2', 
+            'Trust Game Started Return 3', 'Trust Game Finished Return 3', 
+            'Trust Game Started Return 4', 'Trust Game Finished Return 4', 
+            'Trust Game Started Return 5', 'Trust Game Finished Return 5', 
+            ])
+
+        allUsers = User.objects.filter(version = 'Pilot')
+
+        for user in allUsers:
+            row = []
+            row.append(user.username)
+
+            if user.investment_set.count() != 0:
+                investment = user.investment_set.all()[0]
+                row.append(investment.invested)
+                row.append(investment.returned0)
+                row.append(investment.returned1)
+                row.append(investment.returned2)
+                row.append(investment.returned3)
+                row.append(investment.returned4)
+                row.append(investment.returned5)
+                row.append(investment.otheruser)
+                row.append(investment.otherreturned)
+                row.append(investment.otherinvested)
+                row.append(investment.points)
+                row.append(investment.startedinvested)
+                row.append(investment.finishedinvested)
+                row.append(investment.startedreturned0)
+                row.append(investment.finishedreturned0)
+                row.append(investment.startedreturned1)
+                row.append(investment.finishedreturned1)
+                row.append(investment.startedreturned2)
+                row.append(investment.finishedreturned2)
+                row.append(investment.startedreturned3)
+                row.append(investment.finishedreturned3)
+                row.append(investment.startedreturned4)
+                row.append(investment.finishedreturned4)
+                row.append(investment.startedreturned5)
+                row.append(investment.finishedreturned5)
+            else:
+                for index in range(25):
+                    row.append("")
+
+            rows.append(row)
 
     return rows
